@@ -1,6 +1,7 @@
 /* eslint-disable operator-linebreak */
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import { rdxLoginUser } from '../redux/ducks/User';
 import MainMenu from '../components/MainMenu';
@@ -10,6 +11,7 @@ import { validateForm, IForm } from '../components/FormValidation';
 import { serverLoginUser } from '../components/Auth';
 
 const PageLogin = () => {
+	const history = useHistory();
 	const [formFields, setFormFields] = useState<IForm['inputs']>([
 		{
 			name: 'email',
@@ -78,42 +80,60 @@ const PageLogin = () => {
 
 	return (
 		<>
-			<h1 className="bg-red-100">Page login</h1>
-			{!isLogging ? (
-				<form onSubmit={handleSubmit}>
-					<label htmlFor={formFields[0].name}>
-						My E-mail:
-						<input
-							type={formFields[0].type}
-							name={formFields[0].name}
-							id={formFields[0].name}
-							maxLength={formFields[0].maxLength}
-							value={formFields[0].value}
-							onChange={handleChange}
-						/>
-						<span>{formFields[0].error}</span>
-					</label>
-					<br />
+			<div className=" bg-slate-200 h-screen w-full py-5">
+				<div className="bg-white border max-w-lg p-10 rounded-lg mx-auto">
+					<h1 className="text-xl font-bold text-center mb-5">LOGIN ADMINISTRADOR</h1>
 
-					<label htmlFor={formFields[1].name}>
-						password:
-						<input
-							type={formFields[1].type}
-							name={formFields[1].name}
-							id={formFields[1].name}
-							maxLength={formFields[1].maxLength}
-							value={formFields[1].value}
-							onChange={handleChange}
-						/>
-						<span>{formFields[1].error}</span>
-					</label>
-					<br />
-					<button type="submit">Login</button>
-				</form>
-			) : (
-				<p>logging...</p>
-			)}
-			<MainMenu />
+					{!isLogging ? (
+						<form onSubmit={handleSubmit}>
+							<label htmlFor={formFields[0].name} className="block mb-3">
+								<span className="block mb-2">E-mail:</span>
+								<input
+									type={formFields[0].type}
+									name={formFields[0].name}
+									id={formFields[0].name}
+									maxLength={formFields[0].maxLength}
+									value={formFields[0].value}
+									onChange={handleChange}
+									className="border block px-3 py-2 w-full rounded-md"
+								/>
+								<span className="text-sm text-red-500 italic">{formFields[0].error}</span>
+							</label>
+
+							<label htmlFor={formFields[1].name} className="block mb-3">
+								<span className="block mb-2">Senha:</span>
+								<input
+									type={formFields[1].type}
+									name={formFields[1].name}
+									id={formFields[1].name}
+									maxLength={formFields[1].maxLength}
+									value={formFields[1].value}
+									onChange={handleChange}
+									className="border block px-3 py-2 w-full rounded-md"
+								/>
+								<span className="text-sm text-red-500 italic">{formFields[1].error}</span>
+							</label>
+
+							<button
+								type="submit"
+								className="border block px-3 py-2 w-full rounded-md bg-blue-500 hover:bg-blue-600 text-white shadow mb-3"
+							>
+								Fazer login
+							</button>
+							<button
+								type="button"
+								onClick={() => history.push('/')}
+								className="border block px-3 py-2 w-full rounded-md bg-white hover:bg-gray-50 text-gray-600 "
+							>
+								Cancelar
+							</button>
+						</form>
+					) : (
+						<p>logging...</p>
+					)}
+					<MainMenu />
+				</div>
+			</div>
 		</>
 	);
 };
