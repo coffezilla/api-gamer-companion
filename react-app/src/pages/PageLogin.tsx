@@ -78,7 +78,7 @@ const PageLogin = () => {
 
 	return (
 		<>
-			<h1>Page login</h1>
+			<h1 className="bg-red-100">Page login</h1>
 			{!isLogging ? (
 				<form onSubmit={handleSubmit}>
 					<label htmlFor={formFields[0].name}>
