@@ -25,9 +25,11 @@ export interface IStAuth {
 
 export interface IStForm {
 	inputs: {
-		email: string;
-		password: string;
-	};
+		name: string;
+		value: any;
+		error: string;
+		type: string;
+	}[];
 }
 
 // check auth when page is reloaded
@@ -97,9 +99,8 @@ export const serverLoginUser = async (formLogin: IStForm['inputs']) => {
 	await axios({
 		method: 'post',
 		url: ENDPOINT_LOGIN,
-		data: { email: formLogin.email, password: formLogin.password },
+		data: { email: formLogin[0].value, password: formLogin[1].value },
 	}).then((responseLogin) => {
-		console.log(responseLogin);
 		if (responseLogin.data.status === 1) {
 			serverResponse = {
 				data: {

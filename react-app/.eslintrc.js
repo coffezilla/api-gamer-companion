@@ -46,7 +46,7 @@ module.exports = {
 			},
 		],
 		'import/extensions': 'off', // allow every code in every extension
-		'operator-linebreak': ['error', 'before'],
+		'operator-linebreak': 'off',
 		'import/no-unresolved': 'off', // typescript erro importing .tsx files
 		'react/require-default-props': 'off', // typescript allow ? props
 		'object-curly-newline': 'off', // sometimes prettier dont break the line and it's not really a problem
