@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { clearLocalStorageAuth } from '../helpers/handleStorage';
 import { rdxLogoutUser, IRdxUser } from '../redux/ducks/User';
+import SelectLayoutButton from './SelectLayoutButton/SelectLayoutButton';
 
 const MainMenu = () => {
 	const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const MainMenu = () => {
 	return (
 		<>
 			<h1>Menu</h1>
+			<SelectLayoutButton />
 			<pre>{JSON.stringify(rdxUser, null, 1)}</pre>
 			{rdxUserisAuth && (
 				<button type="button" onClick={logoutUser}>
