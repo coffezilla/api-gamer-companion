@@ -6,7 +6,7 @@ const stringify = require('../helper/utils');
 // GET
 router.get('/', async (req, res) => {
 	try {
-		const characters = await Characters.find();
+		const characters = await Characters.find({}, { _id: 1, name: 1 });
 		res.json(characters);
 	} catch (err) {
 		res.json(err);

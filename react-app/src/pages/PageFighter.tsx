@@ -1,11 +1,32 @@
 /* eslint-disable */
 import { useHistory, Link, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import MainMenu from '../components/MainMenu';
+import axios from 'axios';
+import CommandsList from '../components/CommandsList';
+
+import { END_POINT_BASE } from '../Api';
 
 const PageFighter = () => {
 	const history = useHistory();
 	const { fid } = useParams<any>();
-	console.log('change', fid);
+	const [dataCharacter, setDataCharacter] = useState<any>(null);
+
+	const getCharacter = async () => {
+		setDataCharacter(null);
+		await axios({
+			method: 'get',
+			url: `${END_POINT_BASE}/characters/${fid}`,
+		}).then((res) => {
+			setDataCharacter(res.data[0]);
+
+			console.log('personagem', res.data[0]);
+		});
+	};
+
+	useEffect(() => {
+		getCharacter();
+	}, []);
 
 	return (
 		<>
@@ -16,98 +37,33 @@ const PageFighter = () => {
 							Voltar
 						</div>
 					</Link>
-					<h1 className="text-xl font-bold mb-5">FIGHTER {fid}</h1>
-					{/* <p className="mb-2">Fighter {fid}</p> */}
+					{dataCharacter && <h1 className="text-xl font-bold mb-5">{dataCharacter.name}</h1>}
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-						<div>
-							<div className="block mb-5">
-								<h2 className="text-lg font-bold mb-2">Fatality</h2>
-								<ul className="divide-y divide-gray-100">
-									<li className="py-2 flex space-x-2 items-center">
-										<div className="font-bold basis-1/3">Fatality asdf</div>
-										<div className="text-sm">1, 2, 4, voltar, soco</div>
-									</li>
-									<li className="py-2 flex space-x-2 items-center">
-										<div className="font-bold basis-1/3">Fatality</div>
-										<div className="text-sm">1, 2, 4, voltar, soco</div>
-									</li>
-									<li className="py-2 flex space-x-2 items-center">
-										<div className="font-bold basis-1/3">Fatality asf kajs f</div>
-										<div className="text-sm">1, 2, 4, voltar, soco</div>
-									</li>
-									<li className="py-2 flex space-x-2 items-center">
-										<div className="font-bold basis-1/3">Fatality asdf</div>
-										<div className="text-sm">1, 2, 4, voltar, soco</div>
-									</li>
-								</ul>
-							</div>
+						<div id="col1">
+							{dataCharacter ? (
+								<CommandsList title="Fatality" dataMoves={dataCharacter.fatalities} />
+							) : (
+								<p>Carregando...</p>
+							)}
 
-							<div className="block mb-5">
-								<h2 className="text-lg font-bold mb-2">Brutality</h2>
-								<ul className="divide-y divide-gray-100">
-									<li className="py-2 flex space-x-2 items-center">
-										<div className="font-bold basis-1/3">Fatality asdf</div>
-										<div className="text-sm">1, 2, 4, voltar, soco</div>
-									</li>
-									<li className="py-2 flex space-x-2 items-center">
-										<div className="font-bold basis-1/3">Fatality</div>
-										<div className="text-sm">1, 2, 4, voltar, soco</div>
-									</li>
-									<li className="py-2 flex space-x-2 items-center">
-										<div className="font-bold basis-1/3">Fatality asf kajs f</div>
-										<div className="text-sm">1, 2, 4, voltar, soco</div>
-									</li>
-									<li className="py-2 flex space-x-2 items-center">
-										<div className="font-bold basis-1/3">Fatality asdf</div>
-										<div className="text-sm">1, 2, 4, voltar, soco</div>
-									</li>
-								</ul>
-							</div>
+							{dataCharacter ? (
+								<CommandsList title="Brutality" dataMoves={dataCharacter.brutalities} />
+							) : (
+								<p>Carregando...</p>
+							)}
 						</div>
-						<div>
-							<div className="block mb-5">
-								<h2 className="text-lg font-bold mb-2">Golpes</h2>
-								<ul className="divide-y divide-gray-100">
-									<li className="py-2 flex space-x-2 items-center">
-										<div className="font-bold basis-1/3">Fatality asdf</div>
-										<div className="text-sm">1, 2, 4, voltar, soco</div>
-									</li>
-									<li className="py-2 flex space-x-2 items-center">
-										<div className="font-bold basis-1/3">Fatality</div>
-										<div className="text-sm">1, 2, 4, voltar, soco</div>
-									</li>
-									<li className="py-2 flex space-x-2 items-center">
-										<div className="font-bold basis-1/3">Fatality asf kajs f</div>
-										<div className="text-sm">1, 2, 4, voltar, soco</div>
-									</li>
-									<li className="py-2 flex space-x-2 items-center">
-										<div className="font-bold basis-1/3">Fatality asdf</div>
-										<div className="text-sm">1, 2, 4, voltar, soco</div>
-									</li>
-								</ul>
-							</div>
+						<div id="col2">
+							{dataCharacter ? (
+								<CommandsList title="Combos" dataMoves={dataCharacter.combos} />
+							) : (
+								<p>Carregando...</p>
+							)}
 
-							<div className="block mb-5">
-								<h2 className="text-lg font-bold mb-2">Combos</h2>
-								<ul className="divide-y divide-gray-100">
-									<li className="py-2 flex space-x-2 items-center">
-										<div className="font-bold basis-1/3">Fatality asdf</div>
-										<div className="text-sm">1, 2, 4, voltar, soco</div>
-									</li>
-									<li className="py-2 flex space-x-2 items-center">
-										<div className="font-bold basis-1/3">Fatality</div>
-										<div className="text-sm">1, 2, 4, voltar, soco</div>
-									</li>
-									<li className="py-2 flex space-x-2 items-center">
-										<div className="font-bold basis-1/3">Fatality asf kajs f</div>
-										<div className="text-sm">1, 2, 4, voltar, soco</div>
-									</li>
-									<li className="py-2 flex space-x-2 items-center">
-										<div className="font-bold basis-1/3">Fatality asdf</div>
-										<div className="text-sm">1, 2, 4, voltar, soco</div>
-									</li>
-								</ul>
-							</div>
+							{dataCharacter ? (
+								<CommandsList title="Moves" dataMoves={dataCharacter.moves} />
+							) : (
+								<p>Carregando...</p>
+							)}
 						</div>
 					</div>
 					<MainMenu />
