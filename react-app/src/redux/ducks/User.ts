@@ -2,7 +2,7 @@
 export interface IRdxUser {
 	isAuth: boolean;
 	prefs: {
-		buttonLayout: Number;
+		buttonLayout: Number | null;
 	};
 }
 
@@ -57,7 +57,7 @@ export const rdxChangeButtonLayout = (layoutId: Number) => {
 const INITIAL_STATE: IRdxUser = {
 	isAuth: false,
 	prefs: {
-		buttonLayout: 0,
+		buttonLayout: null,
 	},
 };
 const User = (state = INITIAL_STATE, action: Action) => {

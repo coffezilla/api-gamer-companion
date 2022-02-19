@@ -1,4 +1,7 @@
 /* eslint-disable */
+import { useSelector } from 'react-redux';
+
+import { IRdxUser } from '../../redux/ducks/User';
 
 interface IPros {
 	title: String;
@@ -6,23 +9,32 @@ interface IPros {
 }
 
 interface IPropsButton {
-	theme: 'PLAYSTATION' | 'XBOX' | 'SWITCH' | 'PC' | 'GENERIC';
+	layout: IRdxUser['prefs']['buttonLayout'];
 	id: Number;
 }
 
-const ButtonController = ({ theme, id }: IPropsButton) => {
-	let buttonPath = 'default';
+const ButtonController = ({ layout, id }: IPropsButton) => {
+	let buttonPath = '';
 	let buttonLayout = 'df';
 
 	if (id <= 4) {
 		buttonPath = `/images/dir_${id}.png`;
 	} else {
-		switch (theme) {
-			case 'PLAYSTATION':
+		switch (layout) {
+			case 0:
+				buttonLayout = 'gn';
+				break;
+			case 1:
 				buttonLayout = 'ps';
 				break;
-			case 'XBOX':
+			case 2:
 				buttonLayout = 'xb';
+				break;
+			case 3:
+				buttonLayout = 'sw';
+				break;
+			case 4:
+				buttonLayout = 'nb';
 				break;
 			default:
 				buttonLayout = 'df';
@@ -34,6 +46,8 @@ const ButtonController = ({ theme, id }: IPropsButton) => {
 };
 
 const CommandsList = ({ title, dataMoves }: IPros) => {
+	const rdxPrefsButtonLayout = useSelector((state: IRdxUser) => state.prefs.buttonLayout);
+	console.log('sapato', typeof rdxPrefsButtonLayout);
 	const buttonsCommand = [3, 2, [6, 8, 8]];
 
 	return (
@@ -56,7 +70,7 @@ const CommandsList = ({ title, dataMoves }: IPros) => {
 															<>
 																{subIndex !== 0 && <p className=" text-center text-lg">+</p>}
 																<ButtonController
-																	theme="PLAYSTATION"
+																	layout={rdxPrefsButtonLayout}
 																	id={subCommand}
 																	key={subIndex}
 																/>
@@ -64,7 +78,11 @@ const CommandsList = ({ title, dataMoves }: IPros) => {
 														);
 													})
 												) : (
-													<ButtonController theme="PLAYSTATION" id={command} key={index} />
+													<ButtonController
+														layout={rdxPrefsButtonLayout}
+														id={command}
+														key={index}
+													/>
 												)}
 											</>
 										);

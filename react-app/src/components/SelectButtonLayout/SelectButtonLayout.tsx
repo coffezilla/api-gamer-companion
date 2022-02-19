@@ -11,8 +11,8 @@ const SelectButtonLayout = () => {
 
 	const handleSelect = async (e: any) => {
 		setButtonLayout(e.target.value);
-		await setLocalStoragePrefs({ prefs: { buttonLayout: e.target.value } });
-		dispatch(rdxChangeButtonLayout(e.target.value));
+		await setLocalStoragePrefs({ prefs: { buttonLayout: parseInt(e.target.value) } });
+		dispatch(rdxChangeButtonLayout(parseInt(e.target.value)));
 	};
 
 	const getCurrentButtonLayoutData = async () => {
