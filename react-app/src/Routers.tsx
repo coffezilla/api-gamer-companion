@@ -18,6 +18,7 @@ import PageIndex from './pages/PageIndex';
 import PageAbout from './pages/PageAbout';
 import PageContact from './pages/PageContact';
 import PageNotFound from './pages/PageNotFound';
+import PageFighter from './pages/PageFighter';
 
 // page only logged
 import PageHub from './pages/PageHub';
@@ -48,6 +49,7 @@ function Routers() {
 					<Route exact path="/" component={PageIndex} />
 					<Route path="/about" component={PageAbout} />
 					<Route path="/contact" component={PageContact} />
+					<Route exact path="/fighter/:fid" component={PageFighter} />
 
 					<ProtectedRoute path="/hub" component={PageHub} />
 

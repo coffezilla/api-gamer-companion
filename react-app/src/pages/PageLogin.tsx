@@ -82,7 +82,7 @@ const PageLogin = () => {
 		<>
 			<div className=" bg-slate-200 h-screen w-full py-5">
 				<div className="bg-white border max-w-lg p-10 rounded-lg mx-auto">
-					<h1 className="text-xl font-bold text-center mb-5">LOGIN ADMINISTRADOR</h1>
+					<h1 className="text-xl font-bold text-center mb-2">LOGIN ADMINISTRADOR</h1>
 
 					{!isLogging ? (
 						<form onSubmit={handleSubmit}>
