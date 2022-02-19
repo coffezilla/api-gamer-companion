@@ -37,7 +37,26 @@ router.get('/:charId/fatalities/:fatSlug', async (req, res) => {
 
 // POST SKINS
 router.post('/:charId/fatalities', async (req, res) => {
-	if (req.query.auth == process.env.AUTH) {
+	// !!!
+	// THIS DATA SHOULD BE RETRIEVED FROM THE SERVER
+	const BACKEND_USER = {
+		email: process.env.USER_EMAIL,
+		authorization: `Bearer ${process.env.AUTH}`,
+	};
+	// !!!
+
+	const { authorization } = req.headers;
+	const response = {
+		status: 0,
+		message: '',
+	};
+
+	//
+	if (!authorization) {
+		return res.status(403).json({ error: 'No credentials sent!' });
+	}
+
+	if (BACKEND_USER.authorization === authorization) {
 		const { charId } = req.params;
 		const { name, commands } = req.body;
 
@@ -60,19 +79,44 @@ router.post('/:charId/fatalities', async (req, res) => {
 					}
 				);
 
-				res.json(characters);
+				res.json({
+					...response,
+					status: 1,
+					message: 'Done',
+				});
 			} catch (err) {
-				res.json(err);
+				res.json({
+					...response,
+					message: 'Error',
+				});
 			}
 		}
 	} else {
-		res.json('not authenticated');
+		res.json({
+			...response,
+			message: 'Not authenticated',
+		});
 	}
 });
 
 // DELETE SKIN
 router.delete('/:charId/fatalities/:fatSlug', async (req, res) => {
-	if (req.query.auth == process.env.AUTH) {
+	// !!!
+	// THIS DATA SHOULD BE RETRIEVED FROM THE SERVER
+	const BACKEND_USER = {
+		email: process.env.USER_EMAIL,
+		authorization: `Bearer ${process.env.AUTH}`,
+	};
+	// !!!
+
+	const { authorization } = req.headers;
+
+	//
+	if (!authorization) {
+		return res.status(403).json({ error: 'No credentials sent!' });
+	}
+
+	if (BACKEND_USER.authorization === authorization) {
 		const { charId, fatSlug } = req.params;
 		try {
 			const fatalities = await Characters.updateOne(
@@ -98,7 +142,22 @@ router.delete('/:charId/fatalities/:fatSlug', async (req, res) => {
 
 // PATCH SKIN
 router.patch('/:charId/fatalities/:fatSlug', async (req, res) => {
-	if (req.query.auth == process.env.AUTH) {
+	// !!!
+	// THIS DATA SHOULD BE RETRIEVED FROM THE SERVER
+	const BACKEND_USER = {
+		email: process.env.USER_EMAIL,
+		authorization: `Bearer ${process.env.AUTH}`,
+	};
+	// !!!
+
+	const { authorization } = req.headers;
+
+	//
+	if (!authorization) {
+		return res.status(403).json({ error: 'No credentials sent!' });
+	}
+
+	if (BACKEND_USER.authorization === authorization) {
 		const { charId, fatSlug } = req.params;
 		const { name, commands } = req.body;
 

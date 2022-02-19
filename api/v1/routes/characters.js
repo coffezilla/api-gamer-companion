@@ -26,7 +26,22 @@ router.get('/:charId', async (req, res) => {
 
 // PATCH
 router.patch('/:charId', async (req, res) => {
-	if (req.query.auth == process.env.AUTH) {
+	// !!!
+	// THIS DATA SHOULD BE RETRIEVED FROM THE SERVER
+	const BACKEND_USER = {
+		email: process.env.USER_EMAIL,
+		authorization: `Bearer ${process.env.AUTH}`,
+	};
+	// !!!
+
+	const { authorization } = req.headers;
+
+	//
+	if (!authorization) {
+		return res.status(403).json({ error: 'No credentials sent!' });
+	}
+
+	if (BACKEND_USER.authorization === authorization) {
 		const { charId } = req.params;
 		const { name, portrait } = req.body;
 
@@ -53,13 +68,28 @@ router.patch('/:charId', async (req, res) => {
 			}
 		}
 	} else {
-		res.json('not authenticated');
+		res.json('not authensticated');
 	}
 });
 
 // POST
 router.post('/', async (req, res) => {
-	if (req.query.auth == process.env.AUTH) {
+	// !!!
+	// THIS DATA SHOULD BE RETRIEVED FROM THE SERVER
+	const BACKEND_USER = {
+		email: process.env.USER_EMAIL,
+		authorization: `Bearer ${process.env.AUTH}`,
+	};
+	// !!!
+
+	const { authorization } = req.headers;
+
+	//
+	if (!authorization) {
+		return res.status(403).json({ error: 'No credentials sent!' });
+	}
+
+	if (BACKEND_USER.authorization === authorization) {
 		const { name, portrait } = req.body;
 		const slug = stringify(name);
 
@@ -80,13 +110,28 @@ router.post('/', async (req, res) => {
 			}
 		}
 	} else {
-		res.json('not authenticated');
+		res.json('not authenticatzed');
 	}
 });
 
 // DELETE
 router.delete('/:id', async (req, res) => {
-	if (req.query.auth == process.env.AUTH) {
+	// !!!
+	// THIS DATA SHOULD BE RETRIEVED FROM THE SERVER
+	const BACKEND_USER = {
+		email: process.env.USER_EMAIL,
+		authorization: `Bearer ${process.env.AUTH}`,
+	};
+	// !!!
+
+	const { authorization } = req.headers;
+
+	//
+	if (!authorization) {
+		return res.status(403).json({ error: 'No credentials sent!' });
+	}
+
+	if (BACKEND_USER.authorization === authorization) {
 		const { id } = req.params;
 		try {
 			const characters = await Characters.remove({ _id: id });

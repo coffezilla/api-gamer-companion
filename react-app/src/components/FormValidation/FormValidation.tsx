@@ -13,7 +13,7 @@ type inputTypes =
 
 interface IInput {
 	name: string;
-	value: string;
+	value: any;
 	error: string;
 	type: inputTypes;
 	maxLength?: number;
@@ -58,8 +58,10 @@ export const validateInput = (inputField: IInput, formFields: IForm['inputs']) =
 	let errorMessage = '';
 
 	let inputClean = value;
-	inputClean = inputClean.trim();
-	inputClean = inputClean.replace(/  +/g, ' ');
+	if (typeof inputClean === 'string') {
+		inputClean = inputClean.trim();
+		inputClean = inputClean.replace(/  +/g, ' ');
+	}
 
 	const isEmpty = inputClean.length === 0;
 

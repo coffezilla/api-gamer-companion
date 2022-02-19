@@ -60,7 +60,7 @@ const CommandsList = ({ title, dataMoves }: IPros) => {
 							<li className="py-2 flex space-x-2 items-center" key={fatality._id}>
 								<div className="font-bold basis-1/3">{fatality.name}</div>
 								<div className="text-sm items-center flex space-x-2">
-									{buttonsCommand.map((command: any, index: number) => {
+									{fatality.commands.combination.map((command: any, index: number) => {
 										return (
 											<>
 												{index !== 0 && <p className=" text-center text-lg">,</p>}

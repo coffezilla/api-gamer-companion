@@ -50,7 +50,7 @@ const SchemaCharacter = mongoose.Schema({
 				},
 				slug: { type: String, required: true },
 				commands: {
-					combination: [Number],
+					combination: [Number | [Number]],
 					requirement: String,
 				},
 			},
