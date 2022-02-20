@@ -20,8 +20,12 @@ router.get('/:charId/fatalities', async (req, res) => {
 // GET SKINS SPECIFY
 router.get('/:charId/fatalities/:fatSlug', async (req, res) => {
 	const { charId, fatSlug } = req.params;
+	const response = {
+		status: 0,
+		message: '',
+	};
 	try {
-		const fatalities = await Characters.find(
+		const fatality = await Characters.find(
 			{ _id: charId },
 			{
 				fatalities: {
@@ -29,9 +33,18 @@ router.get('/:charId/fatalities/:fatSlug', async (req, res) => {
 				},
 			}
 		);
-		res.json(fatalities);
+
+		res.json({
+			...response,
+			status: 1,
+			message: 'Done',
+			move: fatality[0].fatalities[0],
+		});
 	} catch (err) {
-		res.json(err);
+		res.json({
+			...response,
+			message: 'Error',
+		});
 	}
 });
 
@@ -110,6 +123,10 @@ router.delete('/:charId/fatalities/:fatSlug', async (req, res) => {
 	// !!!
 
 	const { authorization } = req.headers;
+	const response = {
+		status: 0,
+		message: '',
+	};
 
 	//
 	if (!authorization) {
@@ -131,9 +148,16 @@ router.delete('/:charId/fatalities/:fatSlug', async (req, res) => {
 					},
 				}
 			);
-			res.json(fatalities);
+			res.json({
+				...response,
+				status: 1,
+				message: 'Done',
+			});
 		} catch (err) {
-			res.json(err);
+			res.json({
+				...response,
+				message: 'Error',
+			});
 		}
 	} else {
 		res.json('not authenticated');
@@ -151,6 +175,10 @@ router.patch('/:charId/fatalities/:fatSlug', async (req, res) => {
 	// !!!
 
 	const { authorization } = req.headers;
+	const response = {
+		status: 0,
+		message: '',
+	};
 
 	//
 	if (!authorization) {
@@ -179,9 +207,16 @@ router.patch('/:charId/fatalities/:fatSlug', async (req, res) => {
 						},
 					}
 				);
-				res.json(fatalities);
+				res.json({
+					...response,
+					status: 1,
+					message: 'Done',
+				});
 			} catch (err) {
-				res.json(err);
+				res.json({
+					...response,
+					message: 'Error',
+				});
 			}
 		}
 	} else {

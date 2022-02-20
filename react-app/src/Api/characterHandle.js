@@ -54,6 +54,7 @@ import { END_POINT_BASE } from './Api';
 // 	return serverResponse;
 // };
 
+// ADD
 export const postFatality = async (charId, name, command) => {
 	const localStorageAuth = getHasLocalStorageAuth();
 	const hasLocalStorageAuth = localStorageAuth.status;
@@ -93,6 +94,121 @@ export const postFatality = async (charId, name, command) => {
 				console.log(error);
 			});
 	}
+	return serverResponse;
+};
+
+// EDIT
+export const editFatality = async (charId, slug, name, command) => {
+	const localStorageAuth = getHasLocalStorageAuth();
+	const hasLocalStorageAuth = localStorageAuth.status;
+	let serverResponse = {
+		data: {
+			status: 0,
+		},
+	};
+
+	if (hasLocalStorageAuth) {
+		await axios({
+			method: 'patch',
+			url: `${END_POINT_BASE}/characters/${charId}/fatalities/${slug}`,
+			data: {
+				name: name,
+				commands: {
+					combination: command,
+					requirement: 'close',
+				},
+			},
+			headers: { Authorization: `Bearer ${localStorageAuth.data.token}` },
+		})
+			.then((res) => {
+				console.log('editado', res.data);
+				if (res.data.status === 1) {
+					serverResponse = {
+						data: {
+							status: res.data.status,
+						},
+					};
+				} else {
+					// clearLocalStorageAuth();
+				}
+			})
+			.catch((error) => {
+				// clearLocalStorageAuth();
+				console.log(error);
+			});
+	}
+	return serverResponse;
+};
+
+// DELETE
+export const deleteFatality = async (charId, slug) => {
+	const localStorageAuth = getHasLocalStorageAuth();
+	const hasLocalStorageAuth = localStorageAuth.status;
+	let serverResponse = {
+		data: {
+			status: 0,
+		},
+	};
+
+	if (hasLocalStorageAuth) {
+		await axios({
+			method: 'delete',
+			url: `${END_POINT_BASE}/characters/${charId}/fatalities/${slug}`,
+			headers: { Authorization: `Bearer ${localStorageAuth.data.token}` },
+		})
+			.then((res) => {
+				console.log('deletado', res.data);
+				if (res.data.status === 1) {
+					serverResponse = {
+						data: {
+							status: res.data.status,
+						},
+					};
+				} else {
+					// clearLocalStorageAuth();
+				}
+			})
+			.catch((error) => {
+				// clearLocalStorageAuth();
+				console.log(error);
+			});
+	}
+	return serverResponse;
+};
+
+// GET
+export const getFatalityData = async (charId, slug) => {
+	// const localStorageAuth = getHasLocalStorageAuth();
+	// const hasLocalStorageAuth = localStorageAuth.status;
+	let serverResponse = {
+		data: {
+			status: 0,
+		},
+	};
+
+	// if (hasLocalStorageAuth) {
+	await axios({
+		method: 'get',
+		url: `${END_POINT_BASE}/characters/${charId}/fatalities/${slug}`,
+	})
+		.then((res) => {
+			console.log('fata', res.data);
+			if (res.data.status === 1) {
+				serverResponse = {
+					data: {
+						status: res.data.status,
+						move: res.data.move,
+					},
+				};
+			} else {
+				// clearLocalStorageAuth();
+			}
+		})
+		.catch((error) => {
+			// clearLocalStorageAuth();
+			console.log(error);
+		});
+	// }
 	return serverResponse;
 };
 

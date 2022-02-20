@@ -6,6 +6,7 @@ import { IRdxUser } from '../../redux/ducks/User';
 interface IPros {
 	title: String;
 	dataMoves: any;
+	modal?: any;
 }
 
 interface IPropsButton {
@@ -45,10 +46,12 @@ const ButtonController = ({ layout, id }: IPropsButton) => {
 	return <img src={buttonPath} className="w-5 object-cover bg-red-100 rounded-full" />;
 };
 
-const CommandsList = ({ title, dataMoves }: IPros) => {
+const CommandsList = ({ title, dataMoves, modal }: IPros) => {
 	const rdxPrefsButtonLayout = useSelector((state: IRdxUser) => state.prefs.buttonLayout);
-	console.log('sapato', typeof rdxPrefsButtonLayout);
+	// console.log('sapato', typeof rdxPrefsButtonLayout);
 	const buttonsCommand = [3, 2, [6, 8, 8]];
+
+	// console.log('lost', modal);
 
 	return (
 		<div className="block mb-5 rounded-lg p-5 bg-gray-100">
@@ -58,7 +61,14 @@ const CommandsList = ({ title, dataMoves }: IPros) => {
 					{dataMoves.map((fatality: any) => {
 						return (
 							<li className="py-2 flex space-x-2 items-center" key={fatality._id}>
-								<div className="font-bold basis-1/3">{fatality.name}</div>
+								<div className="font-bold basis-1/3">
+									<button
+										onClick={() => modal('MODAL_EDIT_MOVE', { slug: fatality.slug })}
+										className="text-left"
+									>
+										{fatality.name}
+									</button>
+								</div>
 								<div className="text-sm items-center flex space-x-2">
 									{fatality.commands.combination.map((command: any, index: number) => {
 										return (
