@@ -53,6 +53,7 @@ export const postMoveGroup = async (charId, move, name, command, annotation, req
 
 // EDIT
 export const editMoveGroup = async (charId, move, slug, name, command, annotation, requirement) => {
+	// console.log('editado', typeof command, command, [1, [1, 2]]);
 	const localStorageAuth = getHasLocalStorageAuth();
 	const hasLocalStorageAuth = localStorageAuth.status;
 	let serverResponse = {
@@ -148,6 +149,65 @@ export const getMoveGroupData = async (charId, move, slug) => {
 					data: {
 						status: res.data.status,
 						move: res.data.move,
+					},
+				};
+			} else {
+			}
+		})
+		.catch((error) => {
+			console.log(error);
+		});
+	return serverResponse;
+};
+
+// GET CHARACTERS
+export const getAllCharacters = async (game) => {
+	let serverResponse = {
+		data: {
+			status: 0,
+		},
+	};
+
+	await axios({
+		method: 'get',
+		url: `${END_POINT_BASE}/characters/${game && '?game=' + game}`,
+	})
+		.then((res) => {
+			if (res.data.status === 1) {
+				serverResponse = {
+					data: {
+						status: res.data.status,
+						characters: res.data.characters,
+					},
+				};
+			} else {
+			}
+		})
+		.catch((error) => {
+			console.log(error);
+		});
+	return serverResponse;
+};
+
+// GET CHARACTERS ID
+export const getDataCharacters = async (fid) => {
+	let serverResponse = {
+		data: {
+			status: 0,
+		},
+	};
+
+	await axios({
+		method: 'get',
+		url: `${END_POINT_BASE}/characters/${fid}`,
+	})
+		.then((res) => {
+			console.log('galao', res);
+			if (res.data.status === 1) {
+				serverResponse = {
+					data: {
+						status: res.data.status,
+						character: res.data.character,
 					},
 				};
 			} else {

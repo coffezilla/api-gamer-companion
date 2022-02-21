@@ -5,11 +5,30 @@ const stringify = require('../helper/utils');
 
 // GET
 router.get('/', async (req, res) => {
+	const { game } = req.query;
+
+	const response = {
+		status: 0,
+		message: '',
+	};
+
 	try {
-		const characters = await Characters.find({}, { _id: 1, name: 1 });
-		res.json(characters);
+		const characters = await Characters.find(game ? { game: game } : {}, {
+			_id: 1,
+			name: 1,
+			game: 1,
+		});
+		res.json({
+			...response,
+			status: 1,
+			message: 'Done',
+			characters: characters,
+		});
 	} catch (err) {
-		res.json(err);
+		res.json({
+			...response,
+			message: 'Error',
+		});
 	}
 });
 
@@ -17,10 +36,24 @@ router.get('/', async (req, res) => {
 router.get('/:charId', async (req, res) => {
 	const { charId } = req.params;
 	const characters = await Characters.find({ _id: charId });
+
+	const response = {
+		status: 0,
+		message: '',
+	};
+
 	try {
-		res.json(characters);
+		res.json({
+			...response,
+			status: 1,
+			message: 'Done',
+			character: characters[0],
+		});
 	} catch (err) {
-		res.json(err);
+		res.json({
+			...response,
+			message: 'Error',
+		});
 	}
 });
 
@@ -43,7 +76,7 @@ router.patch('/:charId', async (req, res) => {
 
 	if (BACKEND_USER.authorization === authorization) {
 		const { charId } = req.params;
-		const { name, portrait } = req.body;
+		const { name, portrait, game } = req.body;
 
 		if (!name) {
 			res.json('Missing data');
@@ -57,6 +90,7 @@ router.patch('/:charId', async (req, res) => {
 					{
 						$set: {
 							name: name,
+							game: game,
 							slug: slug,
 							portrait: portrait,
 						},
@@ -90,7 +124,7 @@ router.post('/', async (req, res) => {
 	}
 
 	if (BACKEND_USER.authorization === authorization) {
-		const { name, portrait } = req.body;
+		const { name, portrait, game } = req.body;
 		const slug = stringify(name);
 
 		if (!name) {
@@ -98,6 +132,7 @@ router.post('/', async (req, res) => {
 		} else {
 			const characters = new Characters({
 				name: name,
+				game: game,
 				slug: slug,
 				portrait: portrait,
 			});

@@ -1,12 +1,15 @@
 /* eslint-disable */
 
 import { useState, useEffect } from 'react';
-import MainMenu from '../components/MainMenu';
-import ButtonController from '../components/ButtonController';
+import { useSelector } from 'react-redux';
 
-const PageContact = () => {
+import { IRdxUser } from '../../redux/ducks/User';
+import ButtonController from '../ButtonController';
+
+const CombinationInjector = ({ value, onChange, setForm, form }: any) => {
 	const [holdButton, setHoldButton] = useState<Boolean>(false);
 	const [combination, setCombination] = useState<any[]>([]);
+	const rdxPrefsButtonLayout = useSelector((state: IRdxUser) => state.prefs.buttonLayout);
 
 	//
 	const handleHoldButton = () => {
@@ -17,6 +20,7 @@ const PageContact = () => {
 	const handleDeleteButton = () => {
 		combination.pop();
 		setCombination([...combination]);
+		onChange({ target: { name: 'combination', type: 'text', value: combination } }, form, setForm);
 	};
 
 	//
@@ -24,15 +28,15 @@ const PageContact = () => {
 		let currentCombination = combination;
 
 		if (holdButton) {
-			const lastButtonHold = currentCombination.slice(-1)[0];
+			const lastButtonHold = currentCombination.length === 0 ? [] : currentCombination.slice(-1)[0];
 			let currentButtonHold = [];
 
-			// // check if is array
+			// check if is array
 			if (lastButtonHold.length >= 1) {
 				currentCombination.pop();
-				currentButtonHold = [...lastButtonHold, 'y'];
+				currentButtonHold = [...lastButtonHold, button];
 			} else {
-				currentButtonHold = ['x'];
+				currentButtonHold = [button];
 			}
 
 			currentCombination = [...currentCombination, currentButtonHold];
@@ -41,7 +45,17 @@ const PageContact = () => {
 		}
 
 		setCombination(currentCombination);
+		onChange(
+			{ target: { name: 'combination', type: 'text', value: currentCombination } },
+			form,
+			setForm,
+		);
 	};
+
+	useEffect(() => {
+		console.log('return');
+		setCombination(value);
+	}, [value]);
 
 	return (
 		<>
@@ -52,28 +66,28 @@ const PageContact = () => {
 					className="p-1 bg-gray-400 hover:bg-gray-500"
 					onClick={() => handleAddButton(1)}
 				>
-					<ButtonController layout={1} id={1} />
+					<ButtonController layout={rdxPrefsButtonLayout} id={1} />
 				</button>
 				<button
 					type="button"
 					className="p-1 bg-gray-400 hover:bg-gray-500"
 					onClick={() => handleAddButton(2)}
 				>
-					<ButtonController layout={1} id={2} />
+					<ButtonController layout={rdxPrefsButtonLayout} id={2} />
 				</button>
 				<button
 					type="button"
 					className="p-1 bg-gray-400 hover:bg-gray-500"
 					onClick={() => handleAddButton(3)}
 				>
-					<ButtonController layout={1} id={3} />
+					<ButtonController layout={rdxPrefsButtonLayout} id={3} />
 				</button>
 				<button
 					type="button"
 					className="p-1 bg-gray-400 hover:bg-gray-500"
 					onClick={() => handleAddButton(4)}
 				>
-					<ButtonController layout={1} id={4} />
+					<ButtonController layout={rdxPrefsButtonLayout} id={4} />
 				</button>
 
 				<button type="button" className="p-1 bg-gray-400 hover:bg-gray-500">
@@ -112,9 +126,8 @@ const PageContact = () => {
 				<pre>{JSON.stringify(combination, null, 1)}</pre>
 				<pre>hold: {JSON.stringify(holdButton, null, 1)}</pre>
 			</div>
-			<MainMenu />
 		</>
 	);
 };
 
-export default PageContact;
+export default CombinationInjector;

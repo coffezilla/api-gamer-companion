@@ -11,9 +11,11 @@ import {
 	getMoveGroupData,
 	editMoveGroup,
 	deleteMoveGroup,
+	getDataCharacters,
 } from '../Api/characterHandle';
 
 import { END_POINT_BASE } from '../Api';
+import CombinationInjector from '../components/CombinationInjector/CombinationInjector';
 
 type modalIndex = 'MODAL_ADD_MOVE' | 'MODAL_EDIT_MOVE';
 
@@ -185,6 +187,7 @@ const PageFighter = () => {
 	};
 
 	const handleChange = (e: any, form: any, setForm: any) => {
+		console.log('nude', e.target.name, form);
 		const isCheckBox = e.target.type === 'checkbox';
 		let currentValue = e.target.value;
 
@@ -209,7 +212,6 @@ const PageFighter = () => {
 	};
 
 	const handleSubmitAdd = (e: any) => {
-		console.log('quinto');
 		e.preventDefault();
 
 		const isValid = validationForm(formFields, setFormFields);
@@ -289,15 +291,23 @@ const PageFighter = () => {
 	};
 
 	const getCharacter = async () => {
-		setDataCharacter(null);
-		await axios({
-			method: 'get',
-			url: `${END_POINT_BASE}/characters/${fid}`,
-		}).then((res) => {
-			setDataCharacter(res.data[0]);
-
-			console.log('personagem', res.data[0]);
+		getDataCharacters(fid).then((res: any) => {
+			if (res.data.status === 1) {
+				setDataCharacter(res.data.character);
+				console.log('gabigordo', res.data.character);
+			} else {
+				console.log('error');
+			}
 		});
+		setDataCharacter(null);
+		// await axios({
+		// 	method: 'get',
+		// 	url: `${END_POINT_BASE}/characters/${fid}`,
+		// }).then((res) => {
+		// 	setDataCharacter(res.data[0]);
+
+		// 	console.log('personagem', res.data[0]);
+		// });
 	};
 
 	useEffect(() => {
@@ -364,6 +374,13 @@ const PageFighter = () => {
 							<span className="text-sm text-red-500 italic">{formFields[5].error}</span>
 						</label>
 
+						<CombinationInjector
+							value={formFields[3].value}
+							onChange={handleChange}
+							form={formFields}
+							setForm={setFormFields}
+						/>
+
 						{/* <label htmlFor={formFields[2].name} className="block mb-3">
 							<span className="block mb-2">Tipo de movimento:</span>
 							<select
@@ -390,7 +407,7 @@ const PageFighter = () => {
 					<p>logging...</p>
 				)}
 
-				{/* <pre>{JSON.stringify(formFields, null, 1)}</pre> */}
+				<pre>{JSON.stringify(formFields, null, 1)}</pre>
 				<button type="button" onClick={() => closeModal('MODAL_ADD_MOVE')}>
 					CLOSE BUTTON
 				</button>
@@ -453,6 +470,27 @@ const PageFighter = () => {
 							<span className="text-sm text-red-500 italic">{formFieldsEdit[5].error}</span>
 						</label>
 
+						<label htmlFor={formFieldsEdit[3].name} className="block mb-3">
+							<span className="block mb-2">combo:</span>
+							<input
+								type={formFieldsEdit[3].type}
+								name={formFieldsEdit[3].name}
+								id={formFieldsEdit[3].name}
+								maxLength={formFieldsEdit[3].maxLength}
+								value={formFieldsEdit[3].value}
+								onChange={(e: any) => handleChange(e, formFieldsEdit, setFormFieldsEdit)}
+								className="border block px-3 py-2 w-full rounded-md"
+							/>
+							<span className="text-sm text-red-500 italic">{formFieldsEdit[3].error}</span>
+						</label>
+
+						<CombinationInjector
+							value={formFieldsEdit[3].value}
+							onChange={handleChange}
+							form={formFieldsEdit}
+							setForm={setFormFieldsEdit}
+						/>
+
 						{/* <label htmlFor={formFieldsEdit[2].name} className="block mb-3">
 							<span className="block mb-2">Tipo de movimento:</span>
 							<select
@@ -479,7 +517,7 @@ const PageFighter = () => {
 					<p>logging...</p>
 				)}
 
-				{/* <pre>{JSON.stringify(formFieldsEdit, null, 1)}</pre> */}
+				<pre>{JSON.stringify(formFieldsEdit, null, 1)}</pre>
 				<button type="button" onClick={() => closeModal('MODAL_EDIT_MOVE')}>
 					CLOSE BUTTON
 				</button>

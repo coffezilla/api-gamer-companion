@@ -1,30 +1,37 @@
 /* eslint-disable */
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
-import MainMenu from '../components/MainMenu';
 import axios from 'axios';
+import { IRdxUser } from '../redux/ducks/User';
+import MainMenu from '../components/MainMenu';
+
+import { getAllCharacters } from '../Api/characterHandle';
 
 import { END_POINT_BASE } from '../Api';
 
 const PageIndex = () => {
 	const history = useHistory();
 	const [dataCharacters, setDataCharacters] = useState<any>(null);
+	const rdxPrefsGame = useSelector((state: IRdxUser) => state.prefs.game);
 
 	const getCharacteres = async () => {
 		setDataCharacters(null);
-		await axios({
-			method: 'get',
-			url: `${END_POINT_BASE}/characters`,
-		}).then((res) => {
-			setDataCharacters(res.data);
 
-			console.log('fair enought', res.data);
+		getAllCharacters(rdxPrefsGame).then((res: any) => {
+			console.log('modaro');
+			if (res.data.status === 1) {
+				setDataCharacters(res.data.characters);
+				console.log('error', res.data);
+			} else {
+				console.log('error');
+			}
 		});
 	};
 
 	useEffect(() => {
 		getCharacteres();
-	}, []);
+	}, [rdxPrefsGame]);
 
 	return (
 		<>
