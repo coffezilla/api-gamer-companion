@@ -71,7 +71,7 @@ router.post('/:charId/brutalities', async (req, res) => {
 
 	if (BACKEND_USER.authorization === authorization) {
 		const { charId } = req.params;
-		const { name, commands } = req.body;
+		const { name, commands, annotation } = req.body;
 
 		if (!name || !commands) {
 			res.json({
@@ -90,6 +90,7 @@ router.post('/:charId/brutalities', async (req, res) => {
 								name: name,
 								slug: slugId,
 								commands: commands,
+								annotation: annotation,
 							},
 						},
 					}
@@ -193,7 +194,7 @@ router.patch('/:charId/brutalities/:slug', async (req, res) => {
 
 	if (BACKEND_USER.authorization === authorization) {
 		const { charId, slug } = req.params;
-		const { name, commands } = req.body;
+		const { name, commands, annotation } = req.body;
 
 		if (!name || !commands) {
 			res.json({
@@ -213,6 +214,7 @@ router.patch('/:charId/brutalities/:slug', async (req, res) => {
 							'brutalities.$.name': name,
 							'brutalities.$.slug': slugId,
 							'brutalities.$.commands': commands,
+							'brutalities.$.annotation': annotation,
 						},
 					}
 				);

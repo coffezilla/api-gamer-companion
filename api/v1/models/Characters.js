@@ -32,6 +32,10 @@ const SchemaCharacter = mongoose.Schema({
 					type: String,
 					required: true,
 				},
+				annotation: {
+					type: String,
+					default: '',
+				},
 				slug: { type: String, required: true },
 				commands: {
 					combination: [Number],
@@ -47,6 +51,10 @@ const SchemaCharacter = mongoose.Schema({
 				name: {
 					type: String,
 					required: true,
+				},
+				annotation: {
+					type: String,
+					default: '',
 				},
 				slug: { type: String, required: true },
 				commands: {
@@ -64,6 +72,10 @@ const SchemaCharacter = mongoose.Schema({
 					type: String,
 					required: true,
 				},
+				annotation: {
+					type: String,
+					default: '',
+				},
 				slug: { type: String, required: true },
 				commands: {
 					combination: [Number],
@@ -79,6 +91,10 @@ const SchemaCharacter = mongoose.Schema({
 				name: {
 					type: String,
 					required: true,
+				},
+				annotation: {
+					type: String,
+					default: '',
 				},
 				slug: { type: String, required: true },
 				commands: {

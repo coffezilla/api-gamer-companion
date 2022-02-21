@@ -68,7 +68,7 @@ router.post('/:charId/moves', async (req, res) => {
 
 	if (BACKEND_USER.authorization === authorization) {
 		const { charId } = req.params;
-		const { name, commands } = req.body;
+		const { name, commands, annotation } = req.body;
 
 		if (!name || !commands) {
 			res.json({
@@ -87,6 +87,7 @@ router.post('/:charId/moves', async (req, res) => {
 								name: name,
 								slug: slugId,
 								commands: commands,
+								annotation: annotation,
 							},
 						},
 					}
@@ -190,7 +191,7 @@ router.patch('/:charId/moves/:slug', async (req, res) => {
 
 	if (BACKEND_USER.authorization === authorization) {
 		const { charId, slug } = req.params;
-		const { name, commands } = req.body;
+		const { name, commands, annotation } = req.body;
 
 		if (!name || !commands) {
 			res.json({
@@ -210,6 +211,7 @@ router.patch('/:charId/moves/:slug', async (req, res) => {
 							'moves.$.name': name,
 							'moves.$.slug': slugId,
 							'moves.$.commands': commands,
+							'moves.$.annotation': annotation,
 						},
 					}
 				);

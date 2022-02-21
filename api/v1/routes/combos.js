@@ -68,7 +68,7 @@ router.post('/:charId/combos', async (req, res) => {
 
 	if (BACKEND_USER.authorization === authorization) {
 		const { charId } = req.params;
-		const { name, commands } = req.body;
+		const { name, commands, annotation } = req.body;
 
 		if (!name || !commands) {
 			res.json({
@@ -87,6 +87,7 @@ router.post('/:charId/combos', async (req, res) => {
 								name: name,
 								slug: slugId,
 								commands: commands,
+								annotation: annotation,
 							},
 						},
 					}
@@ -190,7 +191,7 @@ router.patch('/:charId/combos/:slug', async (req, res) => {
 
 	if (BACKEND_USER.authorization === authorization) {
 		const { charId, slug } = req.params;
-		const { name, commands } = req.body;
+		const { name, commands, annotation } = req.body;
 
 		if (!name || !commands) {
 			res.json({
@@ -210,6 +211,7 @@ router.patch('/:charId/combos/:slug', async (req, res) => {
 							'combos.$.name': name,
 							'combos.$.slug': slugId,
 							'combos.$.commands': commands,
+							'combos.$.annotation': annotation,
 						},
 					}
 				);

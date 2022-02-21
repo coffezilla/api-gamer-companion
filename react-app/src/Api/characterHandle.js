@@ -10,7 +10,7 @@ import {
 import { END_POINT_BASE } from './Api';
 
 // ADD
-export const postMoveGroup = async (charId, move, name, command) => {
+export const postMoveGroup = async (charId, move, name, command, annotation, requirement) => {
 	const localStorageAuth = getHasLocalStorageAuth();
 	const hasLocalStorageAuth = localStorageAuth.status;
 	let serverResponse = {
@@ -27,8 +27,9 @@ export const postMoveGroup = async (charId, move, name, command) => {
 				name: name,
 				commands: {
 					combination: command,
-					requirement: 'close',
+					requirement: requirement,
 				},
+				annotation: annotation,
 			},
 			headers: { Authorization: `Bearer ${localStorageAuth.data.token}` },
 		})
@@ -51,7 +52,7 @@ export const postMoveGroup = async (charId, move, name, command) => {
 };
 
 // EDIT
-export const editMoveGroup = async (charId, move, slug, name, command) => {
+export const editMoveGroup = async (charId, move, slug, name, command, annotation, requirement) => {
 	const localStorageAuth = getHasLocalStorageAuth();
 	const hasLocalStorageAuth = localStorageAuth.status;
 	let serverResponse = {
@@ -68,8 +69,9 @@ export const editMoveGroup = async (charId, move, slug, name, command) => {
 				name: name,
 				commands: {
 					combination: command,
-					requirement: 'close',
+					requirement: requirement,
 				},
+				annotation: annotation,
 			},
 			headers: { Authorization: `Bearer ${localStorageAuth.data.token}` },
 		})

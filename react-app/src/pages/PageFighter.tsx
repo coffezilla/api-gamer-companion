@@ -25,7 +25,7 @@ const PageFighter = () => {
 	const [formFieldsEdit, setFormFieldsEdit] = useState<IForm['inputs']>([
 		{
 			name: 'name',
-			value: 'Eidcao',
+			value: '',
 			error: '',
 			type: 'text',
 			isRequired: true,
@@ -38,18 +38,24 @@ const PageFighter = () => {
 		},
 		{
 			name: 'group',
-			value: 'brutality',
+			value: 'fatalities',
 			error: '',
 			type: 'select',
 		},
 		{
 			name: 'combination',
-			value: [7, 7, 7, 7],
+			value: [],
 			error: '',
 			type: 'text',
 		},
 		{
 			name: 'slug',
+			value: '',
+			error: '',
+			type: 'text',
+		},
+		{
+			name: 'annotation',
 			value: '',
 			error: '',
 			type: 'text',
@@ -73,18 +79,24 @@ const PageFighter = () => {
 		},
 		{
 			name: 'group',
-			value: 'fatality',
+			value: 'fatalities',
 			error: '',
 			type: 'select',
 		},
 		{
 			name: 'combination',
-			value: [7, 7, 7, 7],
+			value: [],
 			error: '',
 			type: 'text',
 		},
 		{
 			name: 'group',
+			value: '',
+			error: '',
+			type: 'text',
+		},
+		{
+			name: 'annotation',
 			value: '',
 			error: '',
 			type: 'text',
@@ -113,6 +125,7 @@ const PageFighter = () => {
 				{ ...formFieldsEdit[2], value: '' },
 				{ ...formFieldsEdit[3], value: [] },
 				{ ...formFieldsEdit[4], value: '' },
+				{ ...formFieldsEdit[5], value: '' },
 			]);
 			// console.log('adicionar novos', modalData);
 			if (modalData) {
@@ -138,10 +151,11 @@ const PageFighter = () => {
 				console.log('man', res.data.move);
 				setFormFieldsEdit([
 					{ ...formFieldsEdit[0], value: res.data.move.name },
-					{ ...formFieldsEdit[1], value: '' },
+					{ ...formFieldsEdit[1], value: res.data.move.commands.requirement },
 					{ ...formFieldsEdit[2], value: group },
-					{ ...formFieldsEdit[3], value: [] },
+					{ ...formFieldsEdit[3], value: res.data.move.commands.combination },
 					{ ...formFieldsEdit[4], value: res.data.move.slug },
+					{ ...formFieldsEdit[5], value: res.data.move.annotation },
 				]);
 			}
 		});
@@ -156,6 +170,7 @@ const PageFighter = () => {
 			{ ...formFields[2] },
 			{ ...formFields[3] },
 			{ ...formFields[4], value: groupMove },
+			{ ...formFields[5] },
 		]);
 		openModal('MODAL_ADD_MOVE');
 		console.log('sao paulo', groupMove);
@@ -194,6 +209,7 @@ const PageFighter = () => {
 	};
 
 	const handleSubmitAdd = (e: any) => {
+		console.log('quinto');
 		e.preventDefault();
 
 		const isValid = validationForm(formFields, setFormFields);
@@ -201,26 +217,32 @@ const PageFighter = () => {
 		if (isValid) {
 			setIsLogging(true);
 			// use async function for server validation
-			postMoveGroup(fid, formFields[4].value, formFields[0].value, formFields[3].value).then(
-				(res) => {
-					console.log('aksdjfkasjfkad', res.data);
-					if (res.data.status === 1) {
-						getCharacter();
-						setFormFields([
-							{ ...formFields[0], value: '' },
-							{ ...formFields[1], value: '' },
-							{ ...formFields[2], value: '' },
-							{ ...formFields[3], value: [] },
-							{ ...formFields[4], value: '' },
-						]);
-						closeModal('MODAL_ADD_MOVE');
-					} else {
-						alert('erro');
-					}
+			postMoveGroup(
+				fid,
+				formFields[4].value,
+				formFields[0].value,
+				formFields[3].value,
+				formFields[5].value,
+				formFields[1].value,
+			).then((res) => {
+				console.log('aksdjfkasjfkad', res.data);
+				if (res.data.status === 1) {
+					getCharacter();
+					setFormFields([
+						{ ...formFields[0], value: '' },
+						{ ...formFields[1] },
+						{ ...formFields[2], value: '' },
+						{ ...formFields[3], value: [] },
+						{ ...formFields[4], value: '' },
+						{ ...formFields[5], value: '' },
+					]);
+					closeModal('MODAL_ADD_MOVE');
+				} else {
+					alert('erro');
+				}
 
-					setIsLogging(false);
-				},
-			);
+				setIsLogging(false);
+			});
 		}
 	};
 
@@ -235,7 +257,9 @@ const PageFighter = () => {
 				formFieldsEdit[2].value,
 				formFieldsEdit[4].value,
 				formFieldsEdit[0].value,
-				[2, 3, 4],
+				formFieldsEdit[3].value,
+				formFieldsEdit[5].value,
+				formFieldsEdit[1].value,
 			).then((res) => {
 				if (res.data.status === 1) {
 					getCharacter();
@@ -278,7 +302,7 @@ const PageFighter = () => {
 
 	useEffect(() => {
 		getCharacter();
-		openModal('MODAL_ADD_MOVE');
+		// openModal('MODAL_ADD_MOVE');
 	}, []);
 
 	return (
@@ -289,7 +313,7 @@ const PageFighter = () => {
 				modal="MODAL_ADD_MOVE"
 				className="rounded-lg p-5"
 			>
-				<h1 className="text-xl font-bold text-center mb-2">CADASTRAR FATALITY</h1>
+				<h1 className="text-xl font-bold text-center mb-2">CADASTRAR COMANDO</h1>
 
 				{!isLogging ? (
 					<form onSubmit={handleSubmitAdd}>
@@ -318,11 +342,29 @@ const PageFighter = () => {
 							>
 								<option value="Perto">1 - Perto</option>
 								<option value="Longe">2 - Longe</option>
+								<option value="Meia tela">3 - Meia tela</option>
+								<option value="No canto">4 - No canto</option>
+								<option value="No alto">5 - No alto</option>
+								<option value="Agachado">6 - Agachado</option>
 							</select>
 							<span className="text-sm text-red-500 italic">{formFields[1].error}</span>
 						</label>
 
-						<label htmlFor={formFields[2].name} className="block mb-3">
+						<label htmlFor={formFields[5].name} className="block mb-3">
+							<span className="block mb-2">Anotação:</span>
+							<input
+								type={formFields[5].type}
+								name={formFields[5].name}
+								id={formFields[5].name}
+								maxLength={formFields[5].maxLength}
+								value={formFields[5].value}
+								onChange={(e: any) => handleChange(e, formFields, setFormFields)}
+								className="border block px-3 py-2 w-full rounded-md"
+							/>
+							<span className="text-sm text-red-500 italic">{formFields[5].error}</span>
+						</label>
+
+						{/* <label htmlFor={formFields[2].name} className="block mb-3">
 							<span className="block mb-2">Tipo de movimento:</span>
 							<select
 								value={formFields[2].value}
@@ -335,7 +377,7 @@ const PageFighter = () => {
 								<option value="brutality">2 - Brutality</option>
 							</select>
 							<span className="text-sm text-red-500 italic">{formFields[2].error}</span>
-						</label>
+						</label> */}
 
 						<button
 							type="submit"
@@ -389,11 +431,29 @@ const PageFighter = () => {
 							>
 								<option value="Perto">1 - Perto</option>
 								<option value="Longe">2 - Longe</option>
+								<option value="Meia tela">3 - Meia tela</option>
+								<option value="No canto">4 - No canto</option>
+								<option value="No alto">5 - No alto</option>
+								<option value="Agachado">6 - Agachado</option>
 							</select>
 							<span className="text-sm text-red-500 italic">{formFieldsEdit[1].error}</span>
 						</label>
 
-						<label htmlFor={formFieldsEdit[2].name} className="block mb-3">
+						<label htmlFor={formFieldsEdit[5].name} className="block mb-3">
+							<span className="block mb-2">Anotação:</span>
+							<input
+								type={formFieldsEdit[5].type}
+								name={formFieldsEdit[5].name}
+								id={formFieldsEdit[5].name}
+								maxLength={formFieldsEdit[5].maxLength}
+								value={formFieldsEdit[5].value}
+								onChange={(e: any) => handleChange(e, formFieldsEdit, setFormFieldsEdit)}
+								className="border block px-3 py-2 w-full rounded-md"
+							/>
+							<span className="text-sm text-red-500 italic">{formFieldsEdit[5].error}</span>
+						</label>
+
+						{/* <label htmlFor={formFieldsEdit[2].name} className="block mb-3">
 							<span className="block mb-2">Tipo de movimento:</span>
 							<select
 								value={formFieldsEdit[2].value}
@@ -406,7 +466,7 @@ const PageFighter = () => {
 								<option value="brutality">2 - Brutality</option>
 							</select>
 							<span className="text-sm text-red-500 italic">{formFieldsEdit[2].error}</span>
-						</label>
+						</label> */}
 
 						<button
 							type="submit"
