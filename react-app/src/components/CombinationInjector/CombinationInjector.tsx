@@ -6,6 +6,18 @@ import { useSelector } from 'react-redux';
 import { IRdxUser } from '../../redux/ducks/User';
 import ButtonController from '../ButtonController';
 
+const ButtonPressing = ({ buttonIndex, buttonLayout, handleClick }: any) => {
+	return (
+		<button
+			type="button"
+			className="p-1 bg-gray-400 hover:bg-gray-500"
+			onClick={() => handleClick(buttonIndex)}
+		>
+			<ButtonController layout={buttonLayout} id={buttonIndex} />
+		</button>
+	);
+};
+
 const CombinationInjector = ({ value, onChange, setForm, form }: any) => {
 	const [holdButton, setHoldButton] = useState<Boolean>(false);
 	const [combination, setCombination] = useState<any[]>([]);
@@ -61,53 +73,76 @@ const CombinationInjector = ({ value, onChange, setForm, form }: any) => {
 		<>
 			<h1>Contact</h1>
 			<div className="bg-red-">
-				<button
-					type="button"
-					className="p-1 bg-gray-400 hover:bg-gray-500"
-					onClick={() => handleAddButton(1)}
-				>
-					<ButtonController layout={rdxPrefsButtonLayout} id={1} />
-				</button>
-				<button
-					type="button"
-					className="p-1 bg-gray-400 hover:bg-gray-500"
-					onClick={() => handleAddButton(2)}
-				>
-					<ButtonController layout={rdxPrefsButtonLayout} id={2} />
-				</button>
-				<button
-					type="button"
-					className="p-1 bg-gray-400 hover:bg-gray-500"
-					onClick={() => handleAddButton(3)}
-				>
-					<ButtonController layout={rdxPrefsButtonLayout} id={3} />
-				</button>
-				<button
-					type="button"
-					className="p-1 bg-gray-400 hover:bg-gray-500"
-					onClick={() => handleAddButton(4)}
-				>
-					<ButtonController layout={rdxPrefsButtonLayout} id={4} />
-				</button>
-
-				<button type="button" className="p-1 bg-gray-400 hover:bg-gray-500">
-					1
-				</button>
-				<button type="button" className="p-1 bg-gray-400 hover:bg-gray-500">
-					2
-				</button>
-				<button type="button" className="p-1 bg-gray-400 hover:bg-gray-500">
-					3
-				</button>
-				<button type="button" className="p-1 bg-gray-400 hover:bg-gray-500">
-					4
-				</button>
-				<button type="button" className="p-1 bg-gray-400 hover:bg-gray-500">
-					5
-				</button>
-				<button type="button" className="p-1 bg-gray-400 hover:bg-gray-500">
-					6
-				</button>
+				<ButtonPressing
+					buttonIndex={1}
+					buttonLayout={rdxPrefsButtonLayout}
+					handleClick={handleAddButton}
+				/>
+				<ButtonPressing
+					buttonIndex={2}
+					buttonLayout={rdxPrefsButtonLayout}
+					handleClick={handleAddButton}
+				/>
+				<ButtonPressing
+					buttonIndex={3}
+					buttonLayout={rdxPrefsButtonLayout}
+					handleClick={handleAddButton}
+				/>
+				<ButtonPressing
+					buttonIndex={4}
+					buttonLayout={rdxPrefsButtonLayout}
+					handleClick={handleAddButton}
+				/>
+				<ButtonPressing
+					buttonIndex={5}
+					buttonLayout={rdxPrefsButtonLayout}
+					handleClick={handleAddButton}
+				/>
+				<ButtonPressing
+					buttonIndex={6}
+					buttonLayout={rdxPrefsButtonLayout}
+					handleClick={handleAddButton}
+				/>
+				<ButtonPressing
+					buttonIndex={7}
+					buttonLayout={rdxPrefsButtonLayout}
+					handleClick={handleAddButton}
+				/>
+				<ButtonPressing
+					buttonIndex={8}
+					buttonLayout={rdxPrefsButtonLayout}
+					handleClick={handleAddButton}
+				/>
+				<ButtonPressing
+					buttonIndex={9}
+					buttonLayout={rdxPrefsButtonLayout}
+					handleClick={handleAddButton}
+				/>
+				<ButtonPressing
+					buttonIndex={10}
+					buttonLayout={rdxPrefsButtonLayout}
+					handleClick={handleAddButton}
+				/>
+				<ButtonPressing
+					buttonIndex={11}
+					buttonLayout={rdxPrefsButtonLayout}
+					handleClick={handleAddButton}
+				/>
+				<ButtonPressing
+					buttonIndex={12}
+					buttonLayout={rdxPrefsButtonLayout}
+					handleClick={handleAddButton}
+				/>
+				<ButtonPressing
+					buttonIndex={13}
+					buttonLayout={rdxPrefsButtonLayout}
+					handleClick={handleAddButton}
+				/>
+				<ButtonPressing
+					buttonIndex={14}
+					buttonLayout={rdxPrefsButtonLayout}
+					handleClick={handleAddButton}
+				/>
 
 				<button
 					type="button"

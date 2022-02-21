@@ -49,6 +49,26 @@ const SchemaCharacter = mongoose.Schema({
 		],
 		default: [],
 	},
+	specials: {
+		type: [
+			{
+				name: {
+					type: String,
+					required: true,
+				},
+				annotation: {
+					type: String,
+					default: '',
+				},
+				slug: { type: String, required: true },
+				commands: {
+					combination: [Number | [Number]],
+					requirement: String,
+				},
+			},
+		],
+		default: [],
+	},
 	fatalities: {
 		type: [
 			{

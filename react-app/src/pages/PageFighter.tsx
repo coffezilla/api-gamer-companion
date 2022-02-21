@@ -551,12 +551,26 @@ const PageFighter = () => {
 							<button type="button" onClick={() => handleAddGroupMove('moves')}>
 								CADASTRAR MOVES
 							</button>
+							<button type="button" onClick={() => handleAddGroupMove('specials')}>
+								CADASTRAR SPECIALS
+							</button>
 
 							{dataCharacter ? (
 								<CommandsList
 									title="Fatality"
 									group="fatalities"
 									dataMoves={dataCharacter.fatalities}
+									modal={openModal}
+								/>
+							) : (
+								<p>Carregando...</p>
+							)}
+
+							{dataCharacter ? (
+								<CommandsList
+									title="Specials"
+									group="specials"
+									dataMoves={dataCharacter.specials}
 									modal={openModal}
 								/>
 							) : (

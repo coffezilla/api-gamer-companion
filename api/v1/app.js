@@ -38,7 +38,11 @@ app.use('/characters', routeMoves);
 const routeFatalities = require('./routes/fatalities');
 app.use('/characters', routeFatalities);
 
-// fatalities
+// specials
+const routeSpecials = require('./routes/specials');
+app.use('/characters', routeSpecials);
+
+// brutalities
 const routeBrutalities = require('./routes/brutalities');
 app.use('/characters', routeBrutalities);
 
