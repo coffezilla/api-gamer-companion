@@ -7,10 +7,10 @@ import ModalCustom from '../components/ModalCustom';
 import CommandsList from '../components/CommandsList';
 import { validateForm, IForm } from '../components/FormValidation';
 import {
-	postFatality,
-	getFatalityData,
-	editFatality,
-	deleteFatality,
+	postMoveGroup,
+	getMoveGroupData,
+	editMoveGroup,
+	deleteMoveGroup,
 } from '../Api/characterHandle';
 
 import { END_POINT_BASE } from '../Api';
@@ -83,6 +83,12 @@ const PageFighter = () => {
 			error: '',
 			type: 'text',
 		},
+		{
+			name: 'group',
+			value: '',
+			error: '',
+			type: 'text',
+		},
 	]);
 
 	const { fid } = useParams<any>();
@@ -93,7 +99,10 @@ const PageFighter = () => {
 	});
 
 	// MODAL
-	const openModal = (modalName: modalIndex, modalData: { slug: String } | null = { slug: '' }) => {
+	const openModal = (
+		modalName: modalIndex,
+		modalData: { slug: String; group: String } | null = { slug: '', group: '' },
+	) => {
 		setModalState({ ...modalState, [modalName]: { status: true } });
 
 		//
@@ -105,9 +114,10 @@ const PageFighter = () => {
 				{ ...formFieldsEdit[3], value: [] },
 				{ ...formFieldsEdit[4], value: '' },
 			]);
-			console.log('adicionar novos', modalData);
+			// console.log('adicionar novos', modalData);
 			if (modalData) {
-				getDataMove(modalData.slug);
+				getDataMove(modalData.slug, modalData.group);
+				// alert(modalData.group);
 			}
 		}
 	};
@@ -121,21 +131,34 @@ const PageFighter = () => {
 	};
 
 	// FORM EDITION
-	const getDataMove = async (slug: String) => {
+	const getDataMove = async (slug: String, group: String) => {
 		console.log('find', slug);
-		getFatalityData(fid, slug).then((res: any) => {
+		getMoveGroupData(fid, group, slug).then((res: any) => {
 			if (res.data.status === 1) {
 				console.log('man', res.data.move);
 				setFormFieldsEdit([
 					{ ...formFieldsEdit[0], value: res.data.move.name },
 					{ ...formFieldsEdit[1], value: '' },
-					{ ...formFieldsEdit[2], value: '' },
+					{ ...formFieldsEdit[2], value: group },
 					{ ...formFieldsEdit[3], value: [] },
 					{ ...formFieldsEdit[4], value: res.data.move.slug },
 				]);
 			}
 		});
 		// get data from server
+	};
+
+	// BUTTON ADD
+	const handleAddGroupMove = (groupMove: String) => {
+		setFormFields([
+			{ ...formFields[0] },
+			{ ...formFields[1] },
+			{ ...formFields[2] },
+			{ ...formFields[3] },
+			{ ...formFields[4], value: groupMove },
+		]);
+		openModal('MODAL_ADD_MOVE');
+		console.log('sao paulo', groupMove);
 	};
 
 	// FORM
@@ -178,23 +201,26 @@ const PageFighter = () => {
 		if (isValid) {
 			setIsLogging(true);
 			// use async function for server validation
-			postFatality(fid, formFields[0].value, formFields[3].value).then((res) => {
-				console.log('aksdjfkasjfkad', res.data);
-				if (res.data.status === 1) {
-					getCharacter();
-					setFormFields([
-						{ ...formFields[0], value: '' },
-						{ ...formFields[1], value: '' },
-						{ ...formFields[2], value: '' },
-						{ ...formFields[3], value: [] },
-					]);
-					closeModal('MODAL_ADD_MOVE');
-				} else {
-					alert('erro');
-				}
+			postMoveGroup(fid, formFields[4].value, formFields[0].value, formFields[3].value).then(
+				(res) => {
+					console.log('aksdjfkasjfkad', res.data);
+					if (res.data.status === 1) {
+						getCharacter();
+						setFormFields([
+							{ ...formFields[0], value: '' },
+							{ ...formFields[1], value: '' },
+							{ ...formFields[2], value: '' },
+							{ ...formFields[3], value: [] },
+							{ ...formFields[4], value: '' },
+						]);
+						closeModal('MODAL_ADD_MOVE');
+					} else {
+						alert('erro');
+					}
 
-				setIsLogging(false);
-			});
+					setIsLogging(false);
+				},
+			);
 		}
 	};
 
@@ -204,7 +230,13 @@ const PageFighter = () => {
 
 		if (isValid) {
 			setIsLogging(true);
-			editFatality(fid, formFieldsEdit[4].value, formFieldsEdit[0].value, [2, 3, 4]).then((res) => {
+			editMoveGroup(
+				fid,
+				formFieldsEdit[2].value,
+				formFieldsEdit[4].value,
+				formFieldsEdit[0].value,
+				[2, 3, 4],
+			).then((res) => {
 				if (res.data.status === 1) {
 					getCharacter();
 					closeModal('MODAL_EDIT_MOVE');
@@ -220,7 +252,7 @@ const PageFighter = () => {
 	const handleSubmitDelete = (e: any) => {
 		e.preventDefault();
 		setIsLogging(true);
-		deleteFatality(fid, formFieldsEdit[4].value).then((res) => {
+		deleteMoveGroup(fid, formFieldsEdit[2].value, formFieldsEdit[4].value).then((res) => {
 			if (res.data.status === 1) {
 				getCharacter();
 				console.log('deletar move');
@@ -406,12 +438,26 @@ const PageFighter = () => {
 					{dataCharacter && <h1 className="text-xl font-bold mb-5">{dataCharacter.name}</h1>}
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-10">
 						<div id="col1">
-							<button type="button" onClick={() => openModal('MODAL_ADD_MOVE')}>
-								CADASTRAR
+							<button type="button" onClick={() => handleAddGroupMove('fatalities')}>
+								CADASTRAR FATALITY
 							</button>
+							<br />
+							<button type="button" onClick={() => handleAddGroupMove('brutalities')}>
+								CADASTRAR BRUTALITY
+							</button>
+							<br />
+							<button type="button" onClick={() => handleAddGroupMove('combos')}>
+								CADASTRAR COMBOS
+							</button>
+							<br />
+							<button type="button" onClick={() => handleAddGroupMove('moves')}>
+								CADASTRAR MOVES
+							</button>
+
 							{dataCharacter ? (
 								<CommandsList
 									title="Fatality"
+									group="fatalities"
 									dataMoves={dataCharacter.fatalities}
 									modal={openModal}
 								/>
@@ -420,20 +466,35 @@ const PageFighter = () => {
 							)}
 
 							{dataCharacter ? (
-								<CommandsList title="Brutality" dataMoves={dataCharacter.brutalities} />
+								<CommandsList
+									group="brutalities"
+									title="Brutality"
+									dataMoves={dataCharacter.brutalities}
+									modal={openModal}
+								/>
 							) : (
 								<p>Carregando...</p>
 							)}
 						</div>
 						<div id="col2">
 							{dataCharacter ? (
-								<CommandsList title="Combos" dataMoves={dataCharacter.combos} />
+								<CommandsList
+									group="combos"
+									title="Combos"
+									dataMoves={dataCharacter.combos}
+									modal={openModal}
+								/>
 							) : (
 								<p>Carregando...</p>
 							)}
 
 							{dataCharacter ? (
-								<CommandsList title="Moves" dataMoves={dataCharacter.moves} />
+								<CommandsList
+									group="moves"
+									title="Moves"
+									dataMoves={dataCharacter.moves}
+									modal={openModal}
+								/>
 							) : (
 								<p>Carregando...</p>
 							)}

@@ -18,8 +18,8 @@ router.get('/:charId/fatalities', async (req, res) => {
 });
 
 // GET SKINS SPECIFY
-router.get('/:charId/fatalities/:fatSlug', async (req, res) => {
-	const { charId, fatSlug } = req.params;
+router.get('/:charId/fatalities/:slug', async (req, res) => {
+	const { charId, slug } = req.params;
 	const response = {
 		status: 0,
 		message: '',
@@ -29,7 +29,7 @@ router.get('/:charId/fatalities/:fatSlug', async (req, res) => {
 			{ _id: charId },
 			{
 				fatalities: {
-					$elemMatch: { slug: fatSlug },
+					$elemMatch: { slug: slug },
 				},
 			}
 		);
@@ -74,18 +74,21 @@ router.post('/:charId/fatalities', async (req, res) => {
 		const { name, commands } = req.body;
 
 		if (!name || !commands) {
-			res.json('Missing data');
+			res.json({
+				...response,
+				message: 'Missing data',
+			});
 		} else {
 			try {
 				// slugify
-				const slug = stringify(name);
+				const slugId = stringify(name);
 				const characters = await Characters.updateOne(
 					{ _id: charId },
 					{
 						$push: {
 							fatalities: {
 								name: name,
-								slug: slug,
+								slug: slugId,
 								commands: commands,
 							},
 						},
@@ -113,7 +116,7 @@ router.post('/:charId/fatalities', async (req, res) => {
 });
 
 // DELETE SKIN
-router.delete('/:charId/fatalities/:fatSlug', async (req, res) => {
+router.delete('/:charId/fatalities/:slug', async (req, res) => {
 	// !!!
 	// THIS DATA SHOULD BE RETRIEVED FROM THE SERVER
 	const BACKEND_USER = {
@@ -134,7 +137,7 @@ router.delete('/:charId/fatalities/:fatSlug', async (req, res) => {
 	}
 
 	if (BACKEND_USER.authorization === authorization) {
-		const { charId, fatSlug } = req.params;
+		const { charId, slug } = req.params;
 		try {
 			const fatalities = await Characters.updateOne(
 				{
@@ -143,7 +146,7 @@ router.delete('/:charId/fatalities/:fatSlug', async (req, res) => {
 				{
 					$pull: {
 						fatalities: {
-							slug: fatSlug,
+							slug: slug,
 						},
 					},
 				}
@@ -160,12 +163,15 @@ router.delete('/:charId/fatalities/:fatSlug', async (req, res) => {
 			});
 		}
 	} else {
-		res.json('not authenticated');
+		res.json({
+			...response,
+			message: 'Not authenticated',
+		});
 	}
 });
 
 // PATCH SKIN
-router.patch('/:charId/fatalities/:fatSlug', async (req, res) => {
+router.patch('/:charId/fatalities/:slug', async (req, res) => {
 	// !!!
 	// THIS DATA SHOULD BE RETRIEVED FROM THE SERVER
 	const BACKEND_USER = {
@@ -186,23 +192,26 @@ router.patch('/:charId/fatalities/:fatSlug', async (req, res) => {
 	}
 
 	if (BACKEND_USER.authorization === authorization) {
-		const { charId, fatSlug } = req.params;
+		const { charId, slug } = req.params;
 		const { name, commands } = req.body;
 
 		if (!name || !commands) {
-			res.json('Missing data');
+			res.json({
+				...response,
+				message: 'Missing data',
+			});
 		} else {
 			try {
-				const slug = stringify(name);
+				const slugId = stringify(name);
 				const fatalities = await Characters.updateOne(
 					{
 						_id: charId,
-						'fatalities.slug': fatSlug,
+						'fatalities.slug': slug,
 					},
 					{
 						$set: {
 							'fatalities.$.name': name,
-							'fatalities.$.slug': slug,
+							'fatalities.$.slug': slugId,
 							'fatalities.$.commands': commands,
 						},
 					}
@@ -220,7 +229,10 @@ router.patch('/:charId/fatalities/:fatSlug', async (req, res) => {
 			}
 		}
 	} else {
-		res.json('not authenticated');
+		res.json({
+			...response,
+			message: 'Missing data',
+		});
 	}
 });
 

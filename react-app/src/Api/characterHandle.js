@@ -1,10 +1,4 @@
 /* eslint-disable */
-// import axios from 'axios';
-
-// import { END_POINT_BASE } from './Api';
-
-// // localstorage
-// import { readItemFromStorage } from '../helpers/handleStorage';
 
 import axios from 'axios';
 import {
@@ -15,47 +9,8 @@ import {
 
 import { END_POINT_BASE } from './Api';
 
-// GET
-// available categories
-// export const getCategoriesAvailable = async () => {
-// 	let userAuthToken = null;
-// 	await readItemFromStorage().then((responseStorage) => {
-// 		userAuthToken = responseStorage.auth.token;
-// 	});
-
-// 	let serverResponse = { data: { status: 0 } };
-
-// 	const END_POINT = END_POINT_BASE + '/messages/get-categories-available';
-// 	await axios({
-// 		method: 'get',
-// 		url: END_POINT,
-// 		headers: { Authorization: `Bearer xyz` },
-// 	})
-// 		.then((response) => {
-// 			// 1 - done
-// 			if (response.data.status === 1) {
-// 				serverResponse = {
-// 					data: {
-// 						status: response.data.status,
-// 						categories: response.data.categories,
-// 					},
-// 				};
-// 			} else {
-// 				serverResponse = {
-// 					data: {
-// 						status: response.data.status,
-// 						message: response.data.message,
-// 					},
-// 				};
-// 			}
-// 		})
-// 		.catch((error) => {});
-
-// 	return serverResponse;
-// };
-
 // ADD
-export const postFatality = async (charId, name, command) => {
+export const postMoveGroup = async (charId, move, name, command) => {
 	const localStorageAuth = getHasLocalStorageAuth();
 	const hasLocalStorageAuth = localStorageAuth.status;
 	let serverResponse = {
@@ -67,7 +22,7 @@ export const postFatality = async (charId, name, command) => {
 	if (hasLocalStorageAuth) {
 		await axios({
 			method: 'post',
-			url: `${END_POINT_BASE}/characters/${charId}/fatalities`,
+			url: `${END_POINT_BASE}/characters/${charId}/${move}`,
 			data: {
 				name: name,
 				commands: {
@@ -77,20 +32,18 @@ export const postFatality = async (charId, name, command) => {
 			},
 			headers: { Authorization: `Bearer ${localStorageAuth.data.token}` },
 		})
-			.then((responsePostFatality) => {
-				console.log('fata', responsePostFatality);
-				if (responsePostFatality.data.status === 1) {
+			.then((res) => {
+				console.log('fata', res);
+				if (res.data.status === 1) {
 					serverResponse = {
 						data: {
-							status: responsePostFatality.data.status,
+							status: res.data.status,
 						},
 					};
 				} else {
-					// clearLocalStorageAuth();
 				}
 			})
 			.catch((error) => {
-				// clearLocalStorageAuth();
 				console.log(error);
 			});
 	}
@@ -98,7 +51,7 @@ export const postFatality = async (charId, name, command) => {
 };
 
 // EDIT
-export const editFatality = async (charId, slug, name, command) => {
+export const editMoveGroup = async (charId, move, slug, name, command) => {
 	const localStorageAuth = getHasLocalStorageAuth();
 	const hasLocalStorageAuth = localStorageAuth.status;
 	let serverResponse = {
@@ -110,7 +63,7 @@ export const editFatality = async (charId, slug, name, command) => {
 	if (hasLocalStorageAuth) {
 		await axios({
 			method: 'patch',
-			url: `${END_POINT_BASE}/characters/${charId}/fatalities/${slug}`,
+			url: `${END_POINT_BASE}/characters/${charId}/${move}/${slug}`,
 			data: {
 				name: name,
 				commands: {
@@ -129,11 +82,9 @@ export const editFatality = async (charId, slug, name, command) => {
 						},
 					};
 				} else {
-					// clearLocalStorageAuth();
 				}
 			})
 			.catch((error) => {
-				// clearLocalStorageAuth();
 				console.log(error);
 			});
 	}
@@ -141,7 +92,7 @@ export const editFatality = async (charId, slug, name, command) => {
 };
 
 // DELETE
-export const deleteFatality = async (charId, slug) => {
+export const deleteMoveGroup = async (charId, move, slug) => {
 	const localStorageAuth = getHasLocalStorageAuth();
 	const hasLocalStorageAuth = localStorageAuth.status;
 	let serverResponse = {
@@ -150,10 +101,12 @@ export const deleteFatality = async (charId, slug) => {
 		},
 	};
 
+	console.log('cacha', slug, move);
+
 	if (hasLocalStorageAuth) {
 		await axios({
 			method: 'delete',
-			url: `${END_POINT_BASE}/characters/${charId}/fatalities/${slug}`,
+			url: `${END_POINT_BASE}/characters/${charId}/${move}/${slug}`,
 			headers: { Authorization: `Bearer ${localStorageAuth.data.token}` },
 		})
 			.then((res) => {
@@ -165,11 +118,9 @@ export const deleteFatality = async (charId, slug) => {
 						},
 					};
 				} else {
-					// clearLocalStorageAuth();
 				}
 			})
 			.catch((error) => {
-				// clearLocalStorageAuth();
 				console.log(error);
 			});
 	}
@@ -177,19 +128,16 @@ export const deleteFatality = async (charId, slug) => {
 };
 
 // GET
-export const getFatalityData = async (charId, slug) => {
-	// const localStorageAuth = getHasLocalStorageAuth();
-	// const hasLocalStorageAuth = localStorageAuth.status;
+export const getMoveGroupData = async (charId, move, slug) => {
 	let serverResponse = {
 		data: {
 			status: 0,
 		},
 	};
 
-	// if (hasLocalStorageAuth) {
 	await axios({
 		method: 'get',
-		url: `${END_POINT_BASE}/characters/${charId}/fatalities/${slug}`,
+		url: `${END_POINT_BASE}/characters/${charId}/${move}/${slug}`,
 	})
 		.then((res) => {
 			console.log('fata', res.data);
@@ -201,54 +149,10 @@ export const getFatalityData = async (charId, slug) => {
 					},
 				};
 			} else {
-				// clearLocalStorageAuth();
 			}
 		})
 		.catch((error) => {
-			// clearLocalStorageAuth();
 			console.log(error);
 		});
-	// }
 	return serverResponse;
 };
-
-// GET
-// get user data to edit
-// export const getMessageData = async (filterCategories) => {
-// 	let userAuthToken = null;
-// 	await readItemFromStorage().then((responseStorage) => {
-// 		userAuthToken = responseStorage.auth.token;
-// 	});
-
-// 	let serverResponse = { data: { status: 0 } };
-// 	const GET_PARAMS = `?categories=${filterCategories}`;
-
-// 	const END_POINT = END_POINT_BASE + '/messages/get-messages' + GET_PARAMS;
-// 	await axios({
-// 		method: 'get',
-// 		url: END_POINT,
-// 		headers: { Authorization: `Bearer ${userAuthToken}` },
-// 	})
-// 		.then((response) => {
-// 			console.log('mensagensz:', response.data.message);
-// 			// 1 - done
-// 			if (response.data.status === 1) {
-// 				serverResponse = {
-// 					data: {
-// 						status: response.data.status,
-// 						messages: response.data.messages,
-// 					},
-// 				};
-// 			} else {
-// 				serverResponse = {
-// 					data: {
-// 						status: response.data.status,
-// 						message: response.data.message,
-// 					},
-// 				};
-// 			}
-// 		})
-// 		.catch((error) => {});
-
-// 	return serverResponse;
-// };

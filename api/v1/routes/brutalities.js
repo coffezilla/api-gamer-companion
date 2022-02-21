@@ -18,62 +18,126 @@ router.get('/:charId/brutalities', async (req, res) => {
 });
 
 // GET SKINS SPECIFY
-router.get('/:charId/brutalities/:bruSlug', async (req, res) => {
-	const { charId, bruSlug } = req.params;
+router.get('/:charId/brutalities/:slug', async (req, res) => {
+	const { charId, slug } = req.params;
+	const response = {
+		status: 0,
+		message: '',
+	};
 	try {
-		const brutalities = await Characters.find(
+		const brutality = await Characters.find(
 			{ _id: charId },
 			{
 				brutalities: {
-					$elemMatch: { slug: bruSlug },
+					$elemMatch: { slug: slug },
 				},
 			}
 		);
-		res.json(brutalities);
+
+		res.json({
+			...response,
+			status: 1,
+			message: 'Done',
+			move: brutality[0].brutalities[0],
+		});
 	} catch (err) {
-		res.json(err);
+		res.json({
+			...response,
+			message: 'Error',
+		});
 	}
 });
 
 // POST SKINS
 router.post('/:charId/brutalities', async (req, res) => {
-	if (req.query.auth == process.env.AUTH) {
+	// !!!
+	// THIS DATA SHOULD BE RETRIEVED FROM THE SERVER
+	const BACKEND_USER = {
+		email: process.env.USER_EMAIL,
+		authorization: `Bearer ${process.env.AUTH}`,
+	};
+	// !!!
+
+	const { authorization } = req.headers;
+	const response = {
+		status: 0,
+		message: '',
+	};
+
+	//
+	if (!authorization) {
+		return res.status(403).json({ error: 'No credentials sent!' });
+	}
+
+	if (BACKEND_USER.authorization === authorization) {
 		const { charId } = req.params;
 		const { name, commands } = req.body;
 
 		if (!name || !commands) {
-			res.json('Missing data');
+			res.json({
+				...response,
+				message: 'Missing data',
+			});
 		} else {
 			try {
 				// slugify
-				const slug = stringify(name);
+				const slugId = stringify(name);
 				const characters = await Characters.updateOne(
 					{ _id: charId },
 					{
 						$push: {
 							brutalities: {
 								name: name,
-								slug: slug,
+								slug: slugId,
 								commands: commands,
 							},
 						},
 					}
 				);
 
-				res.json(characters);
+				res.json({
+					...response,
+					status: 1,
+					message: 'Done',
+				});
 			} catch (err) {
-				res.json(err);
+				res.json({
+					...response,
+					message: 'Error',
+				});
 			}
 		}
 	} else {
-		res.json('not authenticated');
+		res.json({
+			...response,
+			message: 'Not authenticated',
+		});
 	}
 });
 
 // DELETE SKIN
-router.delete('/:charId/brutalities/:bruSlug', async (req, res) => {
-	if (req.query.auth == process.env.AUTH) {
-		const { charId, bruSlug } = req.params;
+router.delete('/:charId/brutalities/:slug', async (req, res) => {
+	// !!!
+	// THIS DATA SHOULD BE RETRIEVED FROM THE SERVER
+	const BACKEND_USER = {
+		email: process.env.USER_EMAIL,
+		authorization: `Bearer ${process.env.AUTH}`,
+	};
+	// !!!
+
+	const { authorization } = req.headers;
+	const response = {
+		status: 0,
+		message: '',
+	};
+
+	//
+	if (!authorization) {
+		return res.status(403).json({ error: 'No credentials sent!' });
+	}
+
+	if (BACKEND_USER.authorization === authorization) {
+		const { charId, slug } = req.params;
 		try {
 			const brutalities = await Characters.updateOne(
 				{
@@ -82,51 +146,93 @@ router.delete('/:charId/brutalities/:bruSlug', async (req, res) => {
 				{
 					$pull: {
 						brutalities: {
-							slug: bruSlug,
+							slug: slug,
 						},
 					},
 				}
 			);
-			res.json(brutalities);
+			res.json({
+				...response,
+				status: 1,
+				message: 'Done',
+			});
 		} catch (err) {
-			res.json(err);
+			res.json({
+				...response,
+				message: 'Error',
+			});
 		}
 	} else {
-		res.json('not authenticated');
+		res.json({
+			...response,
+			message: 'Not authenticated',
+		});
 	}
 });
 
 // PATCH SKIN
-router.patch('/:charId/brutalities/:bruSlug', async (req, res) => {
-	if (req.query.auth == process.env.AUTH) {
-		const { charId, bruSlug } = req.params;
+router.patch('/:charId/brutalities/:slug', async (req, res) => {
+	// !!!
+	// THIS DATA SHOULD BE RETRIEVED FROM THE SERVER
+	const BACKEND_USER = {
+		email: process.env.USER_EMAIL,
+		authorization: `Bearer ${process.env.AUTH}`,
+	};
+	// !!!
+
+	const { authorization } = req.headers;
+	const response = {
+		status: 0,
+		message: '',
+	};
+
+	//
+	if (!authorization) {
+		return res.status(403).json({ error: 'No credentials sent!' });
+	}
+
+	if (BACKEND_USER.authorization === authorization) {
+		const { charId, slug } = req.params;
 		const { name, commands } = req.body;
 
 		if (!name || !commands) {
-			res.json('Missing data');
+			res.json({
+				...response,
+				message: 'Missing data',
+			});
 		} else {
 			try {
-				const slug = stringify(name);
+				const slugId = stringify(name);
 				const brutalities = await Characters.updateOne(
 					{
 						_id: charId,
-						'brutalities.slug': bruSlug,
+						'brutalities.slug': slug,
 					},
 					{
 						$set: {
 							'brutalities.$.name': name,
-							'brutalities.$.slug': slug,
+							'brutalities.$.slug': slugId,
 							'brutalities.$.commands': commands,
 						},
 					}
 				);
-				res.json(brutalities);
+				res.json({
+					...response,
+					status: 1,
+					message: 'Done',
+				});
 			} catch (err) {
-				res.json(err);
+				res.json({
+					...response,
+					message: 'Error',
+				});
 			}
 		}
 	} else {
-		res.json('not authenticated');
+		res.json({
+			...response,
+			message: 'Missing data',
+		});
 	}
 });
 

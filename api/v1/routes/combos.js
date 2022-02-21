@@ -15,62 +15,126 @@ router.get('/:charId/combos', async (req, res) => {
 });
 
 // GET SKINS SPECIFY
-router.get('/:charId/combos/:comSlug', async (req, res) => {
-	const { charId, comSlug } = req.params;
+router.get('/:charId/combos/:slug', async (req, res) => {
+	const { charId, slug } = req.params;
+	const response = {
+		status: 0,
+		message: '',
+	};
 	try {
-		const combos = await Characters.find(
+		const combo = await Characters.find(
 			{ _id: charId },
 			{
 				combos: {
-					$elemMatch: { slug: comSlug },
+					$elemMatch: { slug: slug },
 				},
 			}
 		);
-		res.json(combos);
+
+		res.json({
+			...response,
+			status: 1,
+			message: 'Done',
+			move: combo[0].combos[0],
+		});
 	} catch (err) {
-		res.json(err);
+		res.json({
+			...response,
+			message: 'Error',
+		});
 	}
 });
 
 // POST SKINS
 router.post('/:charId/combos', async (req, res) => {
-	if (req.query.auth == process.env.AUTH) {
+	// !!!
+	// THIS DATA SHOULD BE RETRIEVED FROM THE SERVER
+	const BACKEND_USER = {
+		email: process.env.USER_EMAIL,
+		authorization: `Bearer ${process.env.AUTH}`,
+	};
+	// !!!
+
+	const { authorization } = req.headers;
+	const response = {
+		status: 0,
+		message: '',
+	};
+
+	//
+	if (!authorization) {
+		return res.status(403).json({ error: 'No credentials sent!' });
+	}
+
+	if (BACKEND_USER.authorization === authorization) {
 		const { charId } = req.params;
 		const { name, commands } = req.body;
 
 		if (!name || !commands) {
-			res.json('Missing data');
+			res.json({
+				...response,
+				message: 'Missing data',
+			});
 		} else {
 			try {
 				// slugify
-				const slug = stringify(name);
+				const slugId = stringify(name);
 				const characters = await Characters.updateOne(
 					{ _id: charId },
 					{
 						$push: {
 							combos: {
 								name: name,
-								slug: slug,
+								slug: slugId,
 								commands: commands,
 							},
 						},
 					}
 				);
 
-				res.json(characters);
+				res.json({
+					...response,
+					status: 1,
+					message: 'Done',
+				});
 			} catch (err) {
-				res.json(err);
+				res.json({
+					...response,
+					message: 'Error',
+				});
 			}
 		}
 	} else {
-		res.json('not authenticated');
+		res.json({
+			...response,
+			message: 'Not authenticated',
+		});
 	}
 });
 
 // DELETE SKIN
-router.delete('/:charId/combos/:comSlug', async (req, res) => {
-	if (req.query.auth == process.env.AUTH) {
-		const { charId, comSlug } = req.params;
+router.delete('/:charId/combos/:slug', async (req, res) => {
+	// !!!
+	// THIS DATA SHOULD BE RETRIEVED FROM THE SERVER
+	const BACKEND_USER = {
+		email: process.env.USER_EMAIL,
+		authorization: `Bearer ${process.env.AUTH}`,
+	};
+	// !!!
+
+	const { authorization } = req.headers;
+	const response = {
+		status: 0,
+		message: '',
+	};
+
+	//
+	if (!authorization) {
+		return res.status(403).json({ error: 'No credentials sent!' });
+	}
+
+	if (BACKEND_USER.authorization === authorization) {
+		const { charId, slug } = req.params;
 		try {
 			const combos = await Characters.updateOne(
 				{
@@ -79,51 +143,93 @@ router.delete('/:charId/combos/:comSlug', async (req, res) => {
 				{
 					$pull: {
 						combos: {
-							slug: comSlug,
+							slug: slug,
 						},
 					},
 				}
 			);
-			res.json(combos);
+			res.json({
+				...response,
+				status: 1,
+				message: 'Done',
+			});
 		} catch (err) {
-			res.json(err);
+			res.json({
+				...response,
+				message: 'Error',
+			});
 		}
 	} else {
-		res.json('not authenticated');
+		res.json({
+			...response,
+			message: 'Not authenticated',
+		});
 	}
 });
 
 // PATCH SKIN
-router.patch('/:charId/combos/:comSlug', async (req, res) => {
-	if (req.query.auth == process.env.AUTH) {
-		const { charId, comSlug } = req.params;
+router.patch('/:charId/combos/:slug', async (req, res) => {
+	// !!!
+	// THIS DATA SHOULD BE RETRIEVED FROM THE SERVER
+	const BACKEND_USER = {
+		email: process.env.USER_EMAIL,
+		authorization: `Bearer ${process.env.AUTH}`,
+	};
+	// !!!
+
+	const { authorization } = req.headers;
+	const response = {
+		status: 0,
+		message: '',
+	};
+
+	//
+	if (!authorization) {
+		return res.status(403).json({ error: 'No credentials sent!' });
+	}
+
+	if (BACKEND_USER.authorization === authorization) {
+		const { charId, slug } = req.params;
 		const { name, commands } = req.body;
 
 		if (!name || !commands) {
-			res.json('Missing data');
+			res.json({
+				...response,
+				message: 'Missing data',
+			});
 		} else {
 			try {
-				const slug = stringify(name);
+				const slugId = stringify(name);
 				const combos = await Characters.updateOne(
 					{
 						_id: charId,
-						'combos.slug': comSlug,
+						'combos.slug': slug,
 					},
 					{
 						$set: {
 							'combos.$.name': name,
-							'combos.$.slug': slug,
+							'combos.$.slug': slugId,
 							'combos.$.commands': commands,
 						},
 					}
 				);
-				res.json(combos);
+				res.json({
+					...response,
+					status: 1,
+					message: 'Done',
+				});
 			} catch (err) {
-				res.json(err);
+				res.json({
+					...response,
+					message: 'Error',
+				});
 			}
 		}
 	} else {
-		res.json('not authenticated');
+		res.json({
+			...response,
+			message: 'Missing data',
+		});
 	}
 });
 
