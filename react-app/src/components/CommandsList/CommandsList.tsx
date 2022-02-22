@@ -37,7 +37,7 @@ const CommandsList = ({ title, group, dataMoves, modal, handleAdd }: IPros) => {
 							return (
 								<li className="bg-gray-200 p-3 md:p-5 rounded-lg mb-1" key={moveGroup._id}>
 									<div className="-mt-3  flex space-x-2 justify-between">
-										<div className="font-bold basis-1/3 shrink-0 pt-3">
+										<div className="font-bold basis-1/4 sm:basis-1/3  shrink-0 pt-3">
 											<button
 												onClick={() =>
 													rdxUserisAuth &&

@@ -14,15 +14,17 @@ const PageLogin = () => {
 	const [formFields, setFormFields] = useState<IForm['inputs']>([
 		{
 			name: 'email',
-			value: 'foo@mail.com',
+			value: '',
 			error: '',
 			type: 'email',
+			isRequired: true,
 		},
 		{
 			name: 'password',
-			value: '123',
+			value: '',
 			error: '',
 			type: 'password',
+			isRequired: true,
 		},
 	]);
 
@@ -71,10 +73,11 @@ const PageLogin = () => {
 				if (responseServerLogin.data.status === 1) {
 					dispatch(rdxLoginUser());
 				} else {
-					setIsLogging(false);
+					alert('Senha ou dado inválido');
 				}
 			});
 		}
+		setIsLogging(false);
 	};
 
 	return (
