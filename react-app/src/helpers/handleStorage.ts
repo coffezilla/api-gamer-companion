@@ -25,13 +25,16 @@ export function __getLocalStorage(localStorageName: string): any {
 }
 
 // clear data from localstorage
-export function __clearLocalStorage() {
-	localStorage.clear();
+export function __clearLocalStorage(store: string) {
+	// localStorage.clear();
+	localStorage.removeItem(store);
 }
 
 // auth
 export const clearLocalStorageAuth = () => {
-	__clearLocalStorage();
+	__clearLocalStorage(LOCAL_STORAGE_STORE_AUTH);
+
+	// __setLocalStorage(LOCAL_STORAGE_STORE_AUTH, null);
 };
 
 export const setLocalStorageAuth = (newLocalStorage: any) => {
@@ -46,7 +49,7 @@ export const getHasLocalStorageAuth = () => {
 
 // prefs
 export const clearLocalStoragePrefs = () => {
-	__clearLocalStorage();
+	__clearLocalStorage(LOCAL_STORAGE_STORE_PREFS);
 };
 
 export const setLocalStoragePrefs = (newLocalStorage: any) => {

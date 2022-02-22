@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react';
 import MainMenu from '../components/MainMenu';
 import ModalCustom from '../components/ModalCustom';
 import CommandsList from '../components/CommandsList';
+import Swal from 'sweetalert2';
+
 import { validateForm, IForm } from '../components/FormValidation';
 import {
 	postMoveGroup,
@@ -37,13 +39,13 @@ const PageFighter = () => {
 		},
 		{
 			name: 'requirement',
-			value: 'Longe',
+			value: '',
 			error: '',
 			type: 'select',
 		},
 		{
 			name: 'group',
-			value: 'fatalities',
+			value: '',
 			error: '',
 			type: 'select',
 		},
@@ -68,6 +70,7 @@ const PageFighter = () => {
 	]);
 
 	// new move
+	// OBS: 2 are not used instead is 4
 	const [formFields, setFormFields] = useState<IForm['inputs']>([
 		{
 			name: 'name',
@@ -78,13 +81,13 @@ const PageFighter = () => {
 		},
 		{
 			name: 'requirement',
-			value: 'Perto',
+			value: '',
 			error: '',
 			type: 'select',
 		},
 		{
 			name: 'group',
-			value: 'fatalities',
+			value: '',
 			error: '',
 			type: 'select',
 		},
@@ -280,16 +283,27 @@ const PageFighter = () => {
 
 	const handleSubmitDelete = (e: any) => {
 		e.preventDefault();
-		setIsLogging(true);
-		deleteMoveGroup(fid, formFieldsEdit[2].value, formFieldsEdit[4].value).then((res) => {
-			if (res.data.status === 1) {
-				getCharacter();
-				console.log('deletar move');
-				closeModal('MODAL_EDIT_MOVE');
-			} else {
-				console.log('nao deletou');
+
+		Swal.fire({
+			title: 'Deletar este golpe?',
+			showCancelButton: true,
+			confirmButtonText: 'Sim',
+			cancelButtonText: 'Cancelar',
+		}).then((result) => {
+			/* Read more about isConfirmed, isDenied below */
+			if (result.isConfirmed) {
+				setIsLogging(true);
+				deleteMoveGroup(fid, formFieldsEdit[2].value, formFieldsEdit[4].value).then((res) => {
+					if (res.data.status === 1) {
+						getCharacter();
+						console.log('deletar move');
+						closeModal('MODAL_EDIT_MOVE');
+					} else {
+						console.log('nao deletou');
+					}
+					setIsLogging(false);
+				});
 			}
-			setIsLogging(false);
 		});
 	};
 
@@ -302,7 +316,7 @@ const PageFighter = () => {
 				console.log('error');
 			}
 		});
-		setDataCharacter(null);
+		// setDataCharacter(null);
 		// await axios({
 		// 	method: 'get',
 		// 	url: `${END_POINT_BASE}/characters/${fid}`,
@@ -326,7 +340,7 @@ const PageFighter = () => {
 				modal="MODAL_ADD_MOVE"
 				className="rounded-lg p-5"
 			>
-				<h1 className="text-xl font-bold text-center mb-2">CADASTRAR COMANDO</h1>
+				<h1 className="text-xl font-bold mb-5 uppercase">CADASTRAR: {formFields[4].value}</h1>
 
 				{!isLogging ? (
 					<form onSubmit={handleSubmitAdd}>
@@ -354,12 +368,12 @@ const PageFighter = () => {
 								className="border block px-3 py-2 w-full rounded-md appearance-none"
 							>
 								<option value="">Sem requisito</option>
-								<option value="Perto">1 - Perto</option>
-								<option value="Longe">2 - Longe</option>
-								<option value="Meia tela">3 - Meia tela</option>
-								<option value="No canto">4 - No canto</option>
-								<option value="No alto">5 - No alto</option>
-								<option value="Agachado">6 - Agachado</option>
+								<option value="Perto">Perto</option>
+								<option value="Longe">Longe</option>
+								<option value="Meia tela">Meia tela</option>
+								<option value="No canto">No canto</option>
+								<option value="No alto">No alto</option>
+								<option value="Agachado">Agachado</option>
 							</select>
 							<span className="text-sm text-red-500 italic">{formFields[1].error}</span>
 						</label>
@@ -393,12 +407,12 @@ const PageFighter = () => {
 															key={`${command}${subIndex}`}
 														>
 															{subIndex !== 0 && <p className="text-center text-lg">+</p>}
-															<ButtonController id={subCommand} />
+															<ButtonController id={subCommand} size={30} />
 														</div>
 													);
 												})
 											) : (
-												<ButtonController id={command} />
+												<ButtonController id={command} size={30} />
 											)}
 										</div>
 									);
@@ -451,11 +465,11 @@ const PageFighter = () => {
 				modal="MODAL_EDIT_MOVE"
 				className="rounded-lg p-5"
 			>
-				<h1 className="text-xl font-bold text-center mb-2">EDITAR FATALITY</h1>
+				<h1 className="text-xl font-bold mb-5 uppercase">EDIÇÃO: {formFieldsEdit[2].value}</h1>
 
 				{!isLogging ? (
 					<form onSubmit={handleSubmitEdit}>
-						<label htmlFor={formFieldsEdit[0].name} className="block mb-3">
+						<label htmlFor={formFieldsEdit[0].name} className="block mb-3 font-bold">
 							<span className="block mb-2">Nome do comando:</span>
 							<input
 								type={formFieldsEdit[0].type}
@@ -469,7 +483,7 @@ const PageFighter = () => {
 							<span className="text-sm text-red-500 italic">{formFieldsEdit[0].error}</span>
 						</label>
 
-						<label htmlFor={formFieldsEdit[1].name} className="block mb-3">
+						<label htmlFor={formFieldsEdit[1].name} className="block mb-3 font-bold">
 							<span className="block mb-2">Requisito:</span>
 							<select
 								value={formFieldsEdit[1].value}
@@ -479,17 +493,17 @@ const PageFighter = () => {
 								className="border block px-3 py-2 w-full rounded-md appearance-none"
 							>
 								<option value="">Sem requisito</option>
-								<option value="Perto">1 - Perto</option>
-								<option value="Longe">2 - Longe</option>
-								<option value="Meia tela">3 - Meia tela</option>
-								<option value="No canto">4 - No canto</option>
-								<option value="No alto">5 - No alto</option>
-								<option value="Agachado">6 - Agachado</option>
+								<option value="Perto">Perto</option>
+								<option value="Longe">Longe</option>
+								<option value="Meia tela">Meia tela</option>
+								<option value="No canto">No canto</option>
+								<option value="No alto">No alto</option>
+								<option value="Agachado">Agachado</option>
 							</select>
 							<span className="text-sm text-red-500 italic">{formFieldsEdit[1].error}</span>
 						</label>
 
-						<label htmlFor={formFieldsEdit[5].name} className="block mb-3">
+						<label htmlFor={formFieldsEdit[5].name} className="block mb-3 font-bold">
 							<span className="block mb-2">Anotação:</span>
 							<input
 								type={formFieldsEdit[5].type}
@@ -518,7 +532,7 @@ const PageFighter = () => {
 						</label> */}
 
 						<label className="block mb-3">
-							<span className="block mb-2">Combinação:</span>
+							<span className="block mb-2 font-bold">Combinação:</span>
 							<div className="text-sm items-end flex flex-wrap space-x-2 space-y-2 border px-3 pb-4 w-full rounded-md min-h-[60px] mb-3">
 								{formFieldsEdit[3].value.map((command: any, index: number) => {
 									return (
@@ -532,12 +546,12 @@ const PageFighter = () => {
 															key={`${command}${subIndex}`}
 														>
 															{subIndex !== 0 && <p className="text-center text-lg">+</p>}
-															<ButtonController id={subCommand} />
+															<ButtonController id={subCommand} size={30} />
 														</div>
 													);
 												})
 											) : (
-												<ButtonController id={command} />
+												<ButtonController id={command} size={30} />
 											)}
 										</div>
 									);

@@ -8,8 +8,9 @@ interface IPropsButton {
 	size?: Number;
 }
 
-const ButtonController = ({ layout, id, size = 6 }: IPropsButton) => {
+const ButtonController = ({ id, size = 30 }: IPropsButton) => {
 	const rdxPrefsButtonLayout = useSelector((state: IRdxUser) => state.prefs.buttonLayout);
+	const buttonSize = `${size}px`;
 	let buttonPath = '';
 	let buttonLayout = 'df';
 
@@ -38,7 +39,7 @@ const ButtonController = ({ layout, id, size = 6 }: IPropsButton) => {
 		buttonPath = `/images/${buttonLayout}_${id}.png`;
 	}
 
-	return <img src={buttonPath} className={`w-${size} h-${size} object-cover rounded-full`} />;
+	return <img src={buttonPath} className={`w-[${buttonSize}]  object-cover rounded-full`} />;
 };
 
 export default ButtonController;

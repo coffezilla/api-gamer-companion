@@ -107,12 +107,12 @@ const CommandsList = ({ title, group, dataMoves, modal, handleAdd }: IPros) => {
 																		key={`${command}${subIndex}`}
 																	>
 																		{subIndex !== 0 && <p className="text-center text-lg">+</p>}
-																		<ButtonController id={subCommand} />
+																		<ButtonController id={subCommand} size={30} />
 																	</div>
 																);
 															})
 														) : (
-															<ButtonController id={command} />
+															<ButtonController id={command} size={30} />
 														)}
 													</div>
 												);
