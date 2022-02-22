@@ -50,25 +50,19 @@ const CommandsList = ({ title, group, dataMoves, modal, handleAdd }: IPros) => {
 										</div>
 										<div className="text-sm items-end flex flex-wrap space-x-2 space-y-2 justify-end">
 											{moveGroup.commands.combination.map((command: any, index: number) => {
-												return (
-													<div className="flex space-x-2 items-center" key={`${command}${index}`}>
-														{index !== 0 && <p className="text-center text-lg">,</p>}
-														{command.length > 1 ? (
-															command.map((subCommand: any, subIndex: number) => {
-																return (
-																	<div
-																		className="flex space-x-2 items-center"
-																		key={`${command}${subIndex}`}
-																	>
-																		{subIndex !== 0 && <p className="text-center text-lg">+</p>}
-																		<ButtonController id={subCommand} />
-																	</div>
-																);
-															})
-														) : (
-															<ButtonController id={command} />
-														)}
-													</div>
+												return command.length > 1 ? (
+													command.map((subCommand: any, subIndex: number) => {
+														return (
+															<ButtonController
+																id={subCommand}
+																key={subIndex}
+																sequel={index}
+																type="SUM"
+															/>
+														);
+													})
+												) : (
+													<ButtonController id={command} key={index} sequel={index} type="DIVIDE" />
 												);
 											})}
 										</div>

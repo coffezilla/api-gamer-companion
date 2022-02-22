@@ -12,7 +12,12 @@ const ButtonPressing = ({ buttonIndex, buttonLayout, handleClick }: any) => {
 			className="p-1 bg-gray-100 hover:bg-violet-500 rounded-full"
 			onClick={() => handleClick(buttonIndex)}
 		>
-			<ButtonController layout={buttonLayout} id={buttonIndex} size="w-8 lg:w-14" />
+			<ButtonController
+				layout={buttonLayout}
+				id={buttonIndex}
+				size="w-8 lg:w-14"
+				sequel={buttonIndex}
+			/>
 		</button>
 	);
 };

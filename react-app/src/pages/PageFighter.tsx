@@ -481,25 +481,19 @@ const PageFighter = () => {
 							<span className="block mb-2 font-bold">Combinação:</span>
 							<div className="text-sm items-end flex flex-wrap space-x-2 space-y-2 border px-3 pb-4 w-full rounded-md min-h-[60px] mb-3">
 								{formFieldsEdit[3].value.map((command: any, index: number) => {
-									return (
-										<div className="flex space-x-2 items-center" key={`${command}${index}`}>
-											{index !== 0 && <p className="text-center text-lg">,</p>}
-											{command.length > 1 ? (
-												command.map((subCommand: any, subIndex: number) => {
-													return (
-														<div
-															className="flex space-x-2 items-center"
-															key={`${command}${subIndex}`}
-														>
-															{subIndex !== 0 && <p className="text-center text-lg">+</p>}
-															<ButtonController id={subCommand} />
-														</div>
-													);
-												})
-											) : (
-												<ButtonController id={command} />
-											)}
-										</div>
+									return command.length > 1 ? (
+										command.map((subCommand: any, subIndex: number) => {
+											return (
+												<ButtonController
+													id={subCommand}
+													key={subIndex}
+													sequel={index}
+													type="SUM"
+												/>
+											);
+										})
+									) : (
+										<ButtonController id={command} key={index} sequel={index} type="DIVIDE" />
 									);
 								})}
 							</div>
