@@ -617,7 +617,7 @@ const PageFighter = () => {
 						name={dataCharacter.name}
 						game={dataCharacter.game}
 						description=""
-						portrait="https://wi.wallpapertip.com/wsimgs/80-806703_mortal-kombat-wallpaper-4k.jpg"
+						portrait={dataCharacter.portrait}
 					/>
 				)}
 				<div className="container bg-white border p-10 rounded-lg max-w-6xl">

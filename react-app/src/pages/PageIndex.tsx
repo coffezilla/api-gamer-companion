@@ -88,7 +88,10 @@ const PageIndex = () => {
 											type="button"
 											key={character._id}
 											onClick={() => history.push(`/fighter/${character._id}`)}
-											className="rounded-md aspect-square bg-slate-300 bg-[url('https://c4.wallpaperflare.com/wallpaper/975/1024/988/mortal-kombat-x-sub-zero-wallpaper-preview.jpg')] bg-cover"
+											style={{
+												backgroundImage: `url("${character.portrait}")`,
+											}}
+											className="rounded-md aspect-square bg-slate-300 bg-cover"
 										>
 											<div className="bg-white inline-block py-1 px-3 rounded-full">
 												{character.name}

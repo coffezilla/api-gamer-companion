@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import SelectButtonLayout from '../SelectButtonLayout';
 
 const HeaderCharacter = ({ name, game, description, portrait }: any) => {
-	console.log('opinai', portrait);
-	const sadfasfasfd = `bg-[url('https://wi.wallpapertip.com/wsimgs/80-806703_mortal-kombat-wallpaper-4k.jpg')]`;
+	const backgroundPortrait = portrait;
 	return (
 		<>
 			<div className="container bg-white border py-5 px-10 rounded-lg max-w-6xl mb-3 flex justify-between space-x-5 items-center">
@@ -15,7 +14,10 @@ const HeaderCharacter = ({ name, game, description, portrait }: any) => {
 						</div>
 					</Link>
 					<div
-						className={`rounded-md aspect-square bg-slate-300 block w-16 ${sadfasfasfd} bg-cover`}
+						className={`rounded-md aspect-square bg-slate-300 block w-16 bg-cover`}
+						style={{
+							backgroundImage: `url("${backgroundPortrait}")`,
+						}}
 					/>
 					<div>
 						<h1 className="text-2xl font-bold">{name}</h1>

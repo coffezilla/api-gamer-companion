@@ -17,6 +17,7 @@ router.get('/', async (req, res) => {
 			_id: 1,
 			name: 1,
 			game: 1,
+			portrait: 1,
 		});
 		res.json({
 			...response,
