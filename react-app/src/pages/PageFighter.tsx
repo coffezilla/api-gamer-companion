@@ -16,6 +16,9 @@ import {
 
 import { END_POINT_BASE } from '../Api';
 import CombinationInjector from '../components/CombinationInjector/CombinationInjector';
+import HeaderCharacter from '../components/HeaderCharacter/HeaderCharacter';
+import HeaderAdmin from '../components/HeaderAdmin/HeaderAdmin';
+import ButtonController from '../components/ButtonController/ButtonController';
 
 type modalIndex = 'MODAL_ADD_MOVE' | 'MODAL_EDIT_MOVE';
 
@@ -336,7 +339,7 @@ const PageFighter = () => {
 								maxLength={formFields[0].maxLength}
 								value={formFields[0].value}
 								onChange={(e: any) => handleChange(e, formFields, setFormFields)}
-								className="border block px-3 py-2 w-full rounded-md"
+								className="border block px-3 py-2 w-full rounded-md "
 							/>
 							<span className="text-sm text-red-500 italic">{formFields[0].error}</span>
 						</label>
@@ -348,8 +351,9 @@ const PageFighter = () => {
 								name={formFields[1].name}
 								id={formFields[1].name}
 								onChange={(e: any) => handleChange(e, formFields, setFormFields)}
-								className="border block px-3 py-2 w-full rounded-md"
+								className="border block px-3 py-2 w-full rounded-md appearance-none"
 							>
+								<option value="">Sem requisito</option>
 								<option value="Perto">1 - Perto</option>
 								<option value="Longe">2 - Longe</option>
 								<option value="Meia tela">3 - Meia tela</option>
@@ -372,6 +376,34 @@ const PageFighter = () => {
 								className="border block px-3 py-2 w-full rounded-md"
 							/>
 							<span className="text-sm text-red-500 italic">{formFields[5].error}</span>
+						</label>
+
+						<label className="block mb-3">
+							<span className="block mb-2">Combinação:</span>
+							<div className="text-sm items-end flex flex-wrap space-x-2 space-y-2 border px-3 pb-4 w-full rounded-md min-h-[60px] mb-3">
+								{formFields[3].value.map((command: any, index: number) => {
+									return (
+										<div className="flex space-x-2 items-center" key={`${command}${index}`}>
+											{index !== 0 && <p className="text-center text-lg">,</p>}
+											{command.length > 1 ? (
+												command.map((subCommand: any, subIndex: number) => {
+													return (
+														<div
+															className="flex space-x-2 items-center"
+															key={`${command}${subIndex}`}
+														>
+															{subIndex !== 0 && <p className="text-center text-lg">+</p>}
+															<ButtonController id={subCommand} />
+														</div>
+													);
+												})
+											) : (
+												<ButtonController id={command} />
+											)}
+										</div>
+									);
+								})}
+							</div>
 						</label>
 
 						<CombinationInjector
@@ -407,10 +439,10 @@ const PageFighter = () => {
 					<p>logging...</p>
 				)}
 
-				<pre>{JSON.stringify(formFields, null, 1)}</pre>
-				<button type="button" onClick={() => closeModal('MODAL_ADD_MOVE')}>
+				{/* <pre>{JSON.stringify(formFields, null, 1)}</pre> */}
+				{/* <button type="button" onClick={() => closeModal('MODAL_ADD_MOVE')}>
 					CLOSE BUTTON
-				</button>
+				</button> */}
 			</ModalCustom>
 
 			<ModalCustom
@@ -444,8 +476,9 @@ const PageFighter = () => {
 								name={formFieldsEdit[1].name}
 								id={formFieldsEdit[1].name}
 								onChange={(e: any) => handleChange(e, formFieldsEdit, setFormFieldsEdit)}
-								className="border block px-3 py-2 w-full rounded-md"
+								className="border block px-3 py-2 w-full rounded-md appearance-none"
 							>
+								<option value="">Sem requisito</option>
 								<option value="Perto">1 - Perto</option>
 								<option value="Longe">2 - Longe</option>
 								<option value="Meia tela">3 - Meia tela</option>
@@ -470,7 +503,7 @@ const PageFighter = () => {
 							<span className="text-sm text-red-500 italic">{formFieldsEdit[5].error}</span>
 						</label>
 
-						<label htmlFor={formFieldsEdit[3].name} className="block mb-3">
+						{/* <label htmlFor={formFieldsEdit[3].name} className="block mb-3">
 							<span className="block mb-2">combo:</span>
 							<input
 								type={formFieldsEdit[3].type}
@@ -482,6 +515,34 @@ const PageFighter = () => {
 								className="border block px-3 py-2 w-full rounded-md"
 							/>
 							<span className="text-sm text-red-500 italic">{formFieldsEdit[3].error}</span>
+						</label> */}
+
+						<label className="block mb-3">
+							<span className="block mb-2">Combinação:</span>
+							<div className="text-sm items-end flex flex-wrap space-x-2 space-y-2 border px-3 pb-4 w-full rounded-md min-h-[60px] mb-3">
+								{formFieldsEdit[3].value.map((command: any, index: number) => {
+									return (
+										<div className="flex space-x-2 items-center" key={`${command}${index}`}>
+											{index !== 0 && <p className="text-center text-lg">,</p>}
+											{command.length > 1 ? (
+												command.map((subCommand: any, subIndex: number) => {
+													return (
+														<div
+															className="flex space-x-2 items-center"
+															key={`${command}${subIndex}`}
+														>
+															{subIndex !== 0 && <p className="text-center text-lg">+</p>}
+															<ButtonController id={subCommand} />
+														</div>
+													);
+												})
+											) : (
+												<ButtonController id={command} />
+											)}
+										</div>
+									);
+								})}
+							</div>
 						</label>
 
 						<CombinationInjector
@@ -517,26 +578,38 @@ const PageFighter = () => {
 					<p>logging...</p>
 				)}
 
-				<pre>{JSON.stringify(formFieldsEdit, null, 1)}</pre>
-				<button type="button" onClick={() => closeModal('MODAL_EDIT_MOVE')}>
+				{/* <pre>{JSON.stringify(formFieldsEdit, null, 1)}</pre> */}
+				{/* <button type="button" onClick={() => closeModal('MODAL_EDIT_MOVE')}>
 					CLOSE BUTTON
+				</button> */}
+				<button
+					type="button"
+					onClick={handleSubmitDelete}
+					className="bg-red-50 hover:bg-red-600 text-red-800 hover:text-white rounded-md inline-block px-3 py-1 text-sm"
+				>
+					Deletar
 				</button>
-				<button type="button" onClick={handleSubmitDelete}>
+
+				{/* <button type="button" onClick={handleSubmitDelete}>
 					DELETAR FATALITY
-				</button>
+				</button> */}
 			</ModalCustom>
 
-			<div className="bg-slate-200 h-screen w-full py-5">
+			<div className="bg-slate-200 min-h-screen w-full pb-20 pt-5">
+				{/* <pre>{JSON.stringify(dataCharacter, null, 1)}</pre> */}
+				<HeaderAdmin />
+				{dataCharacter && (
+					<HeaderCharacter
+						name={dataCharacter.name}
+						game={dataCharacter.game}
+						description=""
+						portrait="https://wi.wallpapertip.com/wsimgs/80-806703_mortal-kombat-wallpaper-4k.jpg"
+					/>
+				)}
 				<div className="container bg-white border p-10 rounded-lg max-w-6xl">
-					<Link to="/">
-						<div className="bg-blue-50 hover:bg-blue-600 text-blue-800 hover:text-white rounded-xl inline-block px-3 py-1 mb-5">
-							Voltar
-						</div>
-					</Link>
-					{dataCharacter && <h1 className="text-xl font-bold mb-5">{dataCharacter.name}</h1>}
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-10">
 						<div id="col1">
-							<button type="button" onClick={() => handleAddGroupMove('fatalities')}>
+							{/* <button type="button" onClick={() => handleAddGroupMove('fatalities')}>
 								CADASTRAR FATALITY
 							</button>
 							<br />
@@ -553,12 +626,13 @@ const PageFighter = () => {
 							</button>
 							<button type="button" onClick={() => handleAddGroupMove('specials')}>
 								CADASTRAR SPECIALS
-							</button>
+							</button> */}
 
 							{dataCharacter ? (
 								<CommandsList
 									title="Fatality"
 									group="fatalities"
+									handleAdd={handleAddGroupMove}
 									dataMoves={dataCharacter.fatalities}
 									modal={openModal}
 								/>
@@ -570,6 +644,7 @@ const PageFighter = () => {
 								<CommandsList
 									title="Specials"
 									group="specials"
+									handleAdd={handleAddGroupMove}
 									dataMoves={dataCharacter.specials}
 									modal={openModal}
 								/>
@@ -581,6 +656,7 @@ const PageFighter = () => {
 								<CommandsList
 									group="brutalities"
 									title="Brutality"
+									handleAdd={handleAddGroupMove}
 									dataMoves={dataCharacter.brutalities}
 									modal={openModal}
 								/>
@@ -593,6 +669,7 @@ const PageFighter = () => {
 								<CommandsList
 									group="combos"
 									title="Combos"
+									handleAdd={handleAddGroupMove}
 									dataMoves={dataCharacter.combos}
 									modal={openModal}
 								/>
@@ -604,6 +681,7 @@ const PageFighter = () => {
 								<CommandsList
 									group="moves"
 									title="Moves"
+									handleAdd={handleAddGroupMove}
 									dataMoves={dataCharacter.moves}
 									modal={openModal}
 								/>
@@ -612,7 +690,7 @@ const PageFighter = () => {
 							)}
 						</div>
 					</div>
-					<MainMenu />
+					{/* <MainMenu /> */}
 				</div>
 			</div>
 		</>

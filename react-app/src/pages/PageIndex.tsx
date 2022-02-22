@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -9,6 +9,10 @@ import MainMenu from '../components/MainMenu';
 import { getAllCharacters } from '../Api/characterHandle';
 
 import { END_POINT_BASE } from '../Api';
+import SelectButtonLayout from '../components/SelectButtonLayout/SelectButtonLayout';
+import HeaderAdmin from '../components/HeaderAdmin';
+import HeaderCharacter from '../components/HeaderCharacter/HeaderCharacter';
+import HeaderGame from '../components/HeaderGame/HeaderGame';
 
 const PageIndex = () => {
 	const history = useHistory();
@@ -35,10 +39,46 @@ const PageIndex = () => {
 
 	return (
 		<>
-			<div className="bg-slate-200 h-screen w-full py-5">
+			<div className="bg-slate-200 min-h-screen w-full pb-20 pt-5">
+				<HeaderAdmin />
+				<HeaderGame title={rdxPrefsGame} />
+				{/* <HeaderCharacter /> */}
+				{/* <div className="container py-5 px-3 max-w-6xl flex justify-end space-x-3 items-center">
+					<p className="text-gray-500 italic text-sm">renatojs.web@gmail.com</p>
+					<button className="bg-blue-50 hover:bg-blue-600 text-blue-800 hover:text-white rounded-xl inline-block px-3 py-1">
+						Sair
+					</button>
+				</div> */}
+
+				{/* <div className="container bg-white border py-5 px-10 rounded-lg max-w-6xl mb-3 flex justify-between space-x-5 items-center">
+					<div className="flex space-x-5 items-center">
+						<Link to="/">
+							<div className="bg-blue-50 hover:bg-blue-600 text-blue-800 hover:text-white rounded-md inline-block px-3 py-1">
+								Voltar
+							</div>
+						</Link>
+						<div className="rounded-md aspect-square bg-slate-300 block w-16 bg-[url('https://c4.wallpaperflare.com/wallpaper/975/1024/988/mortal-kombat-x-sub-zero-wallpaper-preview.jpg')] bg-cover" />
+						<div>
+							<h1 className="text-2xl font-bold">Flamengo</h1>
+							<p className="text-md font-bold">Mortal Kombat X</p>
+							<p className="text-sm text-gray-500">Personagem muito masa</p>
+						</div>
+					</div>
+					<div className="flex space-x-5">
+						<SelectButtonLayout selectGame />
+					</div>
+				</div> */}
+
+				{/* <div className="container bg-white border py-5 px-10 rounded-lg max-w-6xl mb-3 flex justify-between space-x-5 items-center">
+					<h1 className="text-2xl font-bold">MORTAL KOMBAT X</h1>
+					<div className="flex space-x-5">
+						<SelectButtonLayout selectLayout />
+					</div>
+				</div> */}
+
 				<div className="container bg-white border p-10 rounded-lg max-w-6xl">
-					<h1 className="text-xl font-bold mb-2">MORTAL KOMBAT XI</h1>
-					<p className="mb-5">Escolha um personagem:</p>
+					{/* <h1 className="text-xl font-bold mb-2">MORTAL KOMBAT XI</h1> */}
+					{/* <p className="mb-5">Escolha um personagem:</p> */}
 					<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
 						{dataCharacters ? (
 							dataCharacters.length > 0 ? (
@@ -63,7 +103,7 @@ const PageIndex = () => {
 							<p>Carregando...</p>
 						)}
 					</div>
-					<MainMenu />
+					{/* <MainMenu /> */}
 				</div>
 			</div>
 		</>

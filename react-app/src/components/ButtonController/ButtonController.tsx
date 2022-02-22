@@ -1,20 +1,22 @@
 /* eslint-disable */
-
+import { useSelector } from 'react-redux';
 import { IRdxUser } from '../../redux/ducks/User';
 
 interface IPropsButton {
-	layout: IRdxUser['prefs']['buttonLayout'];
+	layout?: IRdxUser['prefs']['buttonLayout'];
 	id: Number;
+	size?: Number;
 }
 
-const ButtonController = ({ layout, id }: IPropsButton) => {
+const ButtonController = ({ layout, id, size = 6 }: IPropsButton) => {
+	const rdxPrefsButtonLayout = useSelector((state: IRdxUser) => state.prefs.buttonLayout);
 	let buttonPath = '';
 	let buttonLayout = 'df';
 
 	if (id <= 4) {
 		buttonPath = `/images/dir_${id}.png`;
 	} else {
-		switch (layout) {
+		switch (rdxPrefsButtonLayout) {
 			case 0:
 				buttonLayout = 'gn';
 				break;
@@ -36,7 +38,7 @@ const ButtonController = ({ layout, id }: IPropsButton) => {
 		buttonPath = `/images/${buttonLayout}_${id}.png`;
 	}
 
-	return <img src={buttonPath} className="w-5 object-cover bg-red-100 rounded-full" />;
+	return <img src={buttonPath} className={`w-${size} h-${size} object-cover rounded-full`} />;
 };
 
 export default ButtonController;

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { rdxLoginUser } from '../redux/ducks/User';
-import MainMenu from '../components/MainMenu';
+// import MainMenu from '../components/MainMenu';
 
 import { validateForm, IForm } from '../components/FormValidation';
 
@@ -80,8 +80,8 @@ const PageLogin = () => {
 
 	return (
 		<>
-			<div className=" bg-slate-200 h-screen w-full py-5">
-				<div className="bg-white border max-w-lg p-10 rounded-lg mx-auto">
+			<div className=" bg-slate-200 h-screen w-full flex justify-center items-center">
+				<div className="bg-white border max-w-[500px] w-full  p-10  rounded-lg ">
 					<h1 className="text-xl font-bold text-center mb-2">LOGIN ADMINISTRADOR</h1>
 
 					{!isLogging ? (
@@ -131,7 +131,7 @@ const PageLogin = () => {
 					) : (
 						<p>logging...</p>
 					)}
-					<MainMenu />
+					{/* <MainMenu /> */}
 				</div>
 			</div>
 		</>

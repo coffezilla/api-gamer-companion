@@ -10,10 +10,10 @@ const ButtonPressing = ({ buttonIndex, buttonLayout, handleClick }: any) => {
 	return (
 		<button
 			type="button"
-			className="p-1 bg-gray-400 hover:bg-gray-500"
+			className="p-1 bg-gray-100 hover:bg-violet-500 rounded-full"
 			onClick={() => handleClick(buttonIndex)}
 		>
-			<ButtonController layout={buttonLayout} id={buttonIndex} />
+			<ButtonController layout={buttonLayout} id={buttonIndex} size={10} />
 		</button>
 	);
 };
@@ -71,95 +71,130 @@ const CombinationInjector = ({ value, onChange, setForm, form }: any) => {
 
 	return (
 		<>
-			<h1>Contact</h1>
-			<div className="bg-red-">
-				<ButtonPressing
-					buttonIndex={1}
-					buttonLayout={rdxPrefsButtonLayout}
-					handleClick={handleAddButton}
-				/>
-				<ButtonPressing
-					buttonIndex={2}
-					buttonLayout={rdxPrefsButtonLayout}
-					handleClick={handleAddButton}
-				/>
-				<ButtonPressing
-					buttonIndex={3}
-					buttonLayout={rdxPrefsButtonLayout}
-					handleClick={handleAddButton}
-				/>
-				<ButtonPressing
-					buttonIndex={4}
-					buttonLayout={rdxPrefsButtonLayout}
-					handleClick={handleAddButton}
-				/>
-				<ButtonPressing
-					buttonIndex={5}
-					buttonLayout={rdxPrefsButtonLayout}
-					handleClick={handleAddButton}
-				/>
-				<ButtonPressing
-					buttonIndex={6}
-					buttonLayout={rdxPrefsButtonLayout}
-					handleClick={handleAddButton}
-				/>
-				<ButtonPressing
-					buttonIndex={7}
-					buttonLayout={rdxPrefsButtonLayout}
-					handleClick={handleAddButton}
-				/>
-				<ButtonPressing
-					buttonIndex={8}
-					buttonLayout={rdxPrefsButtonLayout}
-					handleClick={handleAddButton}
-				/>
-				<ButtonPressing
-					buttonIndex={9}
-					buttonLayout={rdxPrefsButtonLayout}
-					handleClick={handleAddButton}
-				/>
-				<ButtonPressing
-					buttonIndex={10}
-					buttonLayout={rdxPrefsButtonLayout}
-					handleClick={handleAddButton}
-				/>
-				<ButtonPressing
-					buttonIndex={11}
-					buttonLayout={rdxPrefsButtonLayout}
-					handleClick={handleAddButton}
-				/>
-				<ButtonPressing
-					buttonIndex={12}
-					buttonLayout={rdxPrefsButtonLayout}
-					handleClick={handleAddButton}
-				/>
-				<ButtonPressing
-					buttonIndex={13}
-					buttonLayout={rdxPrefsButtonLayout}
-					handleClick={handleAddButton}
-				/>
-				<ButtonPressing
-					buttonIndex={14}
-					buttonLayout={rdxPrefsButtonLayout}
-					handleClick={handleAddButton}
-				/>
+			<div className="grid grid-cols-8 gap-4 my-5">
+				<div className="text-center">
+					<ButtonPressing
+						buttonIndex={1}
+						buttonLayout={rdxPrefsButtonLayout}
+						handleClick={handleAddButton}
+					/>
+				</div>
+				<div className="text-center">
+					<ButtonPressing
+						buttonIndex={2}
+						buttonLayout={rdxPrefsButtonLayout}
+						handleClick={handleAddButton}
+					/>
+				</div>
+				<div className="text-center">
+					<ButtonPressing
+						buttonIndex={3}
+						buttonLayout={rdxPrefsButtonLayout}
+						handleClick={handleAddButton}
+					/>
+				</div>
+				<div className="text-center">
+					<ButtonPressing
+						buttonIndex={4}
+						buttonLayout={rdxPrefsButtonLayout}
+						handleClick={handleAddButton}
+					/>
+				</div>
+				<div className="text-center">
+					<ButtonPressing
+						buttonIndex={5}
+						buttonLayout={rdxPrefsButtonLayout}
+						handleClick={handleAddButton}
+					/>
+				</div>
+				<div className="text-center">
+					<ButtonPressing
+						buttonIndex={6}
+						buttonLayout={rdxPrefsButtonLayout}
+						handleClick={handleAddButton}
+					/>
+				</div>
+				<div className="text-center">
+					<ButtonPressing
+						buttonIndex={7}
+						buttonLayout={rdxPrefsButtonLayout}
+						handleClick={handleAddButton}
+					/>
+				</div>
+				<div className="text-center">
+					<ButtonPressing
+						buttonIndex={8}
+						buttonLayout={rdxPrefsButtonLayout}
+						handleClick={handleAddButton}
+					/>
+				</div>
+				<div className="text-center">
+					<ButtonPressing
+						buttonIndex={9}
+						buttonLayout={rdxPrefsButtonLayout}
+						handleClick={handleAddButton}
+					/>
+				</div>
+				<div className="text-center">
+					<ButtonPressing
+						buttonIndex={10}
+						buttonLayout={rdxPrefsButtonLayout}
+						handleClick={handleAddButton}
+					/>
+				</div>
+				<div className="text-center">
+					<ButtonPressing
+						buttonIndex={11}
+						buttonLayout={rdxPrefsButtonLayout}
+						handleClick={handleAddButton}
+					/>
+				</div>
+				<div className="text-center">
+					<ButtonPressing
+						buttonIndex={12}
+						buttonLayout={rdxPrefsButtonLayout}
+						handleClick={handleAddButton}
+					/>
+				</div>
+				<div className="text-center">
+					<ButtonPressing
+						buttonIndex={13}
+						buttonLayout={rdxPrefsButtonLayout}
+						handleClick={handleAddButton}
+					/>
+				</div>
+				<div className="text-center">
+					<ButtonPressing
+						buttonIndex={14}
+						buttonLayout={rdxPrefsButtonLayout}
+						handleClick={handleAddButton}
+					/>
+				</div>
 
-				<button
-					type="button"
-					className={`p-1  hover:bg-gray-500 ${holdButton ? 'bg-gray-500' : 'bg-gray-400'}`}
-					onClick={() => handleHoldButton()}
-				>
-					HOLD
-				</button>
-				<button
-					type="button"
-					className={`p-1 bg-gray-400 hover:bg-gray-500`}
-					onClick={() => handleDeleteButton()}
-				>
-					DELETE
-				</button>
-				<pre>{JSON.stringify(combination, null, 1)}</pre>
-				<pre>hold: {JSON.stringify(holdButton, null, 1)}</pre>
+				<div className="text-center">
+					<button
+						type="button"
+						className={`p-1 ${
+							holdButton ? 'bg-violet-500' : 'bg-gray-100'
+						} hover:bg-violet-500 rounded-full`}
+						onClick={() => handleHoldButton()}
+					>
+						<ButtonController layout={rdxPrefsButtonLayout} id={15} size={10} />
+					</button>
+				</div>
+
+				<div className="text-center">
+					<button
+						type="button"
+						className="p-1 bg-gray-100 hover:bg-red-400 rounded-full"
+						onClick={() => handleDeleteButton()}
+					>
+						<ButtonController layout={rdxPrefsButtonLayout} id={16} size={10} />
+					</button>
+				</div>
+
+				{/* <pre>{JSON.stringify(combination, null, 1)}</pre> */}
+				{/* <pre>hold: {JSON.stringify(holdButton, null, 1)}</pre> */}
 			</div>
 		</>
 	);
