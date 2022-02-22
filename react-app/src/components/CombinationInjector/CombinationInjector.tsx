@@ -13,7 +13,7 @@ const ButtonPressing = ({ buttonIndex, buttonLayout, handleClick }: any) => {
 			className="p-1 bg-gray-100 hover:bg-violet-500 rounded-full"
 			onClick={() => handleClick(buttonIndex)}
 		>
-			<ButtonController layout={buttonLayout} id={buttonIndex} size={40} />
+			<ButtonController layout={buttonLayout} id={buttonIndex} size="w-14" />
 		</button>
 	);
 };
@@ -179,7 +179,7 @@ const CombinationInjector = ({ value, onChange, setForm, form }: any) => {
 						} hover:bg-violet-500 rounded-full`}
 						onClick={() => handleHoldButton()}
 					>
-						<ButtonController layout={rdxPrefsButtonLayout} id={15} size={40} />
+						<ButtonController layout={rdxPrefsButtonLayout} id={15} size="w-14" />
 					</button>
 				</div>
 
@@ -189,7 +189,7 @@ const CombinationInjector = ({ value, onChange, setForm, form }: any) => {
 						className="p-1 bg-gray-100 hover:bg-red-400 rounded-full"
 						onClick={() => handleDeleteButton()}
 					>
-						<ButtonController layout={rdxPrefsButtonLayout} id={16} size={40} />
+						<ButtonController layout={rdxPrefsButtonLayout} id={16} size="w-14" />
 					</button>
 				</div>
 

@@ -7,7 +7,9 @@ const stringify = require('../helper/utils');
 router.get('/:charId/combos', async (req, res) => {
 	const { charId } = req.params;
 	try {
-		const combos = await Characters.find({ _id: charId }, { combos: 1 });
+		const combos = await Characters.find({ _id: charId }, { combos: 1 }).sort({
+			name: 1,
+		});
 		res.json(combos);
 	} catch (err) {
 		res.json(err);
@@ -29,7 +31,7 @@ router.get('/:charId/combos/:slug', async (req, res) => {
 					$elemMatch: { slug: slug },
 				},
 			}
-		);
+		).sort({ name: 1 });
 
 		res.json({
 			...response,

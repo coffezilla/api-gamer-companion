@@ -7,7 +7,9 @@ const stringify = require('../helper/utils');
 router.get('/:charId/moves', async (req, res) => {
 	const { charId } = req.params;
 	try {
-		const moves = await Characters.find({ _id: charId }, { moves: 1 });
+		const moves = await Characters.find({ _id: charId }, { moves: 1 }).sort({
+			name: 1,
+		});
 		res.json(moves);
 	} catch (err) {
 		res.json(err);
@@ -29,7 +31,7 @@ router.get('/:charId/moves/:slug', async (req, res) => {
 					$elemMatch: { slug: slug },
 				},
 			}
-		);
+		).sort({ name: 1 });
 
 		res.json({
 			...response,

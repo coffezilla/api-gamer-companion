@@ -4,11 +4,11 @@ import { IRdxUser } from '../../redux/ducks/User';
 
 interface IPropsButton {
 	layout?: IRdxUser['prefs']['buttonLayout'];
-	id: Number;
-	size?: Number;
+	id: number;
+	size?: string;
 }
 
-const ButtonController = ({ id, size = 30 }: IPropsButton) => {
+const ButtonController = ({ id, size = 'w-8' }: IPropsButton) => {
 	const rdxPrefsButtonLayout = useSelector((state: IRdxUser) => state.prefs.buttonLayout);
 	const buttonSize = `${size}px`;
 	let buttonPath = '';
@@ -39,7 +39,7 @@ const ButtonController = ({ id, size = 30 }: IPropsButton) => {
 		buttonPath = `/images/${buttonLayout}_${id}.png`;
 	}
 
-	return <img src={buttonPath} className={`w-[${buttonSize}]  object-cover rounded-full`} />;
+	return <img src={buttonPath} className={`${size} object-cover rounded-full`} />;
 };
 
 export default ButtonController;

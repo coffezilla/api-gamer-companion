@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
 			name: 1,
 			game: 1,
 			portrait: 1,
-		});
+		}).sort({ name: 1 });
 		res.json({
 			...response,
 			status: 1,

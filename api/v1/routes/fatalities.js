@@ -10,7 +10,7 @@ router.get('/:charId/fatalities', async (req, res) => {
 		const fatalities = await Characters.find(
 			{ _id: charId },
 			{ fatalities: 1 }
-		);
+		).sort({ name: 1 });
 		res.json(fatalities);
 	} catch (err) {
 		res.json(err);
@@ -32,7 +32,7 @@ router.get('/:charId/fatalities/:slug', async (req, res) => {
 					$elemMatch: { slug: slug },
 				},
 			}
-		);
+		).sort({ name: 1 });
 
 		res.json({
 			...response,

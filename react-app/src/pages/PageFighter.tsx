@@ -407,12 +407,12 @@ const PageFighter = () => {
 															key={`${command}${subIndex}`}
 														>
 															{subIndex !== 0 && <p className="text-center text-lg">+</p>}
-															<ButtonController id={subCommand} size={30} />
+															<ButtonController id={subCommand} />
 														</div>
 													);
 												})
 											) : (
-												<ButtonController id={command} size={30} />
+												<ButtonController id={command} />
 											)}
 										</div>
 									);
@@ -546,12 +546,12 @@ const PageFighter = () => {
 															key={`${command}${subIndex}`}
 														>
 															{subIndex !== 0 && <p className="text-center text-lg">+</p>}
-															<ButtonController id={subCommand} size={30} />
+															<ButtonController id={subCommand} />
 														</div>
 													);
 												})
 											) : (
-												<ButtonController id={command} size={30} />
+												<ButtonController id={command} />
 											)}
 										</div>
 									);
