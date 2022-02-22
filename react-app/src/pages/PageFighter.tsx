@@ -1,8 +1,6 @@
 /* eslint-disable */
-import axios from 'axios';
-import { useHistory, Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import MainMenu from '../components/MainMenu';
 import ModalCustom from '../components/ModalCustom';
 import CommandsList from '../components/CommandsList';
 import Swal from 'sweetalert2';
@@ -16,7 +14,6 @@ import {
 	getDataCharacters,
 } from '../Api/characterHandle';
 
-import { END_POINT_BASE } from '../Api';
 import CombinationInjector from '../components/CombinationInjector/CombinationInjector';
 import HeaderCharacter from '../components/HeaderCharacter/HeaderCharacter';
 import HeaderAdmin from '../components/HeaderAdmin/HeaderAdmin';
@@ -25,7 +22,6 @@ import ButtonController from '../components/ButtonController/ButtonController';
 type modalIndex = 'MODAL_ADD_MOVE' | 'MODAL_EDIT_MOVE';
 
 const PageFighter = () => {
-	const history = useHistory();
 	const [isLogging, setIsLogging] = useState<boolean>(false);
 
 	// edit move
@@ -135,10 +131,8 @@ const PageFighter = () => {
 				{ ...formFieldsEdit[4], value: '' },
 				{ ...formFieldsEdit[5], value: '' },
 			]);
-			// console.log('adicionar novos', modalData);
 			if (modalData) {
 				getDataMove(modalData.slug, modalData.group);
-				// alert(modalData.group);
 			}
 		}
 	};
@@ -153,10 +147,8 @@ const PageFighter = () => {
 
 	// FORM EDITION
 	const getDataMove = async (slug: String, group: String) => {
-		console.log('find', slug);
 		getMoveGroupData(fid, group, slug).then((res: any) => {
 			if (res.data.status === 1) {
-				console.log('man', res.data.move);
 				setFormFieldsEdit([
 					{ ...formFieldsEdit[0], value: res.data.move.name },
 					{ ...formFieldsEdit[1], value: res.data.move.commands.requirement },
@@ -181,7 +173,6 @@ const PageFighter = () => {
 			{ ...formFields[5] },
 		]);
 		openModal('MODAL_ADD_MOVE');
-		console.log('sao paulo', groupMove);
 	};
 
 	// FORM
@@ -193,7 +184,6 @@ const PageFighter = () => {
 	};
 
 	const handleChange = (e: any, form: any, setForm: any) => {
-		console.log('nude', e.target.name, form);
 		const isCheckBox = e.target.type === 'checkbox';
 		let currentValue = e.target.value;
 
@@ -233,7 +223,6 @@ const PageFighter = () => {
 				formFields[5].value,
 				formFields[1].value,
 			).then((res) => {
-				console.log('aksdjfkasjfkad', res.data);
 				if (res.data.status === 1) {
 					getCharacter();
 					setFormFields([
@@ -245,8 +234,6 @@ const PageFighter = () => {
 						{ ...formFields[5], value: '' },
 					]);
 					closeModal('MODAL_ADD_MOVE');
-				} else {
-					alert('erro');
 				}
 
 				setIsLogging(false);
@@ -272,9 +259,6 @@ const PageFighter = () => {
 				if (res.data.status === 1) {
 					getCharacter();
 					closeModal('MODAL_EDIT_MOVE');
-					console.log('done');
-				} else {
-					console.log('error');
 				}
 				setIsLogging(false);
 			});
@@ -296,10 +280,7 @@ const PageFighter = () => {
 				deleteMoveGroup(fid, formFieldsEdit[2].value, formFieldsEdit[4].value).then((res) => {
 					if (res.data.status === 1) {
 						getCharacter();
-						console.log('deletar move');
 						closeModal('MODAL_EDIT_MOVE');
-					} else {
-						console.log('nao deletou');
 					}
 					setIsLogging(false);
 				});
@@ -311,25 +292,12 @@ const PageFighter = () => {
 		getDataCharacters(fid).then((res: any) => {
 			if (res.data.status === 1) {
 				setDataCharacter(res.data.character);
-				console.log('gabigordo', res.data.character);
-			} else {
-				console.log('error');
 			}
 		});
-		// setDataCharacter(null);
-		// await axios({
-		// 	method: 'get',
-		// 	url: `${END_POINT_BASE}/characters/${fid}`,
-		// }).then((res) => {
-		// 	setDataCharacter(res.data[0]);
-
-		// 	console.log('personagem', res.data[0]);
-		// });
 	};
 
 	useEffect(() => {
 		getCharacter();
-		// openModal('MODAL_ADD_MOVE');
 	}, []);
 
 	return (
@@ -338,14 +306,16 @@ const PageFighter = () => {
 				status={modalState.MODAL_ADD_MOVE.status}
 				closeModal={closeModal}
 				modal="MODAL_ADD_MOVE"
-				className="rounded-lg p-5"
+				className="md:rounded-lg p-3 md:p-5"
 			>
-				<h1 className="text-xl font-bold mb-5 uppercase">CADASTRAR: {formFields[4].value}</h1>
+				<h1 className="text-lg md:text-xl leading-5 uppercase font-bold mb-5">
+					CADASTRAR: {formFields[4].value}
+				</h1>
 
 				{!isLogging ? (
 					<form onSubmit={handleSubmitAdd}>
 						<label htmlFor={formFields[0].name} className="block mb-3">
-							<span className="block mb-2">Nome do comando:</span>
+							<span className="block mb-1 font-bold text-xs md:text-md">Nome do comando:</span>
 							<input
 								type={formFields[0].type}
 								name={formFields[0].name}
@@ -359,7 +329,7 @@ const PageFighter = () => {
 						</label>
 
 						<label htmlFor={formFields[1].name} className="block mb-3">
-							<span className="block mb-2">Requisito:</span>
+							<span className="block mb-1 font-bold text-xs md:text-md">Requisito:</span>
 							<select
 								value={formFields[1].value}
 								name={formFields[1].name}
@@ -379,7 +349,7 @@ const PageFighter = () => {
 						</label>
 
 						<label htmlFor={formFields[5].name} className="block mb-3">
-							<span className="block mb-2">Anotação:</span>
+							<span className="block mb-1 font-bold text-xs md:text-md">Anotação:</span>
 							<input
 								type={formFields[5].type}
 								name={formFields[5].name}
@@ -393,7 +363,7 @@ const PageFighter = () => {
 						</label>
 
 						<label className="block mb-3">
-							<span className="block mb-2">Combinação:</span>
+							<span className="block mb-1 font-bold text-xs md:text-md">Combinação:</span>
 							<div className="text-sm items-end flex flex-wrap space-x-2 space-y-2 border px-3 pb-4 w-full rounded-md min-h-[60px] mb-3">
 								{formFields[3].value.map((command: any, index: number) => {
 									return (
@@ -427,50 +397,40 @@ const PageFighter = () => {
 							setForm={setFormFields}
 						/>
 
-						{/* <label htmlFor={formFields[2].name} className="block mb-3">
-							<span className="block mb-2">Tipo de movimento:</span>
-							<select
-								value={formFields[2].value}
-								name={formFields[2].name}
-								id={formFields[2].name}
-								onChange={(e: any) => handleChange(e, formFields, setFormFields)}
-								className="border block px-3 py-2 w-full rounded-md"
-							>
-								<option value="fatality">1 - Fatality</option>
-								<option value="brutality">2 - Brutality</option>
-							</select>
-							<span className="text-sm text-red-500 italic">{formFields[2].error}</span>
-						</label> */}
-
 						<button
 							type="submit"
 							className="border block px-3 py-2 w-full rounded-md bg-blue-500 hover:bg-blue-600 text-white shadow mb-3"
 						>
 							Cadastrar comando
 						</button>
+
+						<button
+							type="button"
+							onClick={() => closeModal('MODAL_ADD_MOVE')}
+							className="border block px-3 py-2 w-full rounded-md bg-white hover:bg-gray-50 text-gray-600 "
+						>
+							Cancelar
+						</button>
 					</form>
 				) : (
 					<p>logging...</p>
 				)}
-
-				{/* <pre>{JSON.stringify(formFields, null, 1)}</pre> */}
-				{/* <button type="button" onClick={() => closeModal('MODAL_ADD_MOVE')}>
-					CLOSE BUTTON
-				</button> */}
 			</ModalCustom>
 
 			<ModalCustom
 				status={modalState.MODAL_EDIT_MOVE.status}
 				closeModal={closeModal}
 				modal="MODAL_EDIT_MOVE"
-				className="rounded-lg p-5"
+				className="md:rounded-lg p-3 md:p-5"
 			>
-				<h1 className="text-xl font-bold mb-5 uppercase">EDIÇÃO: {formFieldsEdit[2].value}</h1>
+				<h1 className="text-lg md:text-xl leading-5 uppercase font-bold mb-5">
+					EDIÇÃO: {formFieldsEdit[2].value}
+				</h1>
 
 				{!isLogging ? (
 					<form onSubmit={handleSubmitEdit}>
 						<label htmlFor={formFieldsEdit[0].name} className="block mb-3 font-bold">
-							<span className="block mb-2">Nome do comando:</span>
+							<span className="block mb-1 font-bold text-xs md:text-md">Nome do comando:</span>
 							<input
 								type={formFieldsEdit[0].type}
 								name={formFieldsEdit[0].name}
@@ -484,7 +444,7 @@ const PageFighter = () => {
 						</label>
 
 						<label htmlFor={formFieldsEdit[1].name} className="block mb-3 font-bold">
-							<span className="block mb-2">Requisito:</span>
+							<span className="block mb-1 font-bold text-xs md:text-md">Requisito:</span>
 							<select
 								value={formFieldsEdit[1].value}
 								name={formFieldsEdit[1].name}
@@ -504,7 +464,7 @@ const PageFighter = () => {
 						</label>
 
 						<label htmlFor={formFieldsEdit[5].name} className="block mb-3 font-bold">
-							<span className="block mb-2">Anotação:</span>
+							<span className="block mb-1 font-bold text-xs md:text-md">Anotação:</span>
 							<input
 								type={formFieldsEdit[5].type}
 								name={formFieldsEdit[5].name}
@@ -516,20 +476,6 @@ const PageFighter = () => {
 							/>
 							<span className="text-sm text-red-500 italic">{formFieldsEdit[5].error}</span>
 						</label>
-
-						{/* <label htmlFor={formFieldsEdit[3].name} className="block mb-3">
-							<span className="block mb-2">combo:</span>
-							<input
-								type={formFieldsEdit[3].type}
-								name={formFieldsEdit[3].name}
-								id={formFieldsEdit[3].name}
-								maxLength={formFieldsEdit[3].maxLength}
-								value={formFieldsEdit[3].value}
-								onChange={(e: any) => handleChange(e, formFieldsEdit, setFormFieldsEdit)}
-								className="border block px-3 py-2 w-full rounded-md"
-							/>
-							<span className="text-sm text-red-500 italic">{formFieldsEdit[3].error}</span>
-						</label> */}
 
 						<label className="block mb-3">
 							<span className="block mb-2 font-bold">Combinação:</span>
@@ -566,36 +512,25 @@ const PageFighter = () => {
 							setForm={setFormFieldsEdit}
 						/>
 
-						{/* <label htmlFor={formFieldsEdit[2].name} className="block mb-3">
-							<span className="block mb-2">Tipo de movimento:</span>
-							<select
-								value={formFieldsEdit[2].value}
-								name={formFieldsEdit[2].name}
-								id={formFieldsEdit[2].name}
-								onChange={(e: any) => handleChange(e, formFieldsEdit, setFormFieldsEdit)}
-								className="border block px-3 py-2 w-full rounded-md"
-							>
-								<option value="fatality">1 - Fatality</option>
-								<option value="brutality">2 - Brutality</option>
-							</select>
-							<span className="text-sm text-red-500 italic">{formFieldsEdit[2].error}</span>
-						</label> */}
-
 						<button
 							type="submit"
 							className="border block px-3 py-2 w-full rounded-md bg-blue-500 hover:bg-blue-600 text-white shadow mb-3"
 						>
 							Cadastrar comando
 						</button>
+
+						<button
+							type="button"
+							onClick={() => closeModal('MODAL_EDIT_MOVE')}
+							className="border block px-3 py-2 w-full rounded-md bg-white hover:bg-gray-50 text-gray-600 mb-3"
+						>
+							Cancelar
+						</button>
 					</form>
 				) : (
 					<p>logging...</p>
 				)}
 
-				{/* <pre>{JSON.stringify(formFieldsEdit, null, 1)}</pre> */}
-				{/* <button type="button" onClick={() => closeModal('MODAL_EDIT_MOVE')}>
-					CLOSE BUTTON
-				</button> */}
 				<button
 					type="button"
 					onClick={handleSubmitDelete}
@@ -603,14 +538,9 @@ const PageFighter = () => {
 				>
 					Deletar
 				</button>
-
-				{/* <button type="button" onClick={handleSubmitDelete}>
-					DELETAR FATALITY
-				</button> */}
 			</ModalCustom>
 
-			<div className="bg-slate-200 min-h-screen w-full pb-20 pt-5">
-				{/* <pre>{JSON.stringify(dataCharacter, null, 1)}</pre> */}
+			<div className="bg-slate-200 min-h-screen w-full p-0 md:p-3 xl:p-3 ">
 				<HeaderAdmin />
 				{dataCharacter && (
 					<HeaderCharacter
@@ -620,34 +550,15 @@ const PageFighter = () => {
 						portrait={dataCharacter.portrait}
 					/>
 				)}
-				<div className="container bg-white border p-10 rounded-lg max-w-6xl">
-					<div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+				<div className="container bg-white border p-3 md:p-10 md:rounded-lg max-w-6xl">
+					<div className="grid grid-cols-1 lg:grid-cols-2 md:gap-10">
 						<div id="col1">
-							{/* <button type="button" onClick={() => handleAddGroupMove('fatalities')}>
-								CADASTRAR FATALITY
-							</button>
-							<br />
-							<button type="button" onClick={() => handleAddGroupMove('brutalities')}>
-								CADASTRAR BRUTALITY
-							</button>
-							<br />
-							<button type="button" onClick={() => handleAddGroupMove('combos')}>
-								CADASTRAR COMBOS
-							</button>
-							<br />
-							<button type="button" onClick={() => handleAddGroupMove('moves')}>
-								CADASTRAR MOVES
-							</button>
-							<button type="button" onClick={() => handleAddGroupMove('specials')}>
-								CADASTRAR SPECIALS
-							</button> */}
-
 							{dataCharacter ? (
 								<CommandsList
-									title="Fatality"
-									group="fatalities"
+									group="moves"
+									title="Moves"
 									handleAdd={handleAddGroupMove}
-									dataMoves={dataCharacter.fatalities}
+									dataMoves={dataCharacter.moves}
 									modal={openModal}
 								/>
 							) : (
@@ -660,18 +571,6 @@ const PageFighter = () => {
 									group="specials"
 									handleAdd={handleAddGroupMove}
 									dataMoves={dataCharacter.specials}
-									modal={openModal}
-								/>
-							) : (
-								<p>Carregando...</p>
-							)}
-
-							{dataCharacter ? (
-								<CommandsList
-									group="brutalities"
-									title="Brutality"
-									handleAdd={handleAddGroupMove}
-									dataMoves={dataCharacter.brutalities}
 									modal={openModal}
 								/>
 							) : (
@@ -693,10 +592,22 @@ const PageFighter = () => {
 
 							{dataCharacter ? (
 								<CommandsList
-									group="moves"
-									title="Moves"
+									title="Fatality"
+									group="fatalities"
 									handleAdd={handleAddGroupMove}
-									dataMoves={dataCharacter.moves}
+									dataMoves={dataCharacter.fatalities}
+									modal={openModal}
+								/>
+							) : (
+								<p>Carregando...</p>
+							)}
+
+							{dataCharacter ? (
+								<CommandsList
+									group="brutalities"
+									title="Brutality"
+									handleAdd={handleAddGroupMove}
+									dataMoves={dataCharacter.brutalities}
 									modal={openModal}
 								/>
 							) : (
@@ -704,7 +615,6 @@ const PageFighter = () => {
 							)}
 						</div>
 					</div>
-					{/* <MainMenu /> */}
 				</div>
 			</div>
 		</>

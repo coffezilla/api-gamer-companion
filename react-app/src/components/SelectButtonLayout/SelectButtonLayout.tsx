@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { useState, useEffect } from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { rdxChangeButtonLayout, rdxChangeGame } from '../../redux/ducks/User';
 import { setLocalStoragePrefs, getHasLocalStoragePrefs } from '../../helpers/handleStorage';
 
@@ -30,7 +30,6 @@ const SelectButtonLayout = ({ selectGame, selectLayout }: any) => {
 	const getCurrentPrefs = async () => {
 		const localStoragePrefs = getHasLocalStoragePrefs();
 		if (localStoragePrefs.status) {
-			console.log('cha', localStoragePrefs);
 			setButtonLayout(localStoragePrefs.data.buttonLayout);
 			setGameFilter(localStoragePrefs.data.game);
 			dispatch(rdxChangeButtonLayout(localStoragePrefs.data.buttonLayout));
@@ -50,22 +49,21 @@ const SelectButtonLayout = ({ selectGame, selectLayout }: any) => {
 
 	return (
 		<>
-			{/* <div className="flex justify-end space-x-5"> */}
 			{selectLayout && (
 				<label htmlFor="button_layout" className="block mb-3">
-					<span className="block mb-2">Button Layout:</span>
+					<span className="block mb-1 font-bold text-xs md:text-md">Button Layout:</span>
 					{buttonLayout !== null && (
 						<select
 							name="button_layout"
 							onChange={handleSelectButtons}
 							value={buttonLayout}
-							className="block px-3 py-2 rounded-md  appearance-none bg-blue-50 hover:bg-blue-600 text-blue-800 hover:text-white"
+							className="block px-3 py-2 rounded-md  appearance-none bg-blue-50 hover:bg-blue-600 text-blue-800 hover:text-white w-full"
 						>
-							<option value="0">0 - Generic</option>
-							<option value="1">1 - Playstation</option>
-							<option value="2">2 - XBox</option>
-							<option value="3">3 - Switch</option>
-							<option value="4">4 - Number</option>
+							<option value="0">Generic</option>
+							<option value="1">Playstation</option>
+							<option value="2">XBox</option>
+							<option value="3">Switch</option>
+							<option value="4">Number</option>
 						</select>
 					)}
 				</label>
@@ -73,23 +71,22 @@ const SelectButtonLayout = ({ selectGame, selectLayout }: any) => {
 
 			{selectGame && (
 				<label htmlFor="game_filter" className="block mb-3 ">
-					<span className="block mb-2">Game:</span>
+					<span className="block mb-1 font-bold text-xs md:text-md">Game:</span>
 					{gameFilter !== null && (
 						<select
 							name="game_filter"
 							onChange={handleSelectGame}
 							value={gameFilter}
-							className="block px-3 py-2 rounded-md  appearance-none bg-blue-50 hover:bg-blue-600 text-blue-800 hover:text-white"
+							className="block px-3 py-2 rounded-md  appearance-none bg-blue-50 hover:bg-blue-600 text-blue-800 hover:text-white w-full"
 						>
-							<option value="">0 - Todos</option>
-							<option value="Mortal Kombat IX">0 - Mortal Kombat IX</option>
-							<option value="Mortal Kombat X">1 - Mortal Kombat X</option>
-							<option value="Mortal Kombat XI">2 - Mortal Kombat XI</option>
+							<option value="">Todos</option>
+							<option value="Mortal Kombat IX">Mortal Kombat IX</option>
+							<option value="Mortal Kombat X">Mortal Kombat X</option>
+							<option value="Mortal Kombat XI">Mortal Kombat XI</option>
 						</select>
 					)}
 				</label>
 			)}
-			{/* </div> */}
 		</>
 	);
 };

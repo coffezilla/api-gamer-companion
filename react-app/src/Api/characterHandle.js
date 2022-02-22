@@ -1,11 +1,7 @@
 /* eslint-disable */
 
 import axios from 'axios';
-import {
-	setLocalStorageAuth,
-	getHasLocalStorageAuth,
-	clearLocalStorageAuth,
-} from '../helpers/handleStorage';
+import { getHasLocalStorageAuth } from '../helpers/handleStorage';
 
 import { END_POINT_BASE } from './Api';
 
@@ -34,7 +30,6 @@ export const postMoveGroup = async (charId, move, name, command, annotation, req
 			headers: { Authorization: `Bearer ${localStorageAuth.data.token}` },
 		})
 			.then((res) => {
-				console.log('fata', res);
 				if (res.data.status === 1) {
 					serverResponse = {
 						data: {
@@ -53,7 +48,6 @@ export const postMoveGroup = async (charId, move, name, command, annotation, req
 
 // EDIT
 export const editMoveGroup = async (charId, move, slug, name, command, annotation, requirement) => {
-	// console.log('editado', typeof command, command, [1, [1, 2]]);
 	const localStorageAuth = getHasLocalStorageAuth();
 	const hasLocalStorageAuth = localStorageAuth.status;
 	let serverResponse = {
@@ -77,7 +71,6 @@ export const editMoveGroup = async (charId, move, slug, name, command, annotatio
 			headers: { Authorization: `Bearer ${localStorageAuth.data.token}` },
 		})
 			.then((res) => {
-				console.log('editado', res.data);
 				if (res.data.status === 1) {
 					serverResponse = {
 						data: {
@@ -104,8 +97,6 @@ export const deleteMoveGroup = async (charId, move, slug) => {
 		},
 	};
 
-	console.log('cacha', slug, move);
-
 	if (hasLocalStorageAuth) {
 		await axios({
 			method: 'delete',
@@ -113,7 +104,6 @@ export const deleteMoveGroup = async (charId, move, slug) => {
 			headers: { Authorization: `Bearer ${localStorageAuth.data.token}` },
 		})
 			.then((res) => {
-				console.log('deletado', res.data);
 				if (res.data.status === 1) {
 					serverResponse = {
 						data: {
@@ -143,7 +133,6 @@ export const getMoveGroupData = async (charId, move, slug) => {
 		url: `${END_POINT_BASE}/characters/${charId}/${move}/${slug}`,
 	})
 		.then((res) => {
-			console.log('fata', res.data);
 			if (res.data.status === 1) {
 				serverResponse = {
 					data: {
@@ -202,7 +191,6 @@ export const getDataCharacters = async (fid) => {
 		url: `${END_POINT_BASE}/characters/${fid}`,
 	})
 		.then((res) => {
-			console.log('galao', res);
 			if (res.data.status === 1) {
 				serverResponse = {
 					data: {

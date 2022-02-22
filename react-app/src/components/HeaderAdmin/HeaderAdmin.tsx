@@ -1,15 +1,13 @@
 /* eslint-disable */
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { clearLocalStorageAuth } from '../../helpers/handleStorage';
 import { rdxLogoutUser, IRdxUser } from '../../redux/ducks/User';
-import SelectButtonLayout from '../SelectButtonLayout';
 
 const HeaderAdmin = () => {
 	const dispatch = useDispatch();
 	const history = useHistory();
-	// const rdxUser = useSelector((state: IRdxUser) => state);
 	const rdxUserisAuth = useSelector((state: IRdxUser) => state.isAuth);
 	const logoutUser = () => {
 		clearLocalStorageAuth();
@@ -23,7 +21,7 @@ const HeaderAdmin = () => {
 
 	return (
 		<>
-			<div className="container pb-5 px-3 max-w-6xl flex justify-end space-x-3 items-center">
+			<div className="container py-2 md:py-5 px-3 max-w-6xl flex justify-end space-x-3 items-center">
 				<p className="text-gray-500 italic text-sm">Logado como editor</p>
 				<button
 					type="button"

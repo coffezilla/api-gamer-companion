@@ -16,7 +16,6 @@ import UnprotectedRoute from './UnprotectedRoute';
 // page public
 import PageIndex from './pages/PageIndex';
 import PageAbout from './pages/PageAbout';
-// import PageContact from './pages/PageContact';
 import PageNotFound from './pages/PageNotFound';
 import PageFighter from './pages/PageFighter';
 
@@ -48,7 +47,6 @@ function Routers() {
 				<Switch>
 					<Route exact path="/" component={PageIndex} />
 					<Route path="/about" component={PageAbout} />
-					{/* <Route path="/contact" component={PageContact} /> */}
 					<Route exact path="/fighter/:fid" component={PageFighter} />
 
 					{/* <ProtectedRoute path="/hub" component={PageHub} /> */}

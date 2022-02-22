@@ -1,5 +1,4 @@
 /* eslint-disable */
-
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -13,7 +12,7 @@ const ButtonPressing = ({ buttonIndex, buttonLayout, handleClick }: any) => {
 			className="p-1 bg-gray-100 hover:bg-violet-500 rounded-full"
 			onClick={() => handleClick(buttonIndex)}
 		>
-			<ButtonController layout={buttonLayout} id={buttonIndex} size="w-14" />
+			<ButtonController layout={buttonLayout} id={buttonIndex} size="w-8 lg:w-14" />
 		</button>
 	);
 };
@@ -65,13 +64,12 @@ const CombinationInjector = ({ value, onChange, setForm, form }: any) => {
 	};
 
 	useEffect(() => {
-		console.log('return');
 		setCombination(value);
 	}, [value]);
 
 	return (
 		<>
-			<div className="grid grid-cols-8 gap-4 my-5">
+			<div className="grid grid-cols-6 md:grid-cols-8 gap-2 my-5">
 				<div className="text-center">
 					<ButtonPressing
 						buttonIndex={1}
@@ -179,7 +177,7 @@ const CombinationInjector = ({ value, onChange, setForm, form }: any) => {
 						} hover:bg-violet-500 rounded-full`}
 						onClick={() => handleHoldButton()}
 					>
-						<ButtonController layout={rdxPrefsButtonLayout} id={15} size="w-14" />
+						<ButtonController layout={rdxPrefsButtonLayout} id={15} size="w-8 lg:w-14" />
 					</button>
 				</div>
 
@@ -189,12 +187,9 @@ const CombinationInjector = ({ value, onChange, setForm, form }: any) => {
 						className="p-1 bg-gray-100 hover:bg-red-400 rounded-full"
 						onClick={() => handleDeleteButton()}
 					>
-						<ButtonController layout={rdxPrefsButtonLayout} id={16} size="w-14" />
+						<ButtonController layout={rdxPrefsButtonLayout} id={16} size="w-8 lg:w-14" />
 					</button>
 				</div>
-
-				{/* <pre>{JSON.stringify(combination, null, 1)}</pre> */}
-				{/* <pre>hold: {JSON.stringify(holdButton, null, 1)}</pre> */}
 			</div>
 		</>
 	);

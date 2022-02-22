@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { rdxLoginUser } from '../redux/ducks/User';
-// import MainMenu from '../components/MainMenu';
 
 import { validateForm, IForm } from '../components/FormValidation';
 
@@ -81,13 +80,13 @@ const PageLogin = () => {
 	return (
 		<>
 			<div className=" bg-slate-200 h-screen w-full flex justify-center items-center">
-				<div className="bg-white border max-w-[500px] w-full  p-10  rounded-lg ">
-					<h1 className="text-xl font-bold text-center mb-2">LOGIN ADMINISTRADOR</h1>
+				<div className="bg-white border md:max-w-[500px] w-full h-full md:h-auto p-3 md:p-10  md:rounded-lg ">
+					<h1 className="text-xl font-bold text-center mb-5">LOGIN ADMINISTRADOR</h1>
 
 					{!isLogging ? (
 						<form onSubmit={handleSubmit}>
 							<label htmlFor={formFields[0].name} className="block mb-3">
-								<span className="block mb-2">E-mail:</span>
+								<span className="block mb-1 font-bold text-xs md:text-md">E-mail:</span>
 								<input
 									type={formFields[0].type}
 									name={formFields[0].name}
@@ -101,7 +100,7 @@ const PageLogin = () => {
 							</label>
 
 							<label htmlFor={formFields[1].name} className="block mb-3">
-								<span className="block mb-2">Senha:</span>
+								<span className="block mb-1 font-bold text-xs md:text-md">Senha:</span>
 								<input
 									type={formFields[1].type}
 									name={formFields[1].name}
@@ -131,7 +130,6 @@ const PageLogin = () => {
 					) : (
 						<p>logging...</p>
 					)}
-					{/* <MainMenu /> */}
 				</div>
 			</div>
 		</>

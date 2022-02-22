@@ -116,8 +116,7 @@ $xxl: 'only screen and (min-width: 1200px) and (max-width: 9999.98px)';
 }
 
 // HACK: block overflow from the body and block scroll
-body.modal-custom--block {
-	padding-right: 14px;
+.modal-custom--block {
 	height: 100%;
 	overflow: hidden;
 }

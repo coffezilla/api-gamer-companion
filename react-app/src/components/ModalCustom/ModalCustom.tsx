@@ -49,6 +49,7 @@ const Modal = ({ size, status, closeModal, modal, children, className }: IProps)
 		};
 
 		if (status) {
+			document.querySelector('body')?.classList.add('modal-custom--block');
 			bhxModalCustomWrapperAll.forEach((element) => {
 				element.addEventListener('mousedown', handleClickModalDown, false);
 				element.addEventListener('mouseup', handleClickModalUp, false);

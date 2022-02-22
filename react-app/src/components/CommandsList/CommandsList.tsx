@@ -1,7 +1,5 @@
 /* eslint-disable */
-// import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { IRdxUser } from '../../redux/ducks/User';
 import ButtonController from '../ButtonController';
@@ -14,51 +12,13 @@ interface IPros {
 	handleAdd: any;
 }
 
-// interface IPropsButton {
-// 	layout: IRdxUser['prefs']['buttonLayout'];
-// 	id: Number;
-// }
-
-// const ButtonController = ({ layout, id }: IPropsButton) => {
-// 	let buttonPath = '';
-// 	let buttonLayout = 'df';
-
-// 	if (id <= 4) {
-// 		buttonPath = `/images/dir_${id}.png`;
-// 	} else {
-// 		switch (layout) {
-// 			case 0:
-// 				buttonLayout = 'gn';
-// 				break;
-// 			case 1:
-// 				buttonLayout = 'ps';
-// 				break;
-// 			case 2:
-// 				buttonLayout = 'xb';
-// 				break;
-// 			case 3:
-// 				buttonLayout = 'sw';
-// 				break;
-// 			case 4:
-// 				buttonLayout = 'nb';
-// 				break;
-// 			default:
-// 				buttonLayout = 'df';
-// 		}
-// 		buttonPath = `/images/${buttonLayout}_${id}.png`;
-// 	}
-
-// 	return <img src={buttonPath} className="w-5 object-cover bg-red-100 rounded-full" />;
-// };
-
 const CommandsList = ({ title, group, dataMoves, modal, handleAdd }: IPros) => {
 	const rdxUserisAuth = useSelector((state: IRdxUser) => state.isAuth);
-	// const rdxPrefsButtonLayout = useSelector((state: IRdxUser) => state.prefs.buttonLayout);
 
 	return (
 		<>
 			<div className="flex justify-between items-center mb-3">
-				<h2 className="text-2xl font-bold  text-violet-600">{title}</h2>
+				<h2 className="text-lg md:text-2xl font-bold  text-violet-600">{title}</h2>
 
 				{rdxUserisAuth && (
 					<button
@@ -69,18 +29,13 @@ const CommandsList = ({ title, group, dataMoves, modal, handleAdd }: IPros) => {
 						Adicionar {title}
 					</button>
 				)}
-				{/* <Link to="/">
-					<div className="bg-blue-50 hover:bg-blue-600 text-blue-800 hover:text-white rounded-md inline-block px-3 py-1">
-						Voltar
-					</div>
-				</Link> */}
 			</div>
 			<div className="block mb-5">
 				{dataMoves.length > 0 ? (
 					<ul className="">
 						{dataMoves.map((moveGroup: any) => {
 							return (
-								<li className="bg-gray-50 p-5 rounded-lg mb-1" key={moveGroup._id}>
+								<li className="bg-gray-200 p-3 md:p-5 rounded-lg mb-1" key={moveGroup._id}>
 									<div className="-mt-3  flex space-x-2 justify-between">
 										<div className="font-bold basis-1/3 shrink-0 pt-3">
 											<button
@@ -92,9 +47,8 @@ const CommandsList = ({ title, group, dataMoves, modal, handleAdd }: IPros) => {
 											>
 												{moveGroup.name}
 											</button>
-											{/* <pre>{JSON.stringify(moveGroup, null, 1)}</pre> */}
 										</div>
-										<div className="text-sm items-end flex flex-wrap space-x-2 space-y-2">
+										<div className="text-sm items-end flex flex-wrap space-x-2 space-y-2 justify-end">
 											{moveGroup.commands.combination.map((command: any, index: number) => {
 												return (
 													<div className="flex space-x-2 items-center" key={`${command}${index}`}>
@@ -107,12 +61,12 @@ const CommandsList = ({ title, group, dataMoves, modal, handleAdd }: IPros) => {
 																		key={`${command}${subIndex}`}
 																	>
 																		{subIndex !== 0 && <p className="text-center text-lg">+</p>}
-																		<ButtonController id={subCommand} size="w-8" />
+																		<ButtonController id={subCommand} />
 																	</div>
 																);
 															})
 														) : (
-															<ButtonController id={command} size="w-8" />
+															<ButtonController id={command} />
 														)}
 													</div>
 												);
