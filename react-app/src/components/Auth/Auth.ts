@@ -144,7 +144,7 @@ export const serverLoginUser = async (formLogin: IStForm['inputs']) => {
 			};
 		}
 
-		alert(serverResponse.data.message);
+		// alert(serverResponse.data.message);
 	});
 
 	return serverResponse;

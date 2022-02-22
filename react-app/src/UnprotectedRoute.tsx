@@ -11,7 +11,7 @@ function UnprotectedRoute({ component: Component, ...rest }: any) {
 			{...rest}
 			render={(props) => {
 				if (rdxUserisAuth) {
-					return <Redirect to={{ pathname: '/hub', state: { from: props.location } }} />;
+					return <Redirect to={{ pathname: '/', state: { from: props.location } }} />;
 				}
 				return <Component {...props} {...rest} />;
 			}}

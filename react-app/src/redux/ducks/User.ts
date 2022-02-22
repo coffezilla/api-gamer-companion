@@ -54,7 +54,7 @@ export const rdxLogoutUser = () => {
 
 // change button layout
 export const rdxChangeButtonLayout = (layoutId: Number) => {
-	console.log('aquele picke', layoutId);
+	// console.log('aquele picke', layoutId);
 	return {
 		type: CHANGE_BUTTON_LAYOUT,
 		payload: {

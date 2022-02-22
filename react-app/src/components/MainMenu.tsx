@@ -31,15 +31,15 @@ const MainMenu = () => {
 				<li>
 					<Link to="/">Index</Link>
 				</li>
-				<li>
+				{/* <li>
 					<Link to="/contact">Contact</Link>
-				</li>
+				</li> */}
 				<li>
 					<Link to="/about">About</Link>
 				</li>
-				<li>
+				{/* <li>
 					<Link to="/hub">Hub (only if logged)</Link>
-				</li>
+				</li> */}
 				<li>
 					<Link to="/login">Login (only if not logged)</Link>
 				</li>

@@ -10,18 +10,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import { rdxLoginUser, IRdxUser } from './redux/ducks/User';
 
 // router with requirement to access
-import ProtectedRoute from './ProtectedRoute';
+// import ProtectedRoute from './ProtectedRoute';
 import UnprotectedRoute from './UnprotectedRoute';
 
 // page public
 import PageIndex from './pages/PageIndex';
 import PageAbout from './pages/PageAbout';
-import PageContact from './pages/PageContact';
+// import PageContact from './pages/PageContact';
 import PageNotFound from './pages/PageNotFound';
 import PageFighter from './pages/PageFighter';
 
 // page only logged
-import PageHub from './pages/PageHub';
+// import PageHub from './pages/PageHub';
 
 // page only if NOT logged
 import PageLogin from './pages/PageLogin';
@@ -48,10 +48,10 @@ function Routers() {
 				<Switch>
 					<Route exact path="/" component={PageIndex} />
 					<Route path="/about" component={PageAbout} />
-					<Route path="/contact" component={PageContact} />
+					{/* <Route path="/contact" component={PageContact} /> */}
 					<Route exact path="/fighter/:fid" component={PageFighter} />
 
-					<ProtectedRoute path="/hub" component={PageHub} />
+					{/* <ProtectedRoute path="/hub" component={PageHub} /> */}
 
 					<UnprotectedRoute path="/login" component={PageLogin} />
 
