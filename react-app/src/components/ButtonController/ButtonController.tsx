@@ -29,7 +29,7 @@ const ButtonController = ({ id, size = 'w-5 lg:w-6 2xl:w-8', sequel, type }: IPr
 				buttonLayout = 'xb';
 				break;
 			case 3:
-				buttonLayout = 'sw';
+				buttonLayout = 'nt';
 				break;
 			case 4:
 				buttonLayout = 'nb';

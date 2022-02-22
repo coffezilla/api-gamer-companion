@@ -63,7 +63,6 @@ const SelectButtonLayout = ({ selectGame, selectLayout }: any) => {
 							<option value="1">Playstation</option>
 							<option value="2">XBox</option>
 							<option value="3">Switch</option>
-							<option value="4">Number</option>
 						</select>
 					)}
 				</label>
