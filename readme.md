@@ -1,6 +1,15 @@
 # Boilerplate
 
-This is a boilerplate for MongoDB + Nodejs api project. This is a simple structure to set everything organized in one single repository.
+This is a API using MongoDB + Nodejs project. This API provides data for lots of games in order to help players throughout the gameplay.
+
+### Current games: 
+- Mortal Kombat IX
+- Mortal Kombat X
+- Mortal Kombat XI
+
+## Links
+- Web client: [Gamer Companion](http://gamer-companion.bhxsites.com.br/)
+- API documentation: [Free API](https://mortal-kombat-xi-api.netlify.app/)
 
 ## Features
 
