@@ -51,7 +51,7 @@ const SelectButtonLayout = ({ selectGame, selectLayout }: any) => {
 		<>
 			{selectLayout && (
 				<label htmlFor="button_layout" className="block mb-3">
-					<span className="block mb-1 font-bold text-xs md:text-md">Button Layout:</span>
+					<span className="block mb-1 font-bold text-xs md:text-md">Layout controle:</span>
 					{buttonLayout !== null && (
 						<select
 							name="button_layout"
