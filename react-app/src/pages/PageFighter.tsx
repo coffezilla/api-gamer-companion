@@ -340,6 +340,7 @@ const PageFighter = () => {
 								<option value="">Sem requisito</option>
 								<option value="Perto">Perto</option>
 								<option value="Longe">Longe</option>
+								<option value="Distância de um pulo">Distância de um pulo</option>
 								<option value="Meia tela">Meia tela</option>
 								<option value="No canto">No canto</option>
 								<option value="No alto">No alto</option>
@@ -367,16 +368,21 @@ const PageFighter = () => {
 							<div className="text-sm items-end flex flex-wrap space-x-2 space-y-2 border px-3 pb-4 w-full rounded-md min-h-[60px] mb-3">
 								{formFields[3].value.map((command: any, index: number) => {
 									return (
-										<div className="flex space-x-2 items-center" key={`${command}${index}`}>
-											{index !== 0 && <p className="text-center text-lg">,</p>}
+										<div className="flex space-x-2 items-end" key={`${command}${index}`}>
+											{index !== 0 && (
+												<p className="text-center text-lg md:text-lg lg:text-md xl:text-xl  h-6 lg:h-7 2xl:h-8">
+													,
+												</p>
+											)}
 											{command.length > 1 ? (
 												command.map((subCommand: any, subIndex: number) => {
 													return (
-														<div
-															className="flex space-x-2 items-center"
-															key={`${command}${subIndex}`}
-														>
-															{subIndex !== 0 && <p className="text-center text-lg">+</p>}
+														<div className="flex space-x-2 items-end" key={`${command}${subIndex}`}>
+															{subIndex !== 0 && (
+																<p className="text-center text-lg md:text-lg lg:text-md xl:text-xl  h-6 lg:h-7 2xl:h-8">
+																	+
+																</p>
+															)}
 															<ButtonController id={subCommand} />
 														</div>
 													);
@@ -455,6 +461,7 @@ const PageFighter = () => {
 								<option value="">Sem requisito</option>
 								<option value="Perto">Perto</option>
 								<option value="Longe">Longe</option>
+								<option value="Distância de um pulo">Distância de um pulo</option>
 								<option value="Meia tela">Meia tela</option>
 								<option value="No canto">No canto</option>
 								<option value="No alto">No alto</option>
@@ -482,16 +489,21 @@ const PageFighter = () => {
 							<div className="text-sm items-end flex flex-wrap space-x-2 space-y-2 border px-3 pb-4 w-full rounded-md min-h-[60px] mb-3">
 								{formFieldsEdit[3].value.map((command: any, index: number) => {
 									return (
-										<div className="flex space-x-2 items-center" key={`${command}${index}`}>
-											{index !== 0 && <p className="text-center text-lg">,</p>}
+										<div className="flex space-x-2 items-end" key={`${command}${index}`}>
+											{index !== 0 && (
+												<p className="text-center text-lg md:text-lg lg:text-md xl:text-xl  h-6 lg:h-7 2xl:h-8">
+													,
+												</p>
+											)}
 											{command.length > 1 ? (
 												command.map((subCommand: any, subIndex: number) => {
 													return (
-														<div
-															className="flex space-x-2 items-center"
-															key={`${command}${subIndex}`}
-														>
-															{subIndex !== 0 && <p className="text-center text-lg">+</p>}
+														<div className="flex space-x-2 items-end" key={`${command}${subIndex}`}>
+															{subIndex !== 0 && (
+																<p className="text-center text-lg md:text-lg lg:text-md xl:text-xl  h-6 lg:h-7 2xl:h-8">
+																	+
+																</p>
+															)}
 															<ButtonController id={subCommand} />
 														</div>
 													);
@@ -553,62 +565,72 @@ const PageFighter = () => {
 					<div className="grid grid-cols-1 lg:grid-cols-2 md:gap-10">
 						<div id="col1">
 							{dataCharacter ? (
-								<CommandsList
-									group="moves"
-									title="Moves"
-									handleAdd={handleAddGroupMove}
-									dataMoves={dataCharacter.moves}
-									modal={openModal}
-								/>
+								dataCharacter.moves.length > 0 && (
+									<CommandsList
+										group="moves"
+										title="Moves"
+										handleAdd={handleAddGroupMove}
+										dataMoves={dataCharacter.moves}
+										modal={openModal}
+									/>
+								)
 							) : (
 								<p>Carregando...</p>
 							)}
 
 							{dataCharacter ? (
-								<CommandsList
-									title="Specials"
-									group="specials"
-									handleAdd={handleAddGroupMove}
-									dataMoves={dataCharacter.specials}
-									modal={openModal}
-								/>
+								dataCharacter.specials.length > 0 && (
+									<CommandsList
+										title="Specials"
+										group="specials"
+										handleAdd={handleAddGroupMove}
+										dataMoves={dataCharacter.specials}
+										modal={openModal}
+									/>
+								)
 							) : (
 								<p>Carregando...</p>
 							)}
 						</div>
 						<div id="col2">
 							{dataCharacter ? (
-								<CommandsList
-									group="combos"
-									title="Combos"
-									handleAdd={handleAddGroupMove}
-									dataMoves={dataCharacter.combos}
-									modal={openModal}
-								/>
+								dataCharacter.combos.length > 0 && (
+									<CommandsList
+										group="combos"
+										title="Combos"
+										handleAdd={handleAddGroupMove}
+										dataMoves={dataCharacter.combos}
+										modal={openModal}
+									/>
+								)
 							) : (
 								<p>Carregando...</p>
 							)}
 
 							{dataCharacter ? (
-								<CommandsList
-									title="Fatality"
-									group="fatalities"
-									handleAdd={handleAddGroupMove}
-									dataMoves={dataCharacter.fatalities}
-									modal={openModal}
-								/>
+								dataCharacter.fatalities.length > 0 && (
+									<CommandsList
+										title="Fatality"
+										group="fatalities"
+										handleAdd={handleAddGroupMove}
+										dataMoves={dataCharacter.fatalities}
+										modal={openModal}
+									/>
+								)
 							) : (
 								<p>Carregando...</p>
 							)}
 
 							{dataCharacter ? (
-								<CommandsList
-									group="brutalities"
-									title="Brutality"
-									handleAdd={handleAddGroupMove}
-									dataMoves={dataCharacter.brutalities}
-									modal={openModal}
-								/>
+								dataCharacter.brutalities.length > 0 && (
+									<CommandsList
+										group="brutalities"
+										title="Brutality"
+										handleAdd={handleAddGroupMove}
+										dataMoves={dataCharacter.brutalities}
+										modal={openModal}
+									/>
+								)
 							) : (
 								<p>Carregando...</p>
 							)}

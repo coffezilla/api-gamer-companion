@@ -36,8 +36,8 @@ const CommandsList = ({ title, group, dataMoves, modal, handleAdd }: IPros) => {
 						{dataMoves.map((moveGroup: any) => {
 							return (
 								<li className="bg-gray-200 p-3 md:p-5 rounded-lg mb-1" key={moveGroup._id}>
-									<div className="md:-mt-3  flex space-x-2 justify-between items-center md:items-start">
-										<div className="font-bold basis-1/4 sm:basis-1/3  shrink-0 pt-1 md:pt-3">
+									<div className="-mt-3  flex space-x-2 justify-between ">
+										<div className="font-bold basis-1/2 sm:basis-1/3  shrink-0 pt-3 md:pt-3">
 											<button
 												onClick={() =>
 													rdxUserisAuth &&
@@ -48,19 +48,30 @@ const CommandsList = ({ title, group, dataMoves, modal, handleAdd }: IPros) => {
 												{moveGroup.name}
 											</button>
 										</div>
-										<div className="text-sm items-end flex flex-wrap space-x-2 space-y-2 justify-end">
+										<div className="text-sm items-end  flex flex-wrap space-x-2 space-y-2 justify-end">
 											{moveGroup.commands.combination.map((command: any, index: number) => {
 												return (
-													<div className="flex space-x-2 items-center" key={`${command}${index}`}>
-														{index !== 0 && <p className="text-center text-lg">,</p>}
+													<div
+														className="flex space-x-2 items-end"
+														key={`${moveGroup._id}${index}`}
+													>
+														{index !== 0 && (
+															<p className="text-center text-lg md:text-lg lg:text-md xl:text-xl  h-6 lg:h-7 2xl:h-8">
+																,
+															</p>
+														)}
 														{command.length > 1 ? (
 															command.map((subCommand: any, subIndex: number) => {
 																return (
 																	<div
-																		className="flex space-x-2 items-center"
-																		key={`${command}${subIndex}`}
+																		className="flex space-x-2 items-end"
+																		key={`${moveGroup._id}${subIndex}`}
 																	>
-																		{subIndex !== 0 && <p className="text-center text-lg">+</p>}
+																		{subIndex !== 0 && (
+																			<p className="text-center text-lg md:text-lg lg:text-md xl:text-xl  h-6 lg:h-7 2xl:h-8">
+																				+
+																			</p>
+																		)}
 																		<ButtonController id={subCommand} />
 																	</div>
 																);

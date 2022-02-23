@@ -49,7 +49,7 @@ const ButtonController = ({
 
 	return (
 		<>
-			<img src={buttonPath} className={`${size} object-cover rounded-full aspect-square block`} />
+			<img src={buttonPath} className={`${size} object-cover rounded-full`} />
 			{type && !last && (
 				<p className="text-center text-lg md:text-xl h-6 xl:h-7 2xl:h-8 ">
 					{type === 'SUM' ? '+' : ','}
