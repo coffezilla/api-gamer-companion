@@ -1,7 +1,9 @@
 /* eslint-disable */
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import ModalCustom from '../components/ModalCustom';
+import { IRdxUser } from '../redux/ducks/User';
 import CommandsList from '../components/CommandsList';
 import Swal from 'sweetalert2';
 
@@ -22,6 +24,7 @@ import ButtonController from '../components/ButtonController/ButtonController';
 type modalIndex = 'MODAL_ADD_MOVE' | 'MODAL_EDIT_MOVE';
 
 const PageFighter = () => {
+	const rdxUserisAuth = useSelector((state: IRdxUser) => state.isAuth);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	// edit move
@@ -565,7 +568,7 @@ const PageFighter = () => {
 					<div className="grid grid-cols-1 lg:grid-cols-2 md:gap-10">
 						<div id="col1">
 							{dataCharacter ? (
-								dataCharacter.moves.length > 0 && (
+								(dataCharacter.moves.length > 0 || rdxUserisAuth) && (
 									<CommandsList
 										group="moves"
 										title="Moves"
@@ -579,7 +582,7 @@ const PageFighter = () => {
 							)}
 
 							{dataCharacter ? (
-								dataCharacter.specials.length > 0 && (
+								(dataCharacter.specials.length > 0 || rdxUserisAuth) && (
 									<CommandsList
 										title="Specials"
 										group="specials"
@@ -594,7 +597,7 @@ const PageFighter = () => {
 						</div>
 						<div id="col2">
 							{dataCharacter ? (
-								dataCharacter.combos.length > 0 && (
+								(dataCharacter.combos.length > 0 || rdxUserisAuth) && (
 									<CommandsList
 										group="combos"
 										title="Combos"
@@ -608,7 +611,7 @@ const PageFighter = () => {
 							)}
 
 							{dataCharacter ? (
-								dataCharacter.fatalities.length > 0 && (
+								(dataCharacter.fatalities.length > 0 || rdxUserisAuth) && (
 									<CommandsList
 										title="Fatality"
 										group="fatalities"
@@ -622,7 +625,7 @@ const PageFighter = () => {
 							)}
 
 							{dataCharacter ? (
-								dataCharacter.brutalities.length > 0 && (
+								(dataCharacter.brutalities.length > 0 || rdxUserisAuth) && (
 									<CommandsList
 										group="brutalities"
 										title="Brutality"
