@@ -37,7 +37,7 @@ const SelectButtonLayout = ({ selectGame, selectLayout }: any) => {
 		} else {
 			setButtonLayout(0);
 			setGameFilter('');
-			await setLocalStoragePrefs({ prefs: { buttonLayout: 0, game: '' } });
+			setLocalStoragePrefs({ prefs: { buttonLayout: 0, game: '' } });
 			dispatch(rdxChangeButtonLayout(0));
 			dispatch(rdxChangeGame(''));
 		}
