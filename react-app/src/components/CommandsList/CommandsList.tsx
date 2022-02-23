@@ -36,8 +36,8 @@ const CommandsList = ({ title, group, dataMoves, modal, handleAdd }: IPros) => {
 						{dataMoves.map((moveGroup: any) => {
 							return (
 								<li className="bg-gray-200 p-3 md:p-5 rounded-lg mb-1" key={moveGroup._id}>
-									<div className="-mt-3  flex space-x-2 justify-between">
-										<div className="font-bold basis-1/4 sm:basis-1/3  shrink-0 pt-3">
+									<div className="md:-mt-3  flex space-x-2 justify-between items-center md:items-start">
+										<div className="font-bold basis-1/4 sm:basis-1/3  shrink-0 pt-1 md:pt-3">
 											<button
 												onClick={() =>
 													rdxUserisAuth &&
@@ -50,26 +50,25 @@ const CommandsList = ({ title, group, dataMoves, modal, handleAdd }: IPros) => {
 										</div>
 										<div className="text-sm items-end flex flex-wrap space-x-2 space-y-2 justify-end">
 											{moveGroup.commands.combination.map((command: any, index: number) => {
-												return command.length > 1 ? (
-													command.map((subCommand: any, subIndex: number) => {
-														return (
-															<ButtonController
-																id={subCommand}
-																key={subIndex}
-																sequel={subIndex}
-																type="SUM"
-																arial-bla={index}
-															/>
-														);
-													})
-												) : (
-													<ButtonController
-														id={command}
-														key={index}
-														sequel={index}
-														type="DIVIDE"
-														arial-bla={index}
-													/>
+												return (
+													<div className="flex space-x-2 items-center" key={`${command}${index}`}>
+														{index !== 0 && <p className="text-center text-lg">,</p>}
+														{command.length > 1 ? (
+															command.map((subCommand: any, subIndex: number) => {
+																return (
+																	<div
+																		className="flex space-x-2 items-center"
+																		key={`${command}${subIndex}`}
+																	>
+																		{subIndex !== 0 && <p className="text-center text-lg">+</p>}
+																		<ButtonController id={subCommand} />
+																	</div>
+																);
+															})
+														) : (
+															<ButtonController id={command} />
+														)}
+													</div>
 												);
 											})}
 										</div>

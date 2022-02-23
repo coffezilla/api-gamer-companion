@@ -8,9 +8,16 @@ interface IPropsButton {
 	size?: string;
 	type?: 'SUM' | 'DIVIDE';
 	sequel?: number;
+	last?: boolean;
 }
 
-const ButtonController = ({ id, size = 'w-5 lg:w-6 2xl:w-8', sequel, type }: IPropsButton) => {
+const ButtonController = ({
+	id,
+	size = 'w-5 lg:w-6 2xl:w-8',
+	sequel,
+	type,
+	last,
+}: IPropsButton) => {
 	const rdxPrefsButtonLayout = useSelector((state: IRdxUser) => state.prefs.buttonLayout);
 	let buttonPath = '';
 	let buttonLayout = 'df';
@@ -42,12 +49,12 @@ const ButtonController = ({ id, size = 'w-5 lg:w-6 2xl:w-8', sequel, type }: IPr
 
 	return (
 		<>
-			{sequel !== 0 && type && (
+			<img src={buttonPath} className={`${size} object-cover rounded-full aspect-square block`} />
+			{type && !last && (
 				<p className="text-center text-lg md:text-xl h-6 xl:h-7 2xl:h-8 ">
 					{type === 'SUM' ? '+' : ','}
 				</p>
 			)}
-			<img src={buttonPath} className={`${size} object-cover rounded-full aspect-square`} />
 		</>
 	);
 };
