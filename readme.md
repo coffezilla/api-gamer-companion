@@ -8,8 +8,9 @@ This is a API using MongoDB + Nodejs project. This API provides data for lots of
 - Mortal Kombat XI
 
 ## Links
-- Web client: [Gamer Companion](http://gamer-companion.bhxsites.com.br/)
-- API documentation: [Free API](https://mortal-kombat-xi-api.netlify.app/)
+- Web Client: [Gamer Companion](http://gamer-companion.bhxsites.com.br)
+- API documentation: [Free API](https://gamer-companion-api.netlify.app)
+- API RESTFul: Running at Heroku
 
 ## Features
 

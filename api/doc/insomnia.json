@@ -1,7 +1,7 @@
 {
 	"_type": "export",
 	"__export_format": 4,
-	"__export_date": "2022-02-23T19:10:21.884Z",
+	"__export_date": "2022-02-23T19:19:01.659Z",
 	"__export_source": "insomnia.desktop.app:v2021.7.2",
 	"resources": [
 		{
@@ -59,7 +59,7 @@
 		{
 			"_id": "req_f71973474ada429ab37c0f48994f28dd",
 			"parentId": "fld_b3ea4e233e3e4c68b6bacaab6141c573",
-			"modified": 1645643401538,
+			"modified": 1645643869364,
 			"created": 1643671326402,
 			"url": "{{ _.base_url }}/characters",
 			"name": "Characters POST",
@@ -1071,7 +1071,7 @@
 		{
 			"_id": "env_69bd2292ef68438ab4c8df8c665c06da",
 			"parentId": "env_da8f93415df7f2dc214abe4b78fe78c318df3b3b",
-			"modified": 1645573582824,
+			"modified": 1645643862271,
 			"created": 1643683566655,
 			"name": "Development",
 			"data": { "base_url": "http://localhost:3000", "auth": "xyz" },
@@ -1084,12 +1084,12 @@
 		{
 			"_id": "env_aac4ed5f30414e7ba88e727f1dcf8d61",
 			"parentId": "env_da8f93415df7f2dc214abe4b78fe78c318df3b3b",
-			"modified": 1645576160989,
+			"modified": 1645643869141,
 			"created": 1643683582268,
 			"name": "Production",
 			"data": {
-				"base_url": "https://mortal-kombat-xi-guide.herokuapp.com",
-				"auth": "XXX"
+				"base_url": "https://api-gamer-companion.herokuapp.com",
+				"auth": "xxx"
 			},
 			"dataPropertyOrder": { "&": ["base_url", "auth"] },
 			"color": null,
