@@ -22,7 +22,7 @@ import ButtonController from '../components/ButtonController/ButtonController';
 type modalIndex = 'MODAL_ADD_MOVE' | 'MODAL_EDIT_MOVE';
 
 const PageFighter = () => {
-	const [isLogging, setIsLogging] = useState<boolean>(false);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	// edit move
 	const [formFieldsEdit, setFormFieldsEdit] = useState<IForm['inputs']>([
@@ -213,7 +213,7 @@ const PageFighter = () => {
 		const isValid = validationForm(formFields, setFormFields);
 
 		if (isValid) {
-			setIsLogging(true);
+			setIsLoading(true);
 			// use async function for server validation
 			postMoveGroup(
 				fid,
@@ -236,7 +236,7 @@ const PageFighter = () => {
 					closeModal('MODAL_ADD_MOVE');
 				}
 
-				setIsLogging(false);
+				setIsLoading(false);
 			});
 		}
 	};
@@ -246,7 +246,7 @@ const PageFighter = () => {
 		const isValid = validationForm(formFieldsEdit, setFormFieldsEdit);
 
 		if (isValid) {
-			setIsLogging(true);
+			setIsLoading(true);
 			editMoveGroup(
 				fid,
 				formFieldsEdit[2].value,
@@ -260,7 +260,7 @@ const PageFighter = () => {
 					getCharacter();
 					closeModal('MODAL_EDIT_MOVE');
 				}
-				setIsLogging(false);
+				setIsLoading(false);
 			});
 		}
 	};
@@ -276,20 +276,20 @@ const PageFighter = () => {
 		}).then((result) => {
 			/* Read more about isConfirmed, isDenied below */
 			if (result.isConfirmed) {
-				setIsLogging(true);
+				setIsLoading(true);
 				deleteMoveGroup(fid, formFieldsEdit[2].value, formFieldsEdit[4].value).then((res) => {
 					if (res.data.status === 1) {
 						getCharacter();
 						closeModal('MODAL_EDIT_MOVE');
 					}
-					setIsLogging(false);
+					setIsLoading(false);
 				});
 			}
 		});
 	};
 
 	const getCharacter = async () => {
-		getDataCharacters(fid).then((res: any) => {
+		await getDataCharacters(fid).then((res: any) => {
 			if (res.data.status === 1) {
 				setDataCharacter(res.data.character);
 			}
@@ -312,7 +312,7 @@ const PageFighter = () => {
 					CADASTRAR: {formFields[4].value}
 				</h1>
 
-				{!isLogging ? (
+				{!isLoading ? (
 					<form onSubmit={handleSubmitAdd}>
 						<label htmlFor={formFields[0].name} className="block mb-3">
 							<span className="block mb-1 font-bold text-xs md:text-md">Nome do comando:</span>
@@ -427,7 +427,7 @@ const PageFighter = () => {
 					EDIÇÃO: {formFieldsEdit[2].value}
 				</h1>
 
-				{!isLogging ? (
+				{!isLoading && formFieldsEdit[0].value !== '' ? (
 					<form onSubmit={handleSubmitEdit}>
 						<label htmlFor={formFieldsEdit[0].name} className="block mb-3 font-bold">
 							<span className="block mb-1 font-bold text-xs md:text-md">Nome do comando:</span>
