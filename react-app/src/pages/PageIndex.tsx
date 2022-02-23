@@ -15,16 +15,20 @@ const PageIndex = () => {
 	const rdxPrefsGame = useSelector((state: IRdxUser) => state.prefs.game);
 
 	const getCharacteres = async () => {
-		setDataCharacters(null);
+		if (rdxPrefsGame !== null) {
+			console.log('data characters', rdxPrefsGame);
+			setDataCharacters(null);
 
-		getAllCharacters(rdxPrefsGame).then((res: any) => {
-			if (res.data.status === 1) {
-				setDataCharacters(res.data.characters);
-			}
-		});
+			getAllCharacters(rdxPrefsGame).then((res: any) => {
+				if (res.data.status === 1) {
+					setDataCharacters(res.data.characters);
+				}
+			});
+		}
 	};
 
 	useEffect(() => {
+		setDataCharacters(null);
 		getCharacteres();
 	}, [rdxPrefsGame]);
 
@@ -32,7 +36,7 @@ const PageIndex = () => {
 		<>
 			<div className="bg-slate-200 min-h-screen w-full p-0 md:p-3 xl:p-3 ">
 				<HeaderAdmin />
-				<HeaderGame title={rdxPrefsGame} />
+				{dataCharacters && <HeaderGame title={rdxPrefsGame} />}
 
 				<div className="container bg-white border p-3 md:p-10 md:rounded-lg max-w-6xl">
 					<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
