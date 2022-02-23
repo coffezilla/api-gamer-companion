@@ -413,7 +413,7 @@ const PageFighter = () => {
 						</button>
 					</form>
 				) : (
-					<p>logging...</p>
+					<p>Carregando...</p>
 				)}
 			</ModalCustom>
 
@@ -481,19 +481,25 @@ const PageFighter = () => {
 							<span className="block mb-2 font-bold">Combinação:</span>
 							<div className="text-sm items-end flex flex-wrap space-x-2 space-y-2 border px-3 pb-4 w-full rounded-md min-h-[60px] mb-3">
 								{formFieldsEdit[3].value.map((command: any, index: number) => {
-									return command.length > 1 ? (
-										command.map((subCommand: any, subIndex: number) => {
-											return (
-												<ButtonController
-													id={subCommand}
-													key={subIndex}
-													sequel={index}
-													type="SUM"
-												/>
-											);
-										})
-									) : (
-										<ButtonController id={command} key={index} sequel={index} type="DIVIDE" />
+									return (
+										<div className="flex space-x-2 items-center" key={`${command}${index}`}>
+											{index !== 0 && <p className="text-center text-lg">,</p>}
+											{command.length > 1 ? (
+												command.map((subCommand: any, subIndex: number) => {
+													return (
+														<div
+															className="flex space-x-2 items-center"
+															key={`${command}${subIndex}`}
+														>
+															{subIndex !== 0 && <p className="text-center text-lg">+</p>}
+															<ButtonController id={subCommand} />
+														</div>
+													);
+												})
+											) : (
+												<ButtonController id={command} />
+											)}
+										</div>
 									);
 								})}
 							</div>
@@ -520,18 +526,17 @@ const PageFighter = () => {
 						>
 							Cancelar
 						</button>
+						<button
+							type="button"
+							onClick={handleSubmitDelete}
+							className="bg-red-50 hover:bg-red-600 text-red-800 hover:text-white rounded-md inline-block px-3 py-1 text-sm"
+						>
+							Deletar
+						</button>
 					</form>
 				) : (
-					<p>logging...</p>
+					<p>Carregando...</p>
 				)}
-
-				<button
-					type="button"
-					onClick={handleSubmitDelete}
-					className="bg-red-50 hover:bg-red-600 text-red-800 hover:text-white rounded-md inline-block px-3 py-1 text-sm"
-				>
-					Deletar
-				</button>
 			</ModalCustom>
 
 			<div className="bg-slate-200 min-h-screen w-full p-0 md:p-3 xl:p-3 ">

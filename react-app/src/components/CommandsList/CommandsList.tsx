@@ -56,13 +56,20 @@ const CommandsList = ({ title, group, dataMoves, modal, handleAdd }: IPros) => {
 															<ButtonController
 																id={subCommand}
 																key={subIndex}
-																sequel={index}
+																sequel={subIndex}
 																type="SUM"
+																arial-bla={index}
 															/>
 														);
 													})
 												) : (
-													<ButtonController id={command} key={index} sequel={index} type="DIVIDE" />
+													<ButtonController
+														id={command}
+														key={index}
+														sequel={index}
+														type="DIVIDE"
+														arial-bla={index}
+													/>
 												);
 											})}
 										</div>

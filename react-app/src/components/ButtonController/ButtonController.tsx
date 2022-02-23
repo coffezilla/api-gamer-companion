@@ -47,7 +47,7 @@ const ButtonController = ({ id, size = 'w-5 lg:w-6 2xl:w-8', sequel, type }: IPr
 					{type === 'SUM' ? '+' : ','}
 				</p>
 			)}
-			<img src={buttonPath} className={`${size} object-cover rounded-full`} />
+			<img src={buttonPath} className={`${size} object-cover rounded-full aspect-square`} />
 		</>
 	);
 };
